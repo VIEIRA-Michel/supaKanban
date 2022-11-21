@@ -1,6 +1,4 @@
 import './App.css';
-// import FilterTodo from './components/FilterTodo/FilterTodo';
-// import TodoData from './components/TodoData/TodoData';
 import TodoListGroup from './components/TodoListGroup/TodoListGroup';
 function App() {
   console.log('BUILD APP');
@@ -9,11 +7,8 @@ function App() {
       <div className='card container p-20'>
         <h1 className='mb-20 d-flex align-items-center'>
           <span className='flex-fill mr-15'>Todo App</span>
-          {/* <FilterTodo /> */}
         </h1>
-        {/* <AddTodo /> */}
         <TodoListGroup />
-        {/* <TodoData /> */}
       </div>
     </div>
   );

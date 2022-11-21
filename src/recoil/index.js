@@ -5,18 +5,10 @@ export const todosState = atom({
     default: [],
 });
 
-// export const todosListCount = atom({
-//     key: 'todosListCount',
-//     default: 0,
-//     set: ({ set }, newValue) => set(todosListCount, newValue)
-// });
-
-
-// export const filterState = atom({
-//     key: 'filterState',
-//     default: 'all',
-// });
-
+export const showInput = atom({
+    key: 'showInput',
+    default: false,
+})
 // export const selectFilteredTodos = selector({
 //     key: 'selectFilteredTodos',
 //     get: ({ get }) => {
@@ -48,12 +40,4 @@ export const todosState = atom({
 //             totalDonePourcentage,
 //         }
 //     },
-// })
-
-// export const selectTodoDetails = selectorFamily({
-//     key: 'selectTodoDetails',
-//     get: _id => ({ get }) => {
-//         const todos = get(todosState);
-//         return _id ? todos.find(t => t._id === _id) : null;
-//     }
 // })

@@ -1,22 +1,14 @@
-import { selectTodoDetails, todosState } from "../../recoil";
+import { todosState } from "../../recoil";
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { useState } from 'react';
 import TodoItem from "../TodoItem/TodoItem";
-// import TodoDetails from "../TodoDetails/TodoDetails";
 import AddTodo from "../AddTodo/AddTodo";
 import styles from './TodoList.module.scss';
 
 function TodoList({ listId }) {
-    // const [id, setId] = useState(null);
     const [inputValue, setInputValue] = useState('');
-    // const filteredTodos = useRecoilValue(selectFilteredTodos);
-    // const todoDetails = useRecoilValue(selectTodoDetails(id));
     const todos = useRecoilValue(todosState);
     const [a, setA] = useState(false);
-
-    // function selectTodo(_id) {
-    //     setId(_id);
-    // }
 
     // function addTask() {
     //     const todo = { id: crypto.randomUUID(), content: inputValue }
@@ -50,7 +42,7 @@ function TodoList({ listId }) {
                     {a ? <AddTodo id={listId} value={inputValue} onChange={handleInputValue} showInput={showInput} /> : <button onClick={() => showInput(true)}>+</button>}
                 </div>
                 <ul className="d-flex flex-column flex-fill b2">
-                    {todos[listId].length > 0 ? (todos[listId].map(todo => <TodoItem key={todos[listId].indexOf(todo)} id={todos[listId].indexOf(todo)} content={todo.content} />)) : <p>Ajoutez une tâche</p>}
+                    {todos[listId].length > 0 ? (todos[listId].map(todo => <TodoItem key={todos[listId].indexOf(todo)} id={todos[listId].indexOf(todo)} listId={listId} todo={todo} />)) : <p>Ajoutez une tâche</p>}
                 </ul>
             </div>
         </div>

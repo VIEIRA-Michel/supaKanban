@@ -3,30 +3,16 @@ import { useRecoilState } from 'recoil';
 import { todosState } from '../../recoil';
 
 function AddTodo({ id, value, onChange, showInput }) {
-    const [inputValue, setInputValue] = useState('');
     const [todos, setTodosState] = useRecoilState(todosState);
-
     function handleOnChange(event) {
         onChange(event.target.value);
     }
 
-    // function handleClick(e) {
-    //     console.log(e)
-    //     // setTodosState((oldTodosState) => [...oldTodosState, {
-    //     //     _id: crypto.randomUUID(),
-    //     //     content: inputValue,
-    //     //     done: false,
-    //     //     edit: false
-    //     // }])
-    //     // setInputValue('');
-    //     // console.log(inputValue);
-    // }
-
     function submit(e) {
-        const todo = { id: crypto.randomUUID(), content: value }
         if (e.key === "Enter") {
             setTodosState((oldTodosState) => {
                 const state = [...oldTodosState];
+                const todo = { id: state[id].length, column: id, content: value, edit: false }
                 state[id] = [...state[id], todo]
                 return state;
             }
@@ -38,8 +24,7 @@ function AddTodo({ id, value, onChange, showInput }) {
 
     return (
         <div className='d-flex align-items-center mb-20'>
-            <textarea value={value} onChange={handleOnChange} type="text" className='flex-fill' onKeyDown={(e) => submit(e)} />
-            {/* <button onClick={handleClick} className="btn btn-primary" id={id}>Ajouter todo</button> */}
+            <input value={value} onChange={handleOnChange} type="text" className='flex-fill' onKeyDown={(e) => submit(e)} />
         </div>
     )
 }
