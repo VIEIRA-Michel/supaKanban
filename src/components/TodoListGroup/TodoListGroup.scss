@@ -1,0 +1,18 @@
+.kanban {
+    display: flex;
+    align-items: flex-start;
+}
+
+.inputAddList {
+    font-family: 'Dosis', sans-serif;
+
+    &::placeholder {
+        font-family: 'Dosis', sans-serif;
+    }
+}
+
+.addList {
+    font-size: 21px;
+    border-radius: 5px;
+    margin-left: 15px;
+}

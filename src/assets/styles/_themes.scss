@@ -1,5 +1,5 @@
 .btn {
-  padding: 5px 15px;
+  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s opacity;
@@ -37,9 +37,20 @@ label {
 }
 
 input {
-  padding: 5px;
+  padding: 10px;
   border: 2px solid var(--gray-2);
-  border-radius: 10px;
+  border-radius: 5px;
+  font-size: 20px;
+
+  &::placeholder {
+    font-family: 'saiyan_sansregular';
+    font-size: 20px;
+    text-align: center;
+    padding: 5px;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+  }
 }
 
 .form-error {

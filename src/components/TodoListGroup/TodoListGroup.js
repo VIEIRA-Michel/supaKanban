@@ -1,24 +1,74 @@
+import { useState } from 'react';
+import { DragDropContext } from 'react-beautiful-dnd';
 import { useRecoilState } from 'recoil';
 import { todosState } from '../../recoil';
+import { v4 as uuidv4 } from 'uuid'
 import TodoList from '../TodoList/TodoList';
+import './TodoListGroup.scss';
+
+
 function TodoListGroup() {
     const [todos, setTodos] = useRecoilState(todosState);
+    const [input, setInput] = useState('');
+
+    function onDragEnd(result) {
+        if (!result.destination) return
+        const { source, destination } = result
+
+        if (source.droppableId !== destination.droppableId) {
+
+            const sourceColIndex = todos.findIndex(e => e.id === source.droppableId)
+            const destinationColIndex = todos.findIndex(e => e.id === destination.droppableId)
+
+            const sourceCol = todos[sourceColIndex]
+            const destinationCol = todos[destinationColIndex]
+
+            const sourceTask = [...sourceCol.tasks]
+            const destinationTask = [...destinationCol.tasks]
+
+            const [removed] = sourceTask.splice(source.index, 1)
+            destinationTask.splice(destination.index, 0, removed)
+
+            setTodos((oldTodosState) => {
+                let state = JSON.parse(JSON.stringify(oldTodosState));
+                state[sourceColIndex].tasks = sourceTask;
+                state[destinationColIndex].tasks = destinationTask;
+                return state;
+            });
+        }
+    }
 
     function addTodoList() {
-        setTodos(oldValue => {
-            return [...oldValue, []]
-        });
-    }
+        if (input.length > 0) {
+            setTodos(oldValue => [...oldValue, {
+                id: uuidv4(),
+                title: input,
+                tasks: [],
+                index: todos.length,
+            }])
+            setInput('');
+        }
+    };
+
     return (
-        <>
-            <div>
-                <button className='p-10' onClick={addTodoList}>+</button>
+        <div className='d-flex flex-column h100'>
+            <div className='mb h20'>
+                <div className='d-flex justify-content-center align-items-center'>
+                    <input className='inputAddList' type="text" placeholder="Saisissez un nom" value={input} onChange={(e) => setInput(e.target.value)} />
+                    <button className='p-20 btn btn-primary addList' onClick={addTodoList}>Ajouter une liste</button>
+                </div>
             </div>
-            <div className="d-flex justify-content-se flex-row">
-                {todos && todos.length > 0 ? (todos.map(element => <TodoList key={todos.indexOf(element)} listId={todos.indexOf(element)} />)) : (<p>Commencez par créer une liste de tâche</p>)}
-            </div>
-        </>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <div className="d-flex justify-content-se flex-row kanban h80">
+                    {todos.map((section, index) => (
+                        <TodoList key={index} listId={section.id} section={section} index={index} />
+                    )
+                    )}
+                </div>
+            </DragDropContext>
+        </div>
     )
 }
+
 
 export default TodoListGroup;

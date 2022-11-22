@@ -1,26 +1,16 @@
-import { todosState } from "../../recoil";
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useState } from 'react';
 import TodoItem from "../TodoItem/TodoItem";
-import AddTodo from "../AddTodo/AddTodo";
-import styles from './TodoList.module.scss';
+import './TodoList.scss';
+import AddTodo from '../AddTodo/AddTodo';
 
-function TodoList({ listId }) {
+import { todosState } from "../../recoil";
+import { useRecoilValue } from 'recoil';
+
+function TodoList({ section, listId, index }) {
+
     const [inputValue, setInputValue] = useState('');
-    const todos = useRecoilValue(todosState);
     const [a, setA] = useState(false);
-
-    // function addTask() {
-    //     const todo = { id: crypto.randomUUID(), content: inputValue }
-    //     console.log(todo);
-    //     setTodosState((oldTodosState) => {
-    //         const state = [...oldTodosState];
-    //         state[id] = [...state[id], todo]
-    //         return state;
-    //     })
-    //     setInputValue('');
-
-    // }
 
     function handleInputValue(content) {
         setInputValue(content)
@@ -30,22 +20,51 @@ function TodoList({ listId }) {
         setA(value);
     }
 
+
     return (
-        <div>
-            {/* <ul className="mb-20">
-                {filteredTodos && filteredTodos.map((todo) => <TodoItem key={todo._id} todo={todo} onClick={() => selectTodo(todo._id)} />)}
-            </ul>
-            {todoDetails && <TodoDetails todo={todoDetails} />}
-            */}
-            <div className={`d-flex justify-content-center flex-column b1 ${styles.column}`}>
-                <div className="b3">
-                    {a ? <AddTodo id={listId} value={inputValue} onChange={handleInputValue} showInput={showInput} /> : <button onClick={() => showInput(true)}>+</button>}
+        <Droppable key={section.id} droppableId={section.id}>
+            {(provided) => (
+                <div
+                    {...provided.droppableProps}
+                    className='kanban__section'
+                    ref={provided.innerRef}
+                >
+                    <div className="kanban__section__title">
+                        {section.title}
+                    </div>
+                    <div className="kanban__section__button d-flex">
+                        {a ? <AddTodo id={section.id} value={inputValue} onChange={handleInputValue} showInput={showInput} index={index} /> : <button className='p-10 d-flex justify-content-center flex-fill' onClick={() => showInput(true)}><span>Ajoutez une tâche</span><i className="fa-solid fa-plus"></i></button>}
+                    </div>
+                    <div className="kanban__section__content">
+                        {
+                            section.tasks.map((task, index) => (
+                                <Draggable
+                                    key={task.id}
+                                    draggableId={task.id}
+                                    index={index}
+                                >
+                                    {(provided, snapshot) => (
+                                        <div
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                            style={{
+                                                ...provided.draggableProps.style,
+                                                opacity: snapshot.isDragging ? '0.5' : '1'
+                                            }}
+                                        >
+                                            <TodoItem todo={task}>
+                                            </TodoItem>
+                                        </div>
+                                    )}
+                                </Draggable>
+                            ))
+                        }
+                        {provided.placeholder}
+                    </div>
                 </div>
-                <ul className="d-flex flex-column flex-fill b2">
-                    {todos[listId].length > 0 ? (todos[listId].map(todo => <TodoItem key={todos[listId].indexOf(todo)} id={todos[listId].indexOf(todo)} listId={listId} todo={todo} />)) : <p>Ajoutez une tâche</p>}
-                </ul>
-            </div>
-        </div>
+            )}
+        </Droppable>
     )
 }
 
