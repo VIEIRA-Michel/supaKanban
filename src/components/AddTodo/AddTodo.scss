@@ -1,7 +1,6 @@
 textarea {
     font-family: 'Dosis', sans-serif;
     resize: none;
-    // padding: 5px;
     border: 2px solid var(--gray-2);
     border-radius: 5px;
     font-size: 20px;
@@ -11,6 +10,6 @@ textarea {
         font-family: 'Dosis', sans-serif;
         font-size: 21px;
         text-align: center;
-        // padding-top: 10px;
+        vertical-align:bottom;
     }
 }

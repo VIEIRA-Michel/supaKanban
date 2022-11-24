@@ -14,7 +14,7 @@ function AddTodo({ id, value, onChange, showInput, index }) {
         if (e.key === "Enter") {
             setTodosState((oldTodosState) => {
                 let state = JSON.parse(JSON.stringify(oldTodosState));
-                state[index].tasks.push({ id: uuidv4(), column: index, content: value, edit: false });
+                state[index].tasks.push({ id: uuidv4(), column: index, content: value, edit: false, menu: false });
                 return state;
             });
             onChange('');

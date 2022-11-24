@@ -8,7 +8,7 @@ import './TodoListGroup.scss';
 
 
 function TodoListGroup() {
-    const [todos, setTodos] = useRecoilState(todosState);
+    const [todos, setTodosState] = useRecoilState(todosState);
     const [input, setInput] = useState('');
 
     function onDragEnd(result) {
@@ -29,7 +29,7 @@ function TodoListGroup() {
             const [removed] = sourceTask.splice(source.index, 1)
             destinationTask.splice(destination.index, 0, removed)
 
-            setTodos((oldTodosState) => {
+            setTodosState((oldTodosState) => {
                 let state = JSON.parse(JSON.stringify(oldTodosState));
                 state[sourceColIndex].tasks = sourceTask;
                 state[destinationColIndex].tasks = destinationTask;
@@ -40,11 +40,13 @@ function TodoListGroup() {
 
     function addTodoList() {
         if (input.length > 0) {
-            setTodos(oldValue => [...oldValue, {
+            setTodosState(oldValue => [...oldValue, {
                 id: uuidv4(),
                 title: input,
                 tasks: [],
                 index: todos.length,
+                edit: false,
+                menu: false,
             }])
             setInput('');
         }

@@ -8,4 +8,4 @@ export const todosState = atom({
 export const showInput = atom({
     key: 'showInput',
     default: false,
-})
+});
