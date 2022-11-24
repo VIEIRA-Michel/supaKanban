@@ -88,7 +88,7 @@ function TodoList({ section, listId, index }) {
         });
     }
     return (
-        <div className='m-20'>
+        <div className='m-20 kanban'>
             <div className='kanban__top'>
                 <div className="kanban__top__title">
                     {section.edit ? <input value={inputTitleValue} onChange={(e) => setInputTitleValue(e.target.value)} onKeyDown={(e) => submit(e)} type="text" /> : <span>{section.title}</span>}

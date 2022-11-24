@@ -7,8 +7,10 @@ import './AddTodo.scss';
 
 function AddTodo({ id, value, onChange, showInput, index }) {
     const setTodosState = useSetRecoilState(todosState);
-    function handleOnChange(event) {
-        onChange(event.target.value);
+    function handleOnChange(e) {
+        onChange(e.target.value);
+        e.target.style.height = 'auto';
+        e.target.style.height = e.target.scrollHeight + 'px';
     }
     function submit(e) {
         if (e.key === "Enter") {

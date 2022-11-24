@@ -1,7 +1,75 @@
 .card {
-    padding: 30px;
+    padding: 10px;
     border-radius: 5px;
     color: #3A4CAE;
     font-size: 22px;
+    margin-top: 10px;
     word-wrap: break-word;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    position: relative;
+    align-items: center;
+
+    &.showButton {
+        background-color: #ffffffb3;
+        transition: .3s all ease-in-out;
+    }
+
+    &__title {
+        width: 90%;
+        font-size: 16px;
+
+        textarea:focus {
+            outline: none;
+        }
+
+        textarea {
+            width: 180px;
+            font-size: 16px;
+        }
+    }
+
+    &__button {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        background-color: #ffffff;
+        right: 5px;
+        top: 5px;
+        z-index: 2;
+        padding: 5px;
+        cursor: pointer;
+        border-radius: 5px;
+
+        i {
+            font-size: 14px;
+            border-radius: 5px;
+            background-color: #ffffff;
+            padding: 10px;
+
+            &:hover {
+                background-color: #130f40;
+                color: #ffffff;
+                transition: .3s all ease-in-out;
+            }
+        }
+    }
+
+    &__cancel {
+        cursor: pointer;
+
+        i {
+            font-size: 14px;
+            border-radius: 5px;
+            background-color: #ffffff;
+            padding: 10px;
+
+            &:hover {
+                background-color: #130f40;
+                color: #ffffff;
+                transition: .3s all ease-in-out;
+            }
+        }
+    }
 }

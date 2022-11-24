@@ -4,12 +4,17 @@ textarea {
     border: 2px solid var(--gray-2);
     border-radius: 5px;
     font-size: 20px;
-    padding: 20px 10px 0px 10px;
+    padding: 5px 5px 0px 5px;
+    overflow-y: hidden;
+
+    &:focus {
+        outline: none;
+    }
 
     &::placeholder {
         font-family: 'Dosis', sans-serif;
         font-size: 21px;
         text-align: center;
-        vertical-align:bottom;
+        vertical-align: bottom;
     }
 }

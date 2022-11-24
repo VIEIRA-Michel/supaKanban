@@ -61,7 +61,7 @@ function TodoListGroup() {
                 </div>
             </div>
             <DragDropContext onDragEnd={onDragEnd}>
-                <div className="d-flex justify-content-se flex-row kanban h80">
+                <div className="d-flex justify-content-se flex-row kanban-container h80">
                     {todos.map((section, index) => (
                         <TodoList key={index} listId={section.id} section={section} index={index} />
                     )
