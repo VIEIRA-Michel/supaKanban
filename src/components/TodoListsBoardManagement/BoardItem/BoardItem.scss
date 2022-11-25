@@ -1,16 +1,10 @@
-.card {
+.board__content__list__item {
     min-height: 55px;
     padding: 10px;
+    background-color: #ffffff;
     border-radius: 5px;
-    color: #3A4CAE;
-    font-size: 22px;
-    margin-top: 10px;
-    word-wrap: break-word;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    cursor: pointer;
     position: relative;
-    align-items: center;
 
     &.showButton {
         background-color: #ffffffb3;
@@ -18,17 +12,9 @@
     }
 
     &__title {
-        width: 90%;
         font-size: 16px;
-
-        textarea:focus {
-            outline: none;
-        }
-
-        textarea {
-            width: 180px;
-            font-size: 16px;
-        }
+        color: #3a4cae;
+        font-weight: 100;
     }
 
     &__button {
@@ -47,30 +33,29 @@
             font-size: 14px;
             border-radius: 5px;
             background-color: #ffffff;
+            color: #130f40 !important;
             padding: 10px;
 
             &:hover {
                 background-color: #130f40;
-                color: #ffffff;
+                color: #ffffff !important;
                 transition: .3s all ease-in-out;
             }
         }
     }
 
-    &__cancel {
+    &__enter {
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-color: #130f40;
+        color: #ffffff;
         cursor: pointer;
+        opacity: .8;
+        min-height: 55px;
 
-        i {
-            font-size: 14px;
-            border-radius: 5px;
-            background-color: #ffffff;
-            padding: 10px;
-
-            &:hover {
-                background-color: #130f40;
-                color: #ffffff;
-                transition: .3s all ease-in-out;
-            }
+        &:hover {
+            opacity: 1;
+            transition: .3s all ease-in-out;
         }
     }
 }

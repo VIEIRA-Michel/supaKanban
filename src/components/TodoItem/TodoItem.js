@@ -1,10 +1,10 @@
 import './TodoItem.scss';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { todosState } from '../../recoil';
 
 function TodoItem({ todo }) {
-    const [todos, setTodosState] = useRecoilState(todosState);
+    const setTodosState = useSetRecoilState(todosState);
     const [showButton, setShowButton] = useState(false);
     const [inputTaskTitle, setInputTaskTitle] = useState(todo.content);
 
@@ -73,8 +73,6 @@ function TodoItem({ todo }) {
                     }
                     return list;
                 }))
-
-                setInputTaskTitle(todo.content);
                 return state;
             });
         } else if (e.key === "Escape") {

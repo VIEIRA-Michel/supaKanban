@@ -1,13 +1,13 @@
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { todosState } from '../../recoil';
 import TodoItem from "../TodoItem/TodoItem";
 import './TodoList.scss';
 import AddTodo from '../AddTodo/AddTodo';
 
 function TodoList({ section, listId, index }) {
-    const [todos, setTodosState] = useRecoilState(todosState);
+    const setTodosState = useSetRecoilState(todosState);
     const [inputValue, setInputValue] = useState('');
     const [inputTitleValue, setInputTitleValue] = useState(section.title);
     const [a, setA] = useState(false);
@@ -56,7 +56,6 @@ function TodoList({ section, listId, index }) {
                     }
                     return element;
                 }))
-                setInputTitleValue('');
                 return state;
             });
         } else if (e.key === "Escape") {
@@ -68,7 +67,6 @@ function TodoList({ section, listId, index }) {
                     }
                     return element;
                 }))
-                setInputTitleValue('');
                 return state;
             });
         }

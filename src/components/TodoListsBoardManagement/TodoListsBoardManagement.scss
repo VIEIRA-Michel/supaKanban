@@ -1,0 +1,107 @@
+.board {
+    background-color: #3a4cae;
+    display: flex;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+
+    &__top {
+        &__button {
+            display: flex;
+            justify-content: center;
+            color: #ffffff;
+
+            button {
+                border: none;
+                width: 100%;
+                margin: 10px;
+                background-color: #130f40;
+                color: #ffffff;
+                border-radius: 5px;
+                height: 30px;
+                padding: 0 10px;
+                cursor: pointer;
+                transition: .3s all ease-in-out;
+                opacity: .8;
+
+                span {
+                    margin-right: 5px;
+                }
+
+                &:hover {
+                    opacity: 1;
+                }
+
+                i {}
+            }
+        }
+    }
+
+    &__content {
+
+        &__create {
+
+            input {
+                font-family: 'Dosis', sans-serif;
+                font-size: 16px;
+            }
+
+            &__cancel {
+                border-radius: 5px;
+                border: none;
+                cursor: pointer;
+                margin-left: 10px;
+                background-color: #130f40;
+
+                i {
+                    padding: 5px 10px;
+                    color: #ffffff;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    opacity: .8;
+
+                    &:hover {
+                        transition: .3s all ease-in-out;
+                        opacity: 1;
+                    }
+                }
+            }
+
+
+        }
+
+        &__message {
+            color: #130f40;
+            margin: 10px;
+            color: #ffffff;
+        }
+
+        &__button {
+            display: flex;
+            justify-content: center;
+            color: #ffffff;
+
+            button {
+                border: none;
+                width: 100%;
+                margin: 10px;
+                background-color: #130f40;
+                color: #ffffff;
+                border-radius: 5px;
+                height: 30px;
+                padding: 0 10px;
+                cursor: pointer;
+                transition: .3s all ease-in-out;
+                opacity: .8;
+
+                span {
+                    margin-right: 5px;
+                }
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
