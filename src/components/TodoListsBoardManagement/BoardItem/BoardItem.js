@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import './BoardItem.scss';
 import { useSetRecoilState } from 'recoil';
-import { todoListsState } from '../../../recoil';
+import { todosState } from '../../../recoil';
+import { Link } from 'react-router-dom';
 
-function BoardItem({ name, id, index, editMode }) {
+function BoardItem({ name, id, kanbanIndex, editMode, kanban }) {
     const [showButton, setShowButton] = useState(false);
     const [inputTitleValue, setInputTitleValue] = useState('');
-    const setTodoListsState = useSetRecoilState(todoListsState);
+    const setTodoListsState = useSetRecoilState(todosState);
 
     function removeTodoList() {
         setTodoListsState((oldTodoListsState) => {
             let state = JSON.parse(JSON.stringify(oldTodoListsState));
             state.map((list, i) => {
-                if (i === index) {
+                if (i === kanbanIndex) {
                     state.splice(i, 1);
                 }
                 return list;
@@ -26,7 +27,7 @@ function BoardItem({ name, id, index, editMode }) {
         setTodoListsState((oldTodoListsState) => {
             let state = JSON.parse(JSON.stringify(oldTodoListsState));
             state.map((list, i) => {
-                if (i === index) {
+                if (i === kanbanIndex) {
                     list.edit = !list.edit;
                 } else {
                     list.edit = false;
@@ -43,7 +44,7 @@ function BoardItem({ name, id, index, editMode }) {
                 setTodoListsState((oldTodoListsState) => {
                     let state = JSON.parse(JSON.stringify(oldTodoListsState));
                     state.map((list, i) => {
-                        if (i === index) {
+                        if (i === kanbanIndex) {
                             list.name = inputTitleValue;
                             list.edit = !list.edit;
                         } else {
@@ -58,7 +59,7 @@ function BoardItem({ name, id, index, editMode }) {
             setTodoListsState((oldTodoListsState) => {
                 let state = JSON.parse(JSON.stringify(oldTodoListsState));
                 state.map((list, i) => {
-                    if (i === index) {
+                    if (i === kanbanIndex) {
                         list.edit = !list.edit;
                     } else {
                         list.edit = false;
@@ -84,9 +85,7 @@ function BoardItem({ name, id, index, editMode }) {
                     </div>
                 }
             </div>
-            <div className='board__content__list__item__enter ml-15 h100 d-flex align-items-center'>
-                Accéder
-            </div>
+            <Link to={`/${id}`} state={{ name, id, kanbanIndex, kanban }} className='board__content__list__item__enter ml-15 h100 d-flex align-items-center'>Accéder</Link>
         </div>
     )
 }

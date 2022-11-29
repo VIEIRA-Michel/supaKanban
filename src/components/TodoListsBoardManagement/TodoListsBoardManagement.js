@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './TodoListsBoardManagement.scss';
 import BoardItem from './BoardItem/BoardItem';
-import { todoListsState } from '../../recoil';
+import { todosState } from '../../recoil';
 import { useRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -9,14 +9,13 @@ function TodoListsBoardManagement() {
     const [createMode, setCreateMode] = useState(false);
     // const [todoLists, setTodoLists] = useState([]);
     const [inputValue, setInputValue] = useState('');
-    const [todoLists, setTodoListsState] = useRecoilState(todoListsState);
-
+    const [todoLists, setTodoListsState] = useRecoilState(todosState);
     function submit(e) {
         if (e.key === "Enter") {
             if (inputValue.length > 0) {
                 setTodoListsState((oldTodoListsState) => {
                     let state = JSON.parse(JSON.stringify(oldTodoListsState));
-                    state.unshift({ id: uuidv4(), name: inputValue, edit: false });
+                    state.unshift({ id: uuidv4(), name: inputValue, edit: false, kanban: [] });
                     setCreateMode(false);
                     setInputValue('');
                     return state;
@@ -27,7 +26,7 @@ function TodoListsBoardManagement() {
 
     return (
         <>
-            <h2>Tableau des listes de tâches en cours</h2>
+            <h2 className='mb-20'>Tableau des listes de tâches en cours</h2>
             <div className="board d-flex flex-column">
                 <div className='board__top d-flex flex-column flex-fill w100'>
                     <div className="board__top__button">
@@ -44,7 +43,7 @@ function TodoListsBoardManagement() {
                     todoLists.length > 0 ?
                         <div className='board__content__list d-flex flex-fill flex-column w100'>
                             {todoLists.map((element, index) =>
-                                <BoardItem key={index} name={element.name} id={element.id} index={index} editMode={element.edit} />
+                                <BoardItem key={index} name={element.name} id={element.id} kanbanIndex={index} editMode={element.edit} kanban={element.kanban} />
                             )}
                         </div>
                         :

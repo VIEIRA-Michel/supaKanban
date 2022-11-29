@@ -8,8 +8,6 @@ function TodoItem({ todo }) {
     const [showButton, setShowButton] = useState(false);
     const [inputTaskTitle, setInputTaskTitle] = useState(todo.content);
 
-    console.log(todo.content);
-
     function autoResize(e) {
         setInputTaskTitle(e.target.value)
         e.target.style.height = 'auto';

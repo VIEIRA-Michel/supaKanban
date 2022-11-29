@@ -12,6 +12,52 @@
         padding-top: 5px;
     }
 
+    &__kanbanList {
+        display: flex;
+        justify-content: space-between;
+
+        a {
+            color: #3a4cae;
+            text-decoration: none;
+            margin-right: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 500;
+
+            &:hover {
+                background-color: #dbdbdb;
+                transition: .3s all ease-in-out;
+            }
+        }
+
+        .active {
+            font-weight: 700;
+        }
+    }
+
+    &__board {
+        a {
+            height: 30px;
+            border: none;
+            color: #3a4cae;
+            background-color: #ffffff;
+            border: 1px solid #3a4cae;
+            font-family: "Dosis", sans-serif;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            text-decoration: none;
+            font-size: 13px;
+
+            &:hover {
+                transition: .3s all ease-in-out;
+                background-color: #3a4cae;
+                color: #ffffff;
+            }
+        }
+    }
+
     &__auth {
         display: flex;
         flex-direction: row;

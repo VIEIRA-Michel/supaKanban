@@ -6,7 +6,7 @@ import TodoItem from "../TodoItem/TodoItem";
 import './TodoList.scss';
 import AddTodo from '../AddTodo/AddTodo';
 
-function TodoList({ section, listId, index }) {
+function TodoList({ section, listId, index, kanbanIndex }) {
     const setTodosState = useSetRecoilState(todosState);
     const [inputValue, setInputValue] = useState('');
     const [inputTitleValue, setInputTitleValue] = useState(section.title);
@@ -23,14 +23,19 @@ function TodoList({ section, listId, index }) {
     function toggleListMenu() {
         setTodosState((oldTodosState) => {
             let state = JSON.parse(JSON.stringify(oldTodosState));
-            state.map((element => {
-                if (element.id === listId) {
-                    element.menu = !element.menu;
-                } else {
-                    element.menu = false;
+            state.map((element, i) => {
+                if (i === kanbanIndex) {
+                    element.kanban.map((list, listIndex) => {
+                        if (listIndex === index) {
+                            list.menu = !list.menu;
+                        } else {
+                            list.menu = false;
+                        }
+                        return list;
+                    });
                 }
                 return element;
-            }))
+            })
             return state;
         });
     }
@@ -38,35 +43,58 @@ function TodoList({ section, listId, index }) {
     function editListTitle() {
         setTodosState((oldTodosState) => {
             let state = JSON.parse(JSON.stringify(oldTodosState));
-            state.map((element => element.index === index ? element.edit = !element.edit : element.edit = false))
+            state.map((element, i) => {
+                if (i === kanbanIndex) {
+                    element.kanban.map((list, listIndex) => {
+                        if (listIndex === index) {
+                            list.edit = !list.edit;
+                        } else {
+                            list.edit = false;
+                        }
+                        return list;
+                    });
+                }
+                return element;
+            })
             return state;
         })
         toggleListMenu();
     }
 
     function submit(e) {
-        console.log(e.key)
         if (e.key === "Enter") {
             setTodosState((oldTodosState) => {
                 let state = JSON.parse(JSON.stringify(oldTodosState));
-                state.map((element => {
-                    if (element.id === listId) {
-                        element.title = inputTitleValue;
-                        element.edit = false;
+                state.map((element, i) => {
+                    if (i === kanbanIndex) {
+                        element.kanban.map((list) => {
+                            if (list.id === listId) {
+                                list.title = inputTitleValue;
+                                list.edit = false;
+                            } else {
+                                list.edit = false;
+                            }
+                            return list;
+                        });
                     }
                     return element;
-                }))
+                })
                 return state;
             });
         } else if (e.key === "Escape") {
             setTodosState((oldTodosState) => {
                 let state = JSON.parse(JSON.stringify(oldTodosState));
-                state.map((element => {
-                    if (element.index === index) {
-                        element.edit = false;
+                state.map((element, i) => {
+                    if (i === kanbanIndex) {
+                        element.kanban.map((list) => {
+                            if (list.id === listId) {
+                                list.edit = false;
+                            }
+                            return list;
+                        });
                     }
                     return element;
-                }))
+                })
                 return state;
             });
         }
@@ -75,16 +103,16 @@ function TodoList({ section, listId, index }) {
     function removeList() {
         setTodosState((oldTodosState) => {
             let state = JSON.parse(JSON.stringify(oldTodosState));
-            console.log(listId);
-
-            for (let i = 0; i < state.length; i++) {
-                if (state[i].id === listId) {
-                    state.splice(i, 1);
+            state.map((element, i) => {
+                if (i === kanbanIndex) {
+                    element.kanban.splice(index, 1)
                 }
-            }
+                return element;
+            })
             return state;
         });
     }
+
     return (
         <div className='m-20 kanban'>
             <div className='kanban__top'>
@@ -103,7 +131,7 @@ function TodoList({ section, listId, index }) {
             </div>
             <div className='kanban__section'>
                 <div className="kanban__section__button d-flex">
-                    {a ? <AddTodo id={section.id} value={inputValue} onChange={handleInputValue} showInput={showInput} index={index} /> : <button className='p-10 d-flex justify-content-center flex-fill' onClick={() => showInput(true)}><span>Ajoutez une tâche</span><i className="fa-solid fa-plus"></i></button>}
+                    {a ? <AddTodo id={section.id} value={inputValue} onChange={handleInputValue} showInput={showInput} index={index} kanbanIndex={kanbanIndex} /> : <button className='p-10 d-flex justify-content-center flex-fill' onClick={() => showInput(true)}><span>Ajoutez une tâche</span><i className="fa-solid fa-plus"></i></button>}
                 </div>
                 <div className="kanban__section__content">
                     <Droppable key={section.id} droppableId={section.id}>

@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { todosState } from '../../recoil';
 import { v4 as uuidv4 } from 'uuid';
 
 import './AddTodo.scss';
 
-function AddTodo({ id, value, onChange, showInput, index }) {
+function AddTodo({ id, value, onChange, showInput, index, kanbanIndex }) {
     const setTodosState = useSetRecoilState(todosState);
     function handleOnChange(e) {
         onChange(e.target.value);
@@ -16,7 +15,7 @@ function AddTodo({ id, value, onChange, showInput, index }) {
         if (e.key === "Enter") {
             setTodosState((oldTodosState) => {
                 let state = JSON.parse(JSON.stringify(oldTodosState));
-                state[index].tasks.push({ id: uuidv4(), column: index, content: value, edit: false, menu: false });
+                state[kanbanIndex].kanban[index].tasks.push({ id: uuidv4(), column: index, content: value, edit: false, menu: false });
                 return state;
             });
             onChange('');
