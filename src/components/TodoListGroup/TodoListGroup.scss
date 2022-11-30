@@ -3,16 +3,25 @@
     align-items: flex-start;
 }
 
+.container-addList {
+    width: 200px;
+    margin: auto;
+}
+
 .inputAddList {
     font-family: 'Dosis', sans-serif;
+    // font-size: 13px;
+    width: 200px;
 
     &::placeholder {
         font-family: 'Dosis', sans-serif;
+        font-size: 15px;
     }
 }
 
 .addList {
-    font-size: 21px;
+    font-size: 13px;
     border-radius: 5px;
     margin-left: 15px;
+    width: 200px;
 }

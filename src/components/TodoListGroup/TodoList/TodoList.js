@@ -1,12 +1,12 @@
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { todosState } from '../../recoil';
-import TodoItem from "../TodoItem/TodoItem";
+import { todosState } from '../../../recoil';
+import TodoItem from "./TodoItem/TodoItem";
 import './TodoList.scss';
-import AddTodo from '../AddTodo/AddTodo';
+import AddTodo from './AddTodo/AddTodo';
 
-function TodoList({ section, listId, index, kanbanIndex }) {
+function TodoList({ section, listId, index, kanbanIndex, kanbanId }) {
     const setTodosState = useSetRecoilState(todosState);
     const [inputValue, setInputValue] = useState('');
     const [inputTitleValue, setInputTitleValue] = useState(section.title);
@@ -131,7 +131,7 @@ function TodoList({ section, listId, index, kanbanIndex }) {
             </div>
             <div className='kanban__section'>
                 <div className="kanban__section__button d-flex">
-                    {a ? <AddTodo id={section.id} value={inputValue} onChange={handleInputValue} showInput={showInput} index={index} kanbanIndex={kanbanIndex} /> : <button className='p-10 d-flex justify-content-center flex-fill' onClick={() => showInput(true)}><span>Ajoutez une tâche</span><i className="fa-solid fa-plus"></i></button>}
+                    {a ? <AddTodo id={section.id} value={inputValue} onChange={handleInputValue} showInput={showInput} index={index} kanbanIndex={kanbanIndex} listId={listId} /> : <button className='p-10 d-flex justify-content-center flex-fill' onClick={() => showInput(true)}><span>Ajoutez une tâche</span><i className="fa-solid fa-plus"></i></button>}
                 </div>
                 <div className="kanban__section__content">
                     <Droppable key={section.id} droppableId={section.id}>
@@ -159,7 +159,7 @@ function TodoList({ section, listId, index, kanbanIndex }) {
                                                     }}
                                                     className="kanban__section__content__list__item"
                                                 >
-                                                    <TodoItem todo={task}>
+                                                    <TodoItem todo={task} kanbanId={kanbanId}>
                                                     </TodoItem>
                                                 </div>
                                             )}

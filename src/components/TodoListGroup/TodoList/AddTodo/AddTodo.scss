@@ -3,9 +3,11 @@ textarea {
     resize: none;
     border: 2px solid var(--gray-2);
     border-radius: 5px;
-    font-size: 20px;
-    padding: 5px 5px 0px 5px;
+    font-size: 13px;
+    font-weight: 100 !important;
+    padding: 5px;
     overflow-y: hidden;
+    min-height: 30px;
 
     &:focus {
         outline: none;
@@ -13,8 +15,9 @@ textarea {
 
     &::placeholder {
         font-family: 'Dosis', sans-serif;
-        font-size: 21px;
+        font-size: 15px;
         text-align: center;
         vertical-align: bottom;
+        font-weight: 100 !important;
     }
 }
