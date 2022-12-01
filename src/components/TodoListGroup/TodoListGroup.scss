@@ -10,8 +10,8 @@
 
 .inputAddList {
     font-family: 'Dosis', sans-serif;
-    // font-size: 13px;
     width: 200px;
+    height: 38px !important;
 
     &::placeholder {
         font-family: 'Dosis', sans-serif;
@@ -19,9 +19,30 @@
     }
 }
 
+.cancelAddList {
+    height: 38px !important;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    background-color: #3a4cae;
+
+    i {
+        padding: 10px;
+        color: #ffffff;
+        border-radius: 5px;
+        cursor: pointer;
+        opacity: .8;
+
+        &:hover {
+            transition: .3s all ease-in-out;
+            opacity: 1;
+        }
+    }
+}
+
 .addList {
     font-size: 13px;
     border-radius: 5px;
-    margin-left: 15px;
     width: 200px;
 }

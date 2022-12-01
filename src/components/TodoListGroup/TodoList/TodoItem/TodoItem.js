@@ -64,7 +64,6 @@ function TodoItem({ todo, kanbanId }) {
     }
 
     function submit(e) {
-        console.log(e.key)
         if (e.key === "Enter") {
             setTodosState((oldTodosState) => {
                 let state = JSON.parse(JSON.stringify(oldTodosState));
@@ -119,7 +118,7 @@ function TodoItem({ todo, kanbanId }) {
     return (
         <div onMouseEnter={() => setShowButton(true)} onMouseLeave={() => setShowButton(false)} className={showButton ? "card showButton" : "card"}>
             <div className="card__title">
-                {todo.edit ? <textarea value={inputTaskTitle} onChange={(e) => autoResize(e)} type="text" onKeyDown={(e) => submit(e)} /> : todo.content}
+                {todo.edit ? <textarea value={inputTaskTitle} onChange={(e) => autoResize(e)} type="text" onKeyDown={(e) => submit(e)} className="d-flex flex-fill" /> : todo.content}
             </div>
             {showButton && !todo.edit ?
                 <div className='card__button'>
@@ -128,9 +127,9 @@ function TodoItem({ todo, kanbanId }) {
                 </div>
 
                 : !showButton && !todo.edit ? '' :
-                    <div className='card__cancel'>
-                        <i onClick={editTaskTitle} className="fa-solid fa-xmark"></i>
-                    </div>
+                    <button onClick={editTaskTitle} className='card__cancel'>
+                        <i className="fa-solid fa-xmark"></i>
+                    </button>
             }
         </div>
     )

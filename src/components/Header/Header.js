@@ -18,7 +18,7 @@ function Header() {
                 )}
             </div>
             <ul className='header__board'>
-                <Link to="/board">Gérer</Link>
+                <Link to="/board"><span>Gérer les tableaux</span><i className="fa-solid fa-gears"></i></Link>
             </ul>
         </header>
     )

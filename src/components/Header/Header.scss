@@ -38,6 +38,7 @@
     &__board {
         a {
             height: 30px;
+            width: 150px;
             border: none;
             color: #3a4cae;
             background-color: #ffffff;
@@ -49,12 +50,17 @@
             margin-right: 10px;
             text-decoration: none;
             font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
             &:hover {
                 transition: .3s all ease-in-out;
                 background-color: #3a4cae;
                 color: #ffffff;
             }
+
+            span {}
         }
     }
 

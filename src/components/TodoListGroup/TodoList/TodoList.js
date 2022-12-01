@@ -10,14 +10,14 @@ function TodoList({ section, listId, index, kanbanIndex, kanbanId }) {
     const setTodosState = useSetRecoilState(todosState);
     const [inputValue, setInputValue] = useState('');
     const [inputTitleValue, setInputTitleValue] = useState(section.title);
-    const [a, setA] = useState(false);
+    const [showAddTodo, setShowAddTodo] = useState(false);
 
     function handleInputValue(content) {
         setInputValue(content)
     }
 
     function showInput(value) {
-        setA(value);
+        setShowAddTodo(value);
     }
 
     function toggleListMenu() {
@@ -131,7 +131,11 @@ function TodoList({ section, listId, index, kanbanIndex, kanbanId }) {
             </div>
             <div className='kanban__section'>
                 <div className="kanban__section__button d-flex">
-                    {a ? <AddTodo id={section.id} value={inputValue} onChange={handleInputValue} showInput={showInput} index={index} kanbanIndex={kanbanIndex} listId={listId} /> : <button className='p-10 d-flex justify-content-center flex-fill' onClick={() => showInput(true)}><span>Ajoutez une tâche</span><i className="fa-solid fa-plus"></i></button>}
+                    {showAddTodo ? <>
+                        <AddTodo id={section.id} value={inputValue} onChange={handleInputValue} showInput={showInput} index={index} kanbanIndex={kanbanIndex} listId={listId} />
+                        <button onClick={() => setShowAddTodo(false)} className='cancelInput'><i className="fa-solid fa-xmark"></i></button>
+                    </>
+                        : <button className='p-10 d-flex justify-content-center flex-fill' onClick={() => showInput(true)}><span>Ajoutez une tâche</span><i className="fa-solid fa-plus"></i></button>}
                 </div>
                 <div className="kanban__section__content">
                     <Droppable key={section.id} droppableId={section.id}>

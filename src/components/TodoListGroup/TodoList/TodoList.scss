@@ -1,5 +1,7 @@
 .kanban {
-    max-width: 260px;
+    max-width: 280px;
+    padding: 10px;
+    // background-color: ;
 
     &__top {
         display: flex;
@@ -108,6 +110,31 @@
                 &:hover {
                     opacity: .8;
                     transition: .3s all ease-in-out;
+                }
+            }
+
+            .cancelInput {
+                height: 38px !important;
+                border-radius: 5px;
+                border: none;
+                cursor: pointer;
+                margin-left: 10px;
+                background-color: #130f40;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                i {
+                    padding: 10px;
+                    color: #ffffff;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    opacity: .8;
+
+                    &:hover {
+                        transition: .3s all ease-in-out;
+                        opacity: 1;
+                    }
                 }
             }
         }

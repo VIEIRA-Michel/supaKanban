@@ -59,11 +59,14 @@
 
     &__cancel {
         cursor: pointer;
+        border: none;
+        // background-color: #130f40;
+        background-color: #ffffff;
+        border-radius: 5px;
 
         i {
             font-size: 14px;
             border-radius: 5px;
-            background-color: #ffffff;
             padding: 10px;
 
             &:hover {
