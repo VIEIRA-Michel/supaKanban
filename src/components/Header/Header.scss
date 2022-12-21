@@ -5,7 +5,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    // padding: 0 10px;
 
     &__logo {
         width: 50px;
@@ -17,7 +16,7 @@
         justify-content: space-between;
 
         a {
-            color: #3a4cae;
+            color: var(--secondary);
             text-decoration: none;
             margin-right: 10px;
             padding: 5px 10px;
@@ -40,9 +39,9 @@
             height: 30px;
             width: 150px;
             border: none;
-            color: #3a4cae;
+            color: var(--secondary);
             background-color: #ffffff;
-            border: 1px solid #3a4cae;
+            border: 1px solid var(--secondary);
             font-family: "Dosis", sans-serif;
             padding: 5px 10px;
             border-radius: 5px;
@@ -56,11 +55,10 @@
 
             &:hover {
                 transition: .3s all ease-in-out;
-                background-color: #3a4cae;
+                background-color: var(--secondary);
                 color: #ffffff;
             }
 
-            span {}
         }
     }
 

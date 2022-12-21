@@ -1,10 +1,10 @@
 .card {
     min-height: 55px;
     padding: 10px;
-    border-radius: 5px;
-    color: #3A4CAE;
+    border-radius: 20px;
+    color: var(--secondary);
     font-size: 22px;
-    margin-top: 10px;
+    margin-top: 15px;
     word-wrap: break-word;
     display: flex;
     flex-direction: row;
@@ -26,7 +26,8 @@
         }
 
         textarea {
-            width: 180px;
+            // width: 180px;
+            width: 95%;
             font-size: 16px;
         }
     }
@@ -41,11 +42,11 @@
         z-index: 2;
         padding: 5px;
         cursor: pointer;
-        border-radius: 5px;
+        border-radius: 15px;
 
         i {
             font-size: 14px;
-            border-radius: 5px;
+            border-radius: 10px;
             background-color: #ffffff;
             padding: 10px;
 
@@ -60,14 +61,13 @@
     &__cancel {
         cursor: pointer;
         border: none;
-        // background-color: #130f40;
-        background-color: #ffffff;
-        border-radius: 5px;
+        background-color: transparent;
 
         i {
+            background-color: #ffffff;
             font-size: 14px;
-            border-radius: 5px;
-            padding: 10px;
+            padding: 8px 10px;
+            border-radius: 50%;
 
             &:hover {
                 background-color: #130f40;

@@ -24,7 +24,7 @@ function AddTodo({ id, value, onChange, showInput, index, kanbanIndex, listId })
     }
 
     return (
-        <div className='d-flex align-items-center mb-20 flex-fill'>
+        <div className='d-flex align-items-center flex-fill'>
             <textarea value={value} onChange={handleOnChange} type="text" className='flex-fill' placeholder='Saisissez le nom de la tâche' onKeyDown={(e) => submit(e)} />
         </div>
     )
