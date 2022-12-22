@@ -17,9 +17,9 @@ function Header() {
                     <Link key={index} to={`/${element.id}`} className={location.pathname === `/${element.id}` ? 'active' : ''}>{element.name}</Link>
                 )}
             </div>
-            <ul className='header__board'>
+            <div className='header__board'>
                 <Link to="/board"><span>Gérer les tableaux</span><i className="fa-solid fa-gears"></i></Link>
-            </ul>
+            </div>
         </header>
     )
 }

@@ -15,6 +15,7 @@ function TodoListGroup() {
     let location = useLocation();
     let url = location.pathname.substring(1);
     const kanbanIndex = todos.findIndex(e => e.id === url);
+    console.log(todos[kanbanIndex].name);
 
     function onDragEnd(result) {
         if (!result.destination) return
@@ -85,10 +86,10 @@ function TodoListGroup() {
     }
     return (
         <div className='d-flex flex-column h100'>
-            <div className='mb-20 h20'>
-                {/* <h2 className='d-flex justify-content-center mb-20'>{}</h2> */}
+            <h2 className='mb-20 d-flex justify-content-center'>{todos[kanbanIndex].name}</h2>
+            <div className={`mb-20 h20 d-flex justify-content-center container-button list-${todos[kanbanIndex].kanban.length} align-items-center`}>
                 <div className='container-addList d-flex justify-content-center align-items-center'>
-                    {!showInput && <button className='p-20 btn btn-primary addList d-flex justify-content-sb align-items-center flex-fill' onClick={() => setShowInput(true)}><span>Ajouter une liste</span><i className="fa-solid fa-plus"></i></button>}
+                    {!showInput && <button className={`p-20 btn btn-primary addList list-${todos[kanbanIndex].kanban.length} d-flex justify-content-sb align-items-center flex-fill`} onClick={() => setShowInput(true)}><span>Ajouter une liste</span><i className="fa-solid fa-plus"></i></button>}
                     {showInput && <>
                         <input className='inputAddList' type="text" placeholder="Saisissez un nom de liste" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => submit(e)} />
                         <button className='cancelAddList' onClick={() => setShowInput(false)}><i className="fa-solid fa-xmark"></i></button>
@@ -98,7 +99,7 @@ function TodoListGroup() {
                 </div>
             </div>
             <DragDropContext onDragEnd={onDragEnd}>
-                <div className="d-flex justify-content-se flex-row kanban-container h80">
+                <div className="d-flex justify-content-se kanban-container">
                     {todos[kanbanIndex].kanban.length > 0 && todos[kanbanIndex].kanban.map((section, index) => (
                         <TodoList key={index} listId={section.id} section={section} index={index} kanbanIndex={kanbanIndex} kanbanId={url} />
                     ))}

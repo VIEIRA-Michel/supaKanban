@@ -8,12 +8,17 @@
 }
 
 body {
-    background: linear-gradient(#130f40, #3a4cae00);
+    // background: linear-gradient(#130f40, #3a4cae00);
+    background: linear-gradient(#130f40a8, rgba(58, 76, 174, 0));
     color: #E4E4E4;
     font-family: 'Dosis', sans-serif;
     line-height: 1.5;
     min-height: 100vh;
     width: 100%;
+}
+
+.app {
+    position: relative;
 }
 
 .mainContainer {

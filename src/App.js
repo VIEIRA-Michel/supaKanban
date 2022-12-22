@@ -22,14 +22,14 @@ function App() {
     }
   }, [url, todos])
   return (
-    <>
+    <div className='app'>
       <Header />
       <div className='d-flex flex-row justify-content-center p-20 flex-fill mainContainer'>
-        <div className="flex-fill">
+        <div className="d-flex flex-column align-items-center flex-fill">
           {check ? <Outlet /> : <TodoListsBoardManagement />}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

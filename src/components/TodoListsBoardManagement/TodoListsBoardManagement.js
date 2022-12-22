@@ -26,7 +26,9 @@ function TodoListsBoardManagement() {
 
     return (
         <>
-            <h2 className='mb-20'>Tableau des listes de tâches en cours</h2>
+            <div className='top d-flex justify-content-center align-items-center'>
+                <h2 className='mb-20'>Liste des tableaux</h2>
+            </div>
             <div className="board d-flex flex-column">
                 <div className='board__top d-flex flex-column flex-fill w100'>
                     <div className="board__top__button">
@@ -34,7 +36,7 @@ function TodoListsBoardManagement() {
                     </div>
                 </div>
                 {createMode && <div className='board__content__create d-flex align-items-center w100'>
-                    <div className='board__content__input d-flex flex-row w100 m-10'>
+                    <div className='board__content__create__input d-flex flex-row w100'>
                         <input type="text" className='d-flex flex-fill' value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyDown={(e) => submit(e)} />
                         <button className='board__content__create__cancel' onClick={() => setCreateMode(false)}><i className="fa-solid fa-xmark"></i></button>
                     </div>
@@ -43,7 +45,7 @@ function TodoListsBoardManagement() {
                     todoLists.length > 0 ?
                         <div className='board__content__list d-flex flex-fill flex-column w100'>
                             {todoLists.map((element, index) =>
-                                <BoardItem key={index} name={element.name} id={element.id} kanbanIndex={index} editMode={element.edit} kanban={element.kanban} />
+                                <BoardItem key={index} name={element.name} id={element.id} kanbanIndex={index} editMode={element.edit} kanban={element.kanban} moreThanOne={todoLists.length} />
                             )}
                         </div>
                         :

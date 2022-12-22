@@ -15,16 +15,25 @@
 
         &__title {
             font-size: 16px;
-            // margin: 10px 0 20px;
-            margin-left: 5px;
             text-align: initial;
-            width: 80%;
+            width: 84.7%;
+
+            span {
+                text-decoration: none;
+                text-overflow: ellipsis;
+                display: block;
+                overflow: hidden;
+                white-space: nowrap;
+                color: var(--secondary);
+                font-weight: bold;
+            }
 
             input {
                 font-family: 'Dosis', sans-serif;
                 padding: 10px;
                 border-radius: 15px;
                 width: 100%;
+                border: none;
             }
         }
 
@@ -35,6 +44,7 @@
                 border-radius: 5px;
                 cursor: pointer;
                 opacity: 0.8;
+                color: var(--secondary);
 
                 &:hover {
                     opacity: 1;
@@ -54,7 +64,7 @@
             border-radius: 15px;
             padding: 5px;
             margin-right: 10px;
-            box-shadow: rgba(0 0 0 /22%) 0px 2px 18px 0px;
+            box-shadow: rgb(0 0 0 / 36%) 0px 2px 18px 0px;
 
             button {
                 padding: 10px;
@@ -121,8 +131,8 @@
                 color: #ffffff;
                 cursor: pointer;
                 opacity: .8;
-                border-radius: 20px;
-                padding: 20px;
+                border-radius: 15px;
+                padding: 10px 20px;
 
                 &:hover {
                     opacity: 1;
@@ -132,7 +142,6 @@
 
             .cancelInput {
                 height: 38px !important;
-                width: 20px;
                 border-radius: 50%;
                 border: none;
                 cursor: pointer;
@@ -141,6 +150,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                padding: 0 !important;
 
                 i {
                     font-size: 14px;

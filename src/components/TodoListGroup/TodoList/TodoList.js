@@ -135,7 +135,7 @@ function TodoList({ section, listId, index, kanbanIndex, kanbanId }) {
                         <AddTodo id={section.id} value={inputValue} onChange={handleInputValue} showInput={showInput} index={index} kanbanIndex={kanbanIndex} listId={listId} />
                         <button onClick={() => setShowAddTodo(false)} className='cancelInput'><i className="fa-solid fa-xmark"></i></button>
                     </>
-                        : <button className='p-10 d-flex justify-content-center align-items-center flex-fill' onClick={() => showInput(true)}><span>Ajoutez une tâche</span><i className="fa-solid fa-plus"></i></button>}
+                        : <button className='d-flex justify-content-center align-items-center flex-fill' onClick={() => showInput(true)}><span>Ajoutez une tâche</span><i className="fa-solid fa-plus"></i></button>}
                 </div>
                 <div className="kanban__section__content">
                     <Droppable key={section.id} droppableId={section.id}>
