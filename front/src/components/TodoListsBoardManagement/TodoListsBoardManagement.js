@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import './TodoListsBoardManagement.scss';
 import BoardItem from './BoardItem/BoardItem';
 import { todosState } from '../../recoil';
 import { useRecoilState } from 'recoil';
@@ -26,30 +25,30 @@ function TodoListsBoardManagement() {
 
     return (
         <>
-            <div className='top d-flex justify-content-center align-items-center'>
-                <h2 className='mb-20'>Liste des tableaux</h2>
+            <div className='h-1/5 flex justify-center items-center'>
+                <h2 className='mb-5'>Liste des tableaux</h2>
             </div>
-            <div className="board d-flex flex-column">
-                <div className='board__top d-flex flex-column flex-fill w100'>
-                    <div className="board__top__button">
-                        <button className='d-flex justify-content-sb align-items-center' onClick={() => setCreateMode(true)}><span>Créer un tableau</span><i className="fa-solid fa-plus"></i></button>
+            <div className="min-w-310 bg-[#777591] rounded-[40px] flex flex-col justify-center items-center p-5 shadow-[0_2px_18px_0_rgba(0,0,0,0.5)]">
+                <div className='flex flex-col flex-auto w-full'>
+                    <div className="flex justify-center text-white">
+                        <button className='w-full text-white flex justify-between items-center cursor-pointer rounded-[15px] py-2.5 px-5 bg-[#130f40] border-none opacity-80 hover:opacity-100 transition-all' onClick={() => setCreateMode(true)}><span className='mr-1.5'>Créer un tableau</span><i className="fa-solid fa-plus"></i></button>
                     </div>
                 </div>
-                {createMode && <div className='board__content__create d-flex align-items-center w100'>
-                    <div className='board__content__create__input d-flex flex-row w100'>
-                        <input type="text" className='d-flex flex-fill' value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyDown={(e) => submit(e)} />
-                        <button className='board__content__create__cancel' onClick={() => setCreateMode(false)}><i className="fa-solid fa-xmark"></i></button>
+                {createMode && <div className='flex items-center w-full'>
+                    <div className='flex flex-row w-full mt-5'>
+                        <input type="text" className='flex flex-auto font-[Dosis] text-base rounded-[15px] border-none p-2.5 text-black' value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyDown={(e) => submit(e)} />
+                        <button className='border-none bg-transparent ml-2.5' onClick={() => setCreateMode(false)}><i className="fa-solid fa-xmark py-2 px-2.5 bg-[#130f40] text-white rounded-full cursor-pointer opacity-80 hover:opacity-100 transition-all"></i></button>
                     </div>
                 </div>}
                 {
                     todoLists.length > 0 ?
-                        <div className='board__content__list d-flex flex-fill flex-column w100'>
+                        <div className='flex flex-auto flex-col w-full'>
                             {todoLists.map((element, index) =>
                                 <BoardItem key={index} name={element.name} id={element.id} kanbanIndex={index} editMode={element.edit} kanban={element.kanban} moreThanOne={todoLists.length} />
                             )}
                         </div>
                         :
-                        <div className="board__content__message d-flex justify-content-center">
+                        <div className="flex justify-center text-white m-2.5">
                             Vous n’avez aucun tableau pour le moment
                         </div>
                 }
