@@ -119,20 +119,20 @@ function TodoList({ section, listId, index, kanbanIndex, kanbanId }) {
                     {section.edit ? <input className='font-[Dosis] p-[10px] rounded-[15px] w-full border-none' value={inputTitleValue} onChange={(e) => setInputTitleValue(e.target.value)} onKeyDown={(e) => submit(e)} type="text" /> : <span className='block truncate no-underline font-bold text-secondary'>{section.title}</span>}
                 </div>
                 {section.edit ? (<div className="">
-                    <i onClick={editListTitle} className="fa-solid fa-xmark text-base py-2 px-2.5 bg-secondary text-white rounded-full cursor-pointer opacity-80 hover:opacity-100 hover:transition-all"></i>
+                    <i onClick={editListTitle} className="fa-solid fa-xmark text-base leading-3 py-2 px-2.5 bg-secondary text-white rounded-full cursor-pointer opacity-80 hover:opacity-100 hover:transition-all"></i>
                 </div>) : (<div className="mr-[5px]">
                     <i onClick={toggleListMenu} className="fa-solid fa-ellipsis rounded-[5px] cursor-pointer opacity-80 text-secondary hover:opacity-100 hover:transition-all"></i>
                 </div>)}
                 {section.menu && (<div className='absolute right-[40px] bg-white rounded-[15px] p-[5px] mr-[10px] shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]'>
-                    <button className='p-2.5 border-none bg-white rounded-[10px] cursor-pointer hover:text-white hover:bg-secondary hover:transition-all group-hover:text-white group-hover:transition-all' onClick={editListTitle} ><i className="fa-regular fa-pen-to-square text-secondary text-sm"></i></button>
-                    <button className='p-2.5 border-none bg-white rounded-[10px] cursor-pointer hover:text-white hover:bg-secondary hover:transition-all' onClick={removeList}><i className="fa-solid fa-trash text-secondary text-sm"></i></button>
+                    <i onClick={editListTitle} className="fa-regular text-secondary fa-pen-to-square text-sm p-2.5 border-none bg-white rounded-[10px] cursor-pointer hover:text-white hover:bg-[#130f40] hover:transition-all"></i>
+                    <i onClick={removeList} className="fa-solid fa-trash text-secondary text-sm p-2.5 border-none bg-white rounded-[10px] cursor-pointer hover:text-white hover:bg-[#130f40] hover:transition-all"></i>
                 </div>)}
             </div>
             <div className='min-w-[260px] rounded-[10px] font-thin mt-[25px]'>
                 <div className="flex items-center">
                     {showAddTodo ? <>
                         <AddTodo id={section.id} value={inputValue} onChange={handleInputValue} showInput={showInput} index={index} kanbanIndex={kanbanIndex} listId={listId} />
-                        <button onClick={() => setShowAddTodo(false)} className='rounded-full border-none flex justify-center items-center ml-2.5 bg-transparent text-white cursor-pointer opacity-80 p-0 hover:opacity-100 hover:transition-all h-[38px]'><i className="fa-solid fa-xmark text-sm py-2 px-2.5 bg-primary rounded-full text-white cursor-pointer opacity-80 hover:opacity-100 hover:transition-all "></i></button>
+                        <button onClick={() => setShowAddTodo(false)} className='rounded-full border-none flex justify-center items-center ml-2.5 bg-transparent text-white cursor-pointer opacity-80 p-0 hover:opacity-100 hover:transition-all h-[38px]'><i className="fa-solid fa-xmark text-sm leading-3 py-2 px-2.5 bg-primary rounded-full text-white cursor-pointer opacity-80 hover:opacity-100 hover:transition-all "></i></button>
                     </>
                         : <button className='flex justify-between text-white cursor-pointer opacity-80 items-center flex-auto bg-primary rounded-[15px] border border-[#130f40] py-2.5 px-5 hover:opacity-100 hover:transition-all' onClick={() => showInput(true)}><span>Ajoutez une tâche</span><i className="fa-solid fa-plus"></i></button>}
                 </div>

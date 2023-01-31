@@ -2,8 +2,6 @@ import { useSetRecoilState } from 'recoil';
 import { todosState } from '../../../../recoil';
 import { v4 as uuidv4 } from 'uuid';
 
-import './AddTodo.scss';
-
 function AddTodo({ id, value, onChange, showInput, index, kanbanIndex, listId }) {
     const setTodosState = useSetRecoilState(todosState);
     function handleOnChange(e) {
@@ -24,8 +22,8 @@ function AddTodo({ id, value, onChange, showInput, index, kanbanIndex, listId })
     }
 
     return (
-        <div className='d-flex align-items-center flex-fill'>
-            <textarea value={value} onChange={handleOnChange} type="text" className='flex-fill' placeholder='Saisissez le nom de la tâche' onKeyDown={(e) => submit(e)} />
+        <div className='flex items-center flex-auto'>
+            <textarea value={value} onChange={handleOnChange} type="text" className='flex-auto h-[59px] font-[Dosis] resize-none border-none rounded-[20px] text-sm font-thin p-[10px] overflow-y-hidden min-h-[30px] focus:outline-none placeholder:font-[Dosis] placeholder:text-base placeholder:text-center placeholder:align-text-bottom placeholder:font-thin' placeholder='Saisissez le nom de la tâche' onKeyDown={(e) => submit(e)} />
         </div>
     )
 }
