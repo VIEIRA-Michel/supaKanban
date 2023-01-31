@@ -73,7 +73,7 @@ function BoardItem({ name, id, kanbanIndex, editMode, kanban, moreThanOne }) {
     }
     return (
         <div className={moreThanOne ? 'flex flex-row justify-between flex-auto items-center mt-5' : 'flex flex-row justify-between flex-auto items-center'}>
-            <div onMouseEnter={() => setShowButton(true)} onMouseLeave={() => setShowButton(false)} className={showButton ? 'min-h-55 flex items-center flex-auto p-2.5 rounded-[20px] relative cursor-default bg-[#ffffffb3] transition-all' : 'min-h-55 p-2.5 bg-white rounded-[20px] cursor-default relative flex flex-auto'}>
+            <div onMouseEnter={() => setShowButton(true)} onMouseLeave={() => setShowButton(false)} className={showButton ? 'min-h-[55px] flex items-center flex-auto p-2.5 rounded-[20px] relative cursor-default bg-[#ffffffb3] transition-all' : 'min-h-[55px] p-2.5 bg-white rounded-[20px] cursor-default relative flex flex-auto'}>
                 <div className='text-base text-[#3a4cae] font-thin truncate w-11/12 flex items-center'>
                     {editMode ? <input type='text' className='font-[Dosis] text-base font-thin border-none rounded-[10px] w-11/12' value={inputTitleValue} onChange={(e) => setInputTitleValue(e.target.value)} onKeyDown={(e) => submit(e)} /> : <span>{name}</span>}
                 </div>
@@ -89,7 +89,7 @@ function BoardItem({ name, id, kanbanIndex, editMode, kanban, moreThanOne }) {
                         : ""
                 }
             </div>
-            <Link to={`/${id}`} state={{ name, id, kanbanIndex, kanban }} className='ml-[15px] p-2.5 rounded-[15px] bg-primary text-white cursor-pointer opacity-80 hover:opacity-100 hover:transition-all min-h-55 no-underline h-full flex items-center'>Accéder</Link>
+            <Link to={`/${id}`} state={{ name, id, kanbanIndex, kanban }} className='ml-[15px] p-2.5 rounded-[15px] bg-primary text-white cursor-pointer opacity-80 hover:opacity-100 hover:transition-all min-h-[55px] no-underline h-full flex items-center'>Accéder</Link>
         </div>
     )
 }

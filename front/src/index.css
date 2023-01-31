@@ -4,16 +4,12 @@
 
 @layer components {
 
-  .min-w-310 {
-    min-width: 310px;
-  }
-
-  .min-h-55 {
-    min-height: 55px;
-  }
-
   .text-primary {
     color: #130f40;
+  }
+
+  .text-secondary {
+    color: #272350;
   }
 
   .bg-primary {

@@ -5,7 +5,6 @@ import { todosState } from '../../recoil';
 import { v4 as uuidv4 } from 'uuid';
 import { useLocation } from 'react-router-dom';
 import TodoList from './TodoList/TodoList';
-import './TodoListGroup.scss';
 
 
 function TodoListGroup() {
@@ -85,21 +84,20 @@ function TodoListGroup() {
         }
     }
     return (
-        <div className='d-flex flex-column h100'>
-            <h2 className='mb-20 d-flex justify-content-center'>{todos[kanbanIndex].name}</h2>
-            <div className={`mb-20 h20 d-flex justify-content-center container-button list-${todos[kanbanIndex].kanban.length} align-items-center`}>
-                <div className='container-addList d-flex justify-content-center align-items-center'>
-                    {!showInput && <button className={`p-20 btn btn-primary addList list-${todos[kanbanIndex].kanban.length} d-flex justify-content-sb align-items-center flex-fill`} onClick={() => setShowInput(true)}><span>Ajouter une liste</span><i className="fa-solid fa-plus"></i></button>}
+        <div className='flex flex-col h-full'>
+            <h2 className='mb-5 flex justify-center'>{todos[kanbanIndex].name}</h2>
+            <div className={`mb-5 h-1/5 flex justify-center list-${todos[kanbanIndex].kanban.length} items-center`}>
+                <div className='w-[200px] m-auto flex justify-center items-center'>
+                    {!showInput && <button className={`p-[20px] py-2.5 px-5 cursor-pointer opacity-80 transition-opacity hover:opacity-100 text-sm rounded-[15px] w-[200px] shadow-[0_2px_18px_0_rgba(0,0,0,0.5)] border-none bg-secondary list-${todos[kanbanIndex].kanban.length} flex justify-between items-center flex-auto`} onClick={() => setShowInput(true)}><span>Ajouter une liste</span><i className="fa-solid fa-plus"></i></button>}
                     {showInput && <>
-                        <input className='inputAddList' type="text" placeholder="Saisissez un nom de liste" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => submit(e)} />
-                        <button className='cancelAddList' onClick={() => setShowInput(false)}><i className="fa-solid fa-xmark"></i></button>
+                        <input className='font-[Dosis] w-[200px] h-[38px] rounded-[15px]' type="text" placeholder="Saisissez un nom de liste" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => submit(e)} />
+                        <button className='rounded-full border-none cursor-pointer ml-2.5 bg-secondary' onClick={() => setShowInput(false)}><i className="fa-solid fa-xmark py-2 px-2.5 text-white rounded-[5px] cursor-pointer opacity-80 hover:transition-all hover:opacity-100"></i></button>
                     </>
                     }
-
                 </div>
             </div>
             <DragDropContext onDragEnd={onDragEnd}>
-                <div className="d-flex justify-content-se kanban-container">
+                <div className="flex justify-evenly items-start flex-row flex-wrap">
                     {todos[kanbanIndex].kanban.length > 0 && todos[kanbanIndex].kanban.map((section, index) => (
                         <TodoList key={index} listId={section.id} section={section} index={index} kanbanIndex={kanbanIndex} kanbanId={url} />
                     ))}
