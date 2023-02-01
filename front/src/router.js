@@ -1,17 +1,23 @@
-import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
-import TodoListGroup from './components/TodoListGroup/TodoListGroup';
-import TodoListsBoardManagement from './components/TodoListsBoardManagement/TodoListsBoardManagement';
-import AuthView from './views/AuthView';
+import { createBrowserRouter } from 'react-router-dom';
+import { lazy } from 'react';
+const TodoListGroup = lazy(() => import('./components/TodoListGroup/TodoListGroup'));
+const TodoListsBoardManagement = lazy(() => import('./components/TodoListsBoardManagement/TodoListsBoardManagement'));
+const LoginForm = lazy(() => import('./components/Form/LoginForm/LoginForm'));
+const RegisterForm = lazy(() => import('./components/Form/RegisterForm/RegisterForm'));
 
 export const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
-        children: [
+        children: [,
             {
-                path: '/auth',
-                element: <AuthView />,
+                path: '/signup',
+                element: <RegisterForm />
+            },
+            {
+                path: '/signin',
+                element: <LoginForm />
             },
             {
                 path: '/:idKanban',

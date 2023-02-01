@@ -6,20 +6,28 @@ import { todosState } from './recoil';
 import { useEffect, useState, Suspense } from 'react';
 function App() {
   const todos = useRecoilValue(todosState);
-  // const [check, setCheck] = useState(false);
+  const [check, setCheck] = useState(false);
   const location = useLocation();
-  // let url = location.pathname.substring(1);
+  let url = location.pathname.substring(1);
 
-  // useEffect(() => {
-  //   if (url !== '' || url !== 'board') {
-  //     for (let i = 0; i < todos.length; i++) {
-  //       if (todos[i].id === url) {
-  //         setCheck(true);
-  //         break;
-  //       }
-  //     }
-  //   }
-  // }, [url, todos])
+  useEffect(() => {
+    if (url !== '' || url !== 'board') {
+      for (let i = 0; i < todos.length; i++) {
+        if (todos[i].id === url) {
+          setCheck(true);
+          break;
+        }
+      }
+    }
+  }, [url, todos])
+
+  // async function test() {
+  //   const response = await fetch('/api/test');
+  //   console.log(await response.json());
+  // }
+
+  // test();
+
   return (
     <div className='app'>
       <Header />

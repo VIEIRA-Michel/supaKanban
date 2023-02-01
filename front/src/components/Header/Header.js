@@ -20,7 +20,7 @@ function Header() {
                 <Link to="/board"><span>Gérer les tableaux</span><i className="fa-solid fa-gears"></i></Link>
             </div> */}
             <div className='header__board flex flex-row'>
-                <Link to="/auth" className='text-secondary bg-white border border-[#272350] font-[Dosis] py-[5px] px-2.5 rounded-[15px] cursor-pointer mr-[10px] no-underline text-sm flex justify-between items-center hover:bg-secondary hover:text-white hover:transition-all'><span>S'identifier</span></Link>
+                <Link to="/signin" className='text-secondary bg-white border border-[#272350] font-[Dosis] py-[5px] px-2.5 rounded-[15px] cursor-pointer mr-[10px] no-underline text-sm flex justify-between items-center hover:bg-secondary hover:text-white hover:transition-all'><span>S'identifier</span></Link>
             </div>
         </header>
     )
