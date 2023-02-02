@@ -1,27 +1,48 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BoardItem from './BoardItem/BoardItem';
 import { todosState } from '../../recoil';
 import { useRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
+import { createKanban, getAllKanbans } from '../../apis/kanban';
 
 function TodoListsBoardManagement() {
     const [createMode, setCreateMode] = useState(false);
     // const [todoLists, setTodoLists] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [todoLists, setTodoListsState] = useRecoilState(todosState);
-    function submit(e) {
+    async function submit(e) {
         if (e.key === "Enter") {
             if (inputValue.length > 0) {
-                setTodoListsState((oldTodoListsState) => {
-                    let state = JSON.parse(JSON.stringify(oldTodoListsState));
-                    state.unshift({ id: uuidv4(), name: inputValue, edit: false, kanban: [] });
-                    setCreateMode(false);
-                    setInputValue('');
-                    return state;
-                })
+                try {
+                    const result = await createKanban({ title: inputValue })
+                    console.log(result);
+                    setTodoListsState((oldTodoListsState) => {
+                        let state = JSON.parse(JSON.stringify(oldTodoListsState));
+                        state.unshift({ id: uuidv4(), title: inputValue, edit: false, kanban: [] });
+                        setCreateMode(false);
+                        setInputValue('');
+                        return state;
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
             }
         }
     }
+
+    useEffect(() => {
+        getAllKanbans().then((data) => {
+            setTodoListsState((oldTodoListsState) => {
+                let state = JSON.parse(JSON.stringify(oldTodoListsState));
+                if (data.length > 0) {
+                    data.map((kanban, i) => {
+                        state.unshift(kanban);
+                    })
+                }
+                return state;
+            })
+        }).catch((e) => { console.log(e) })
+    }, [])
 
     return (
         <>
@@ -44,7 +65,7 @@ function TodoListsBoardManagement() {
                     todoLists.length > 0 ?
                         <div className='flex flex-auto flex-col w-full'>
                             {todoLists.map((element, index) =>
-                                <BoardItem key={index} name={element.name} id={element.id} kanbanIndex={index} editMode={element.edit} kanban={element.kanban} moreThanOne={todoLists.length} />
+                                <BoardItem key={index} title={element.title} id={element.id} kanbanIndex={index} editMode={element.edit} kanban={element.kanban} moreThanOne={todoLists.length} />
                             )}
                         </div>
                         :

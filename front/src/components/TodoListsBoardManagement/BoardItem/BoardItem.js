@@ -3,7 +3,7 @@ import { useSetRecoilState } from 'recoil';
 import { todosState } from '../../../recoil';
 import { Link } from 'react-router-dom';
 
-function BoardItem({ name, id, kanbanIndex, editMode, kanban, moreThanOne }) {
+function BoardItem({ title, id, kanbanIndex, editMode, kanban, moreThanOne }) {
     const [showButton, setShowButton] = useState(false);
     const [inputTitleValue, setInputTitleValue] = useState('');
     const setTodoListsState = useSetRecoilState(todosState);
@@ -44,7 +44,7 @@ function BoardItem({ name, id, kanbanIndex, editMode, kanban, moreThanOne }) {
                     let state = JSON.parse(JSON.stringify(oldTodoListsState));
                     state.map((list, i) => {
                         if (i === kanbanIndex) {
-                            list.name = inputTitleValue;
+                            list.title = inputTitleValue;
                             list.edit = !list.edit;
                         } else {
                             list.edit = false;
@@ -66,7 +66,7 @@ function BoardItem({ name, id, kanbanIndex, editMode, kanban, moreThanOne }) {
                     return list;
                 })
 
-                setInputTitleValue(name);
+                setInputTitleValue(title);
                 return state;
             });
         }
@@ -75,7 +75,7 @@ function BoardItem({ name, id, kanbanIndex, editMode, kanban, moreThanOne }) {
         <div className={moreThanOne ? 'flex flex-row justify-between flex-auto items-center mt-5' : 'flex flex-row justify-between flex-auto items-center'}>
             <div onMouseEnter={() => setShowButton(true)} onMouseLeave={() => setShowButton(false)} className={showButton ? 'min-h-[55px] flex items-center flex-auto p-2.5 rounded-[20px] relative cursor-default bg-[#ffffffb3] transition-all' : 'min-h-[55px] p-2.5 bg-white rounded-[20px] cursor-default relative flex flex-auto'}>
                 <div className='text-base text-[#3a4cae] font-thin truncate w-11/12 flex items-center'>
-                    {editMode ? <input type='text' className='font-[Dosis] text-base font-thin border-none rounded-[10px] w-11/12' value={inputTitleValue} onChange={(e) => setInputTitleValue(e.target.value)} onKeyDown={(e) => submit(e)} /> : <span>{name}</span>}
+                    {editMode ? <input type='text' className='font-[Dosis] text-base font-thin border-none rounded-[10px] w-11/12' value={inputTitleValue} onChange={(e) => setInputTitleValue(e.target.value)} onKeyDown={(e) => submit(e)} /> : <span>{title}</span>}
                 </div>
                 {editMode ?
                     <button onClick={editTodoListTitle} className='border-none bg-transparent'>
@@ -89,7 +89,7 @@ function BoardItem({ name, id, kanbanIndex, editMode, kanban, moreThanOne }) {
                         : ""
                 }
             </div>
-            <Link to={`/${id}`} state={{ name, id, kanbanIndex, kanban }} className='ml-[15px] p-2.5 rounded-[15px] bg-primary text-white cursor-pointer opacity-80 hover:opacity-100 hover:transition-all min-h-[55px] no-underline h-full flex items-center'>Accéder</Link>
+            <Link to={`/${id}`} state={{ title, id, kanbanIndex, kanban }} className='ml-[15px] p-2.5 rounded-[15px] bg-primary text-white cursor-pointer opacity-80 hover:opacity-100 hover:transition-all min-h-[55px] no-underline h-full flex items-center'>Accéder</Link>
         </div>
     )
 }

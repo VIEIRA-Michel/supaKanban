@@ -14,7 +14,7 @@ function TodoListGroup() {
     let location = useLocation();
     let url = location.pathname.substring(1);
     const kanbanIndex = todos.findIndex(e => e.id === url);
-    console.log(todos[kanbanIndex].name);
+    console.log(todos[kanbanIndex].title);
 
     function onDragEnd(result) {
         if (!result.destination) return
@@ -85,7 +85,7 @@ function TodoListGroup() {
     }
     return (
         <div className='flex flex-col h-full'>
-            <h2 className='mb-5 flex justify-center'>{todos[kanbanIndex].name}</h2>
+            <h2 className='mb-5 flex justify-center'>{todos[kanbanIndex].title}</h2>
             <div className={`mb-5 h-1/5 flex justify-center list-${todos[kanbanIndex].kanban.length} items-center`}>
                 <div className='w-[200px] m-auto flex justify-center items-center'>
                     {!showInput && <button className={`p-[20px] py-2.5 px-5 cursor-pointer opacity-80 transition-opacity hover:opacity-100 text-sm rounded-[15px] w-[200px] shadow-[0_2px_18px_0_rgba(0,0,0,0.5)] border-none bg-secondary list-${todos[kanbanIndex].kanban.length} flex justify-between items-center flex-auto`} onClick={() => setShowInput(true)}><span>Ajouter une liste</span><i className="fa-solid fa-plus"></i></button>}
