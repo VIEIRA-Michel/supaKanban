@@ -25,3 +25,9 @@ export async function getCurrentUser() {
     return response.json();
 
 }
+
+export async function signOut() {
+    await fetch(API_AUTH, {
+        method: 'DELETE',
+    });
+}

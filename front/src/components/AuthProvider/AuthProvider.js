@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import { signIn } from "../../apis/auth";
+import { signIn, signOut } from "../../apis/auth";
 import { AuthContext } from "../../context";
 
 function AuthProvider({ children }) {
@@ -13,8 +13,9 @@ function AuthProvider({ children }) {
         setUser(newUser);
     }
 
-    function logout() {
-
+    async function logout() {
+        await signOut();
+        setUser(null);
     }
 
     return <AuthContext.Provider value={{
