@@ -1,26 +1,75 @@
-import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Link, Navigate } from 'react-router-dom';
+import { AuthContext } from '../../../context/AuthContext';
+import { useContext } from 'react';
 
 function LoginForm() {
+    const { login, user } = useContext(AuthContext);
+
+    const validationSchema = yup.object({
+        email: yup
+            .string()
+            .required('Email requis')
+            .min(10, "L'email n'est pas valide"),
+        password: yup
+            .string()
+            .required('Mot de passe requis')
+            .min(6, 'Mot de passe trop court !'),
+    })
+
+    const initialValues = {
+        email: '',
+        password: ''
+    }
+
+    const {
+        handleSubmit,
+        register,
+        formState: { errors, isSubmitting },
+        setError,
+        clearErrors
+    } = useForm({
+        initialValues,
+        resolver: yupResolver(validationSchema),
+    });
+
+    const submit = handleSubmit(async (credentials) => {
+        try {
+            clearErrors();
+            await login(credentials);
+        } catch (message) {
+            setError('generic', { type: 'generic', message })
+        }
+    });
     return (
-        <div className='h-full w-[350px] m-auto rounded-[40px] shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]'>
-            <form className="flex flex-col max-w-[300px] m-auto">
-                <div className="flex flex-col mt-5">
-                    <label htmlFor="email" className='text-center text-secondary'>Email</label>
-                    <input type="email" className='rounded-[15px] p-[5px] text-secondary border-[transparent]' name="email" id="email" />
+        <>
+            {user ? (
+                <Navigate to="/board" />
+            ) : (
+                <div className='h-full w-[350px] m-auto rounded-[40px] shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]'>
+                    <form onSubmit={submit} className="flex flex-col max-w-[300px] m-auto">
+                        <div className="flex flex-col mt-5">
+                            <label htmlFor="email" className='text-center text-secondary'>Email</label>
+                            <input type="email" className='rounded-[15px] p-[5px] text-secondary border-[transparent]' name="email" id="email" {...register('email')} />
+                        </div>
+                        <div className="flex flex-col mt-5">
+                            <label htmlFor="password" className='text-center text-secondary'>Mot de passe</label>
+                            <input type="password" className='rounded-[15px] p-[5px] text-secondary border-[transparent]' name="password" id="password" {...register('password')} />
+                        </div>
+                        <div className='my-10 w-full'>
+                            <button type="submit" className='w-full rounded-[15px] p-[15px] bg-secondary opacity-80 hover:opacity-100  hover:text-white hover:transition-all'>Se connecter</button>
+                        </div>
+                    </form>
+                    <div className='flex flex-col justify-center items-center text-secondary'>
+                        Vous n'avez pas encore de compte ?
+                        <Link to='/signup' className='text-secondary font-bold mb-5 cursor-pointer hover:underline'>Inscrivez-vous gratuitement</Link>
+                    </div>
                 </div>
-                <div className="flex flex-col mt-5">
-                    <label htmlFor="password" className='text-center text-secondary'>Mot de passe</label>
-                    <input type="password" className='rounded-[15px] p-[5px] text-secondary border-[transparent]' name="password" id="password" />
-                </div>
-                <div className='my-10 w-full'>
-                    <button type="submit" className='w-full rounded-[15px] p-[15px] bg-secondary opacity-80 hover:opacity-100  hover:text-white hover:transition-all'>Se connecter</button>
-                </div>
-            </form>
-            <div className='flex flex-col justify-center items-center text-secondary'>
-                Vous n'avez pas encore de compte ?
-                <Link to='/signup' className='text-secondary font-bold mb-5 cursor-pointer hover:underline'>Inscrivez-vous gratuitement</Link>
-            </div>
-        </div>
+            )}
+        </>
+
     )
 }
 

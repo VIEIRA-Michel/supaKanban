@@ -1,15 +1,18 @@
 import App from './App';
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy } from 'react';
+import { rootLoader } from './loaders/rootLoader';
 const TodoListGroup = lazy(() => import('./components/TodoListGroup/TodoListGroup'));
 const TodoListsBoardManagement = lazy(() => import('./components/TodoListsBoardManagement/TodoListsBoardManagement'));
 const LoginForm = lazy(() => import('./components/Form/LoginForm/LoginForm'));
 const RegisterForm = lazy(() => import('./components/Form/RegisterForm/RegisterForm'));
 
+
 export const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
+        loader: rootLoader,
         children: [,
             {
                 path: '/signup',

@@ -22,7 +22,7 @@ function RegisterForm() {
     })
 
     const initialValues = {
-        name: '',
+        username: '',
         email: '',
         password: ''
     }
@@ -38,11 +38,10 @@ function RegisterForm() {
         resolver: yupResolver(validationSchema),
     });
 
-    const submit = handleSubmit(async (credentials) => {
-        console.log(credentials);
+    const submit = handleSubmit(async (user) => {
         try {
             clearErrors();
-            await createUser(credentials);
+            await createUser(user);
             navigate('/signin');
         } catch (message) {
             setError('generic', { type: 'generic', message })
