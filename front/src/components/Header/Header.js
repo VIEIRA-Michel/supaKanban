@@ -9,7 +9,6 @@ function Header() {
     const todos = useRecoilValue(todosState);
     let location = useLocation();
     const { user, logout } = useContext(AuthContext);
-    console.log(todos);
     return (
         <header className='h-[50px] bg-white flex flex-row justify-between items-center'>
             <div className='w-[50px] pt-[5px]'>

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const KanbanModel = require('../../database/models/kanban.model');
+const UserModel = require('../../database/models/user.model');
 const jsonwebtoken = require('jsonwebtoken');
 const { keyPub } = require('../../keys');
 
@@ -10,15 +11,11 @@ router.post('/', async (req, res) => {
     const newKanban = new KanbanModel({ title, userId: decodedToken.sub });
     newKanban.save((err, data) => {
         if (err) {
-            console.log(err);
-            if (err.code === 11000) {
-                res.status(400).json('Email déjà utilisé');
-            } else {
-                res.status(400).json('Oops une erreur est survenue');
-            }
+            res.status(400).json('Oops une erreur est survenue');
         } else {
-            console.log(data);
-            res.json(data);
+            UserModel.findOneAndUpdate({ _id: decodedToken.sub }, { $inc: { 'kanbanCreated': 1 } })
+                .then(() => res.json(data))
+                .catch((e) => res.status(400).json({ e }))
         }
     })
 })
@@ -26,8 +23,42 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     const { token } = req.cookies;
     const decodedToken = jsonwebtoken.verify(token, keyPub);
-    KanbanModel.find({ userId: decodedToken.sub })
-        .then(data => res.status(200).json(data))
+    KanbanModel.find({ userId: decodedToken.sub }).sort({ _id: -1 })
+        .then(data => {
+            res.status(200).json(data);
+        })
+        .catch(error => res.status(400).json({ error }));
+})
+
+router.put('/:id', async (req, res) => {
+    const { token } = req.cookies;
+    const decodedToken = jsonwebtoken.verify(token, keyPub);
+    KanbanModel.find({ _id: req.params.id })
+        .then(data => {
+            if (data[0].userId == decodedToken.sub) {
+                KanbanModel.updateOne({ _id: req.params.id }, { title: req.body.title })
+                    .then((result) => res.status(200).json({ result, message: 'Kanban modifié !' }))
+                    .catch(error => res.status(400).json({ error }));
+            } else {
+                res.status(403).json({ message: "Vous n'avez pas la permission pour cette action !" })
+            }
+        })
+        .catch(error => res.status(400).json({ error }));
+})
+
+router.delete('/:id', async (req, res) => {
+    const { token } = req.cookies;
+    const decodedToken = jsonwebtoken.verify(token, keyPub);
+    KanbanModel.find({ _id: req.params.id })
+        .then(data => {
+            if (data && data[0].userId == decodedToken.sub) {
+                KanbanModel.deleteOne({ _id: req.params.id })
+                    .then(() => res.status(200).json({ message: 'Kanban supprimé !' }))
+                    .catch(error => res.status(400).json({ error }));
+            } else {
+                res.status(404).json({ message: 'Kanban non trouvé !' })
+            }
+        })
         .catch(error => res.status(400).json({ error }));
 })
 
