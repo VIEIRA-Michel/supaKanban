@@ -40,6 +40,25 @@ export async function getAllKanbans() {
     }
 };
 
+export async function getKanban(id) {
+    const response = await fetch(`${API_KANBAN}/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+    const body = await response.json();
+    if (response.ok) {
+        return body;
+    } else {
+        if (body) {
+            throw body;
+        } else {
+            throw new Error('Error api getKanban');
+        }
+    }
+}
+
 export async function updateKanban(id, update) {
     console.log(update);
     const response = await fetch(`${API_KANBAN}/${id}`, {

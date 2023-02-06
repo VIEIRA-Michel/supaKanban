@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const KanbanModel = require('../../database/models/kanban.model');
+const ListModel = require('../../database/models/list.model');
 const UserModel = require('../../database/models/user.model');
 const jsonwebtoken = require('jsonwebtoken');
 const { keyPub } = require('../../keys');
@@ -29,6 +30,24 @@ router.get('/', async (req, res) => {
         })
         .catch(error => res.status(400).json({ error }));
 })
+
+router.get('/:id', async (req, res) => {
+    const { token } = req.cookies;
+    console.log(req.params.id);
+    const decodedToken = jsonwebtoken.verify(token, keyPub);
+    ListModel.find({ kanbanId: req.params.id }).populate("kanbanId")
+        .then(data => {
+            if (data.length < 1) {
+                res.status(200).json({ message: 'Aucune liste pour ce kanban !' });
+            } else if (data[0].userId == decodedToken.sub) {
+                res.status(200).json(data);
+            } else {
+                res.status(404).json({ message: 'Kanban non trouvé !' })
+            }
+        })
+        .catch(error => res.status(400).json({ error }));
+})
+
 
 router.put('/:id', async (req, res) => {
     const { token } = req.cookies;

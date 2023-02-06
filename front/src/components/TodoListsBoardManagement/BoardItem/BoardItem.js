@@ -18,6 +18,7 @@ function BoardItem({ title, id, kanbanIndex, editMode, kanban, kanbanCount, item
     }
 
     async function removeTodoList() {
+        console.log(id);
         try {
             await deleteKanban(id);
             const newList = removeItemAtIndex(todoLists, kanbanIndex);

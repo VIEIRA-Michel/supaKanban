@@ -6,7 +6,6 @@ import { createKanban, getAllKanbans } from '../../apis/kanban';
 
 function TodoListsBoardManagement() {
     const [createMode, setCreateMode] = useState(false);
-    // const [todoLists, setTodoLists] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [todoLists, setTodoListsState] = useRecoilState(todosState);
 
@@ -15,16 +14,18 @@ function TodoListsBoardManagement() {
             if (inputValue.length > 0) {
                 try {
                     const kanban = await createKanban({ title: inputValue })
-                    setTodoListsState((oldTodoListsState) => [
-                        {
-                            id: kanban._id,
-                            title: kanban.title,
-                            userId: kanban.userId,
-                            kanban: kanban.kanban,
-                        },
-                        ...oldTodoListsState,
-                    ])
-                    setCreateMode(false);
+                    if (kanban) {
+                        setCreateMode(false);
+                        setTodoListsState((oldTodoListsState) => [
+                            {
+                                _id: kanban._id,
+                                title: kanban.title,
+                                userId: kanban.userId,
+                                kanban: kanban.kanban,
+                            },
+                            ...oldTodoListsState,
+                        ])
+                    }
                     setInputValue('');
                 } catch (error) {
                     console.log(error);
@@ -37,6 +38,7 @@ function TodoListsBoardManagement() {
         getAllKanbans().then((data) => {
             setTodoListsState(data);
         }).catch((e) => { console.log(e) })
+        // eslint-disable-next-line
     }, [])
 
     return (

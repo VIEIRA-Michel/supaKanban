@@ -6,7 +6,6 @@ import { AuthContext } from "../../context";
 function AuthProvider({ children }) {
     const initialUser = useLoaderData();
     const [user, setUser] = useState(initialUser);
-    console.log(initialUser);
 
     async function login(credentials) {
         const newUser = await signIn(credentials);
