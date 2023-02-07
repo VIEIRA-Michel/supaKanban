@@ -1,19 +1,38 @@
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useState } from 'react';
 import TodoItem from "./TodoItem/TodoItem";
-import AddTodo from './AddTodo/AddTodo';
 
-function TodoList({ list, index, kanbanIndex, kanbanId, fToggleEdit, fToggleMenu, fDeleteList, fUpdateList }) {
+function TodoList({ list, index, kanbanId, fToggleEdit, fToggleMenu, fDeleteList, fUpdateList, fAddTask }) {
     const [inputValue, setInputValue] = useState('');
     const [inputTitleValue, setInputTitleValue] = useState(list.title);
     const [showAddTodo, setShowAddTodo] = useState(false);
 
-    function handleInputValue(content) {
-        setInputValue(content)
-    }
-
     function showInput(value) {
         setShowAddTodo(value);
+    }
+
+    function handleOnChange(e) {
+        e.target.style.height = 'auto';
+        e.target.style.height = e.target.scrollHeight + 'px';
+        setInputValue(e.target.value)
+        console.log(inputValue);
+    }
+
+    async function createTask(e) {
+        try {
+            if (e.key === "Enter") {
+                if (inputValue.length > 0) {
+                    await fAddTask(inputValue);
+                    setInputValue('');
+                    setShowAddTodo(!showAddTodo);
+
+                }
+            } else if (e.key === "Escape") {
+                setShowAddTodo(!showAddTodo);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -35,7 +54,9 @@ function TodoList({ list, index, kanbanIndex, kanbanId, fToggleEdit, fToggleMenu
             <div className='min-w-[260px] rounded-[10px] font-thin mt-[25px]'>
                 <div className="flex items-center">
                     {showAddTodo ? <>
-                        <AddTodo id={list._id} value={inputValue} onChange={handleInputValue} showInput={showInput} index={index} kanbanIndex={kanbanIndex} />
+                        <div className='flex items-center flex-auto'>
+                            <textarea value={inputValue} onChange={(e) => handleOnChange(e)} onKeyDown={(e) => e.key === "Enter" ? createTask(e) : e.key === "Escape" ? setShowAddTodo(!showAddTodo) : null} type="text" className='flex-auto h-[59px] font-[Dosis] resize-none border-none rounded-[20px] text-sm font-thin p-[10px] overflow-y-hidden min-h-[30px] focus:outline-none placeholder:font-[Dosis] placeholder:text-base placeholder:text-center placeholder:align-text-bottom placeholder:font-thin' placeholder='Saisissez le nom de la tâche' />
+                        </div>
                         <button onClick={() => setShowAddTodo(false)} className='rounded-full border-none flex justify-center items-center ml-2.5 bg-transparent text-white cursor-pointer opacity-80 p-0 hover:opacity-100 hover:transition-all h-[38px]'><i className="fa-solid fa-xmark text-sm leading-3 py-2 px-2.5 bg-primary rounded-full text-white cursor-pointer opacity-80 hover:opacity-100 hover:transition-all "></i></button>
                     </>
                         : <button className='flex justify-between text-white cursor-pointer opacity-80 items-center flex-auto bg-primary rounded-[15px] border border-[#130f40] py-2.5 px-5 hover:opacity-100 hover:transition-all' onClick={() => showInput(true)}><span>Ajoutez une tâche</span><i className="fa-solid fa-plus"></i></button>}
@@ -51,8 +72,8 @@ function TodoList({ list, index, kanbanIndex, kanbanId, fToggleEdit, fToggleMenu
                                 {
                                     list.tasks.map((task, index) => (
                                         <Draggable
-                                            key={task.id}
-                                            draggableId={task.id}
+                                            key={task._id}
+                                            draggableId={task._id}
                                             index={index}
                                         >
                                             {(provided, snapshot) => (
@@ -66,8 +87,7 @@ function TodoList({ list, index, kanbanIndex, kanbanId, fToggleEdit, fToggleMenu
                                                     }}
                                                     className="mt-2.5 first:mt-0"
                                                 >
-                                                    <TodoItem todo={task} kanbanId={kanbanId}>
-                                                    </TodoItem>
+                                                    <TodoItem todo={task} kanbanId={kanbanId} />
                                                 </div>
                                             )}
                                         </Draggable>
@@ -80,7 +100,6 @@ function TodoList({ list, index, kanbanIndex, kanbanId, fToggleEdit, fToggleMenu
                 </div>
             </div>
         </div>
-
     )
 }
 

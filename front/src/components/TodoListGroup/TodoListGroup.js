@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import TodoList from './TodoList/TodoList';
 import { getKanban } from '../../apis/kanban';
 import { createList, removeList, modifyList } from '../../apis/list';
-
+import { createTask } from '../../apis/task';
 
 
 
@@ -148,6 +148,26 @@ function TodoListGroup() {
         }
     }
 
+    async function addTask(index, inputValue) {
+        try {
+            const response = await createTask(kb[index].kanbanId._id, kb[index]._id, { content: inputValue });
+            const taskAdded = response.list.tasks.shift();
+            const newList = replaceItemAtIndex(kb, index, {
+                ...kb[index],
+                tasks: [{
+                    _id: taskAdded._id,
+                    column: index,
+                    content: taskAdded.content,
+                    edit: false,
+                    menu: false,
+                    listId: kb[index]._id,
+                }, ...kb[index].tasks]
+            })
+            setKb(newList);
+        } catch (error) {
+            console.log(error);
+        }
+    }
     useEffect(() => {
         getKanban(url).then(data => {
             if (data.length > 0) {
@@ -187,11 +207,10 @@ function TodoListGroup() {
                         <DragDropContext onDragEnd={onDragEnd}>
                             <div className="flex justify-evenly items-start flex-row flex-wrap">
                                 {kb.length > 0 && kb.map((list, index) => (
-                                    <TodoList key={index} list={list} index={index} kanbanId={url} fToggleEdit={() => toggleEditMode(index)} fToggleMenu={() => toggleShowMenu(index)} fDeleteList={() => deleteList(index)} fUpdateList={(e, updateValue) => updateList(index, e, updateValue)} />
+                                    <TodoList key={index} list={list} index={index} kanbanId={url} fToggleEdit={() => toggleEditMode(index)} fToggleMenu={() => toggleShowMenu(index)} fDeleteList={() => deleteList(index)} fUpdateList={(e, updateValue) => updateList(index, e, updateValue)} fAddTask={(inputValue) => addTask(index, inputValue)} />
                                 ))}
                             </div>
                         </DragDropContext>
-                        {/* <TodoList key={index} listId={section.id} section={section} index={index} kanbanIndex={kanbanIndex} kanbanId={url} /> */}
                     </div>) : (
                         <div className='flex flex-col h-full'>
                             <h2 className='mb-5 flex justify-center'>{kb.title}</h2>

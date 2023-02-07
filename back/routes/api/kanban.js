@@ -33,7 +33,6 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     const { token } = req.cookies;
-    console.log(req.params.id);
     const decodedToken = jsonwebtoken.verify(token, keyPub);
     ListModel.find({ kanbanId: req.params.id }).populate("kanbanId")
         .then(data => {
