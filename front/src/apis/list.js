@@ -15,7 +15,46 @@ export async function createList({ title, id }) {
         if (body) {
             throw body;
         } else {
-            throw new Error('Error api createKanban');
+            throw new Error('Error api createList');
+        }
+    }
+};
+
+export async function removeList(kanbanId, id) {
+    const response = await fetch(`${API_KANBAN}/${kanbanId}/list/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+    const body = await response.json();
+    if (response.ok) {
+        return body;
+    } else {
+        if (body) {
+            throw body;
+        } else {
+            throw new Error('Error api removeList');
+        }
+    }
+}
+
+export async function modifyList(kanbanId, id, update) {
+    const response = await fetch(`${API_KANBAN}/${kanbanId}/list/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(update)
+    });
+    const body = await response.json();
+    if (response.ok) {
+        return body;
+    } else {
+        if (body) {
+            throw body;
+        } else {
+            throw new Error('Error api modifyList');
         }
     }
 };

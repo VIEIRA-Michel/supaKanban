@@ -1,15 +1,13 @@
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
-import { todosState } from '../../../recoil';
 import TodoItem from "./TodoItem/TodoItem";
 import AddTodo from './AddTodo/AddTodo';
 
-function TodoList({ list, index, kanbanIndex, kanbanId }) {
-    const setTodosState = useSetRecoilState(todosState);
+function TodoList({ list, index, kanbanIndex, kanbanId, fToggleEdit, fToggleMenu, fDeleteList, fUpdateList }) {
     const [inputValue, setInputValue] = useState('');
     const [inputTitleValue, setInputTitleValue] = useState(list.title);
     const [showAddTodo, setShowAddTodo] = useState(false);
+
     function handleInputValue(content) {
         setInputValue(content)
     }
@@ -18,113 +16,20 @@ function TodoList({ list, index, kanbanIndex, kanbanId }) {
         setShowAddTodo(value);
     }
 
-    function toggleListMenu() {
-        setTodosState((oldTodosState) => {
-            let state = JSON.parse(JSON.stringify(oldTodosState));
-            state.map((element, i) => {
-                if (i === kanbanIndex) {
-                    element.kanban.map((list, listIndex) => {
-                        if (listIndex === index) {
-                            list.menu = !list.menu;
-                        } else {
-                            list.menu = false;
-                        }
-                        return list;
-                    });
-                }
-                return element;
-            })
-            return state;
-        });
-    }
-
-    function editListTitle() {
-        setTodosState((oldTodosState) => {
-            let state = JSON.parse(JSON.stringify(oldTodosState));
-            state.map((element, i) => {
-                if (i === kanbanIndex) {
-                    element.kanban.map((list, listIndex) => {
-                        if (listIndex === index) {
-                            list.edit = !list.edit;
-                        } else {
-                            list.edit = false;
-                        }
-                        return list;
-                    });
-                }
-                return element;
-            })
-            return state;
-        })
-        toggleListMenu();
-    }
-
-    function submit(e) {
-        if (e.key === "Enter") {
-            // setTodosState((oldTodosState) => {
-            //     let state = JSON.parse(JSON.stringify(oldTodosState));
-            //     state.map((element, i) => {
-            //         if (i === kanbanIndex) {
-            //             element.kanban.map((list) => {
-            //                 if (list._id === listId) {
-            //                     list.title = inputTitleValue;
-            //                     list.edit = false;
-            //                 } else {
-            //                     list.edit = false;
-            //                 }
-            //                 return list;
-            //             });
-            //         }
-            //         return element;
-            //     })
-            //     return state;
-            // });
-        } else if (e.key === "Escape") {
-            // setTodosState((oldTodosState) => {
-            //     let state = JSON.parse(JSON.stringify(oldTodosState));
-            //     state.map((element, i) => {
-            //         if (i === kanbanIndex) {
-            //             element.kanban.map((list) => {
-            //                 if (list._id === listId) {
-            //                     list.edit = false;
-            //                 }
-            //                 return list;
-            //             });
-            //         }
-            //         return element;
-            //     })
-            //     return state;
-            // });
-        }
-    }
-
-    function removeList() {
-        setTodosState((oldTodosState) => {
-            let state = JSON.parse(JSON.stringify(oldTodosState));
-            state.map((element, i) => {
-                if (i === kanbanIndex) {
-                    element.kanban.splice(index, 1)
-                }
-                return element;
-            })
-            return state;
-        });
-    }
-
     return (
         <div className='m-5 max-w-[300px] p-5 shadow-[0_2px_18px_0_rgba(0,0,0,0.5)] rounded-[40px] bg-transparent'>
             <div className='flex flex-row justify-between items-center relative mt-[5px]'>
                 <div className="text-base w-[84.7%]">
-                    {list.edit ? <input className='font-[Dosis] p-[10px] rounded-[15px] w-full border-none' value={inputTitleValue} onChange={(e) => setInputTitleValue(e.target.value)} onKeyDown={(e) => submit(e)} type="text" /> : <span className='block truncate no-underline font-bold text-secondary'>{list.title}</span>}
+                    {list.edit ? <input className='font-[Dosis] p-[10px] rounded-[15px] w-full border-none' value={inputTitleValue} onChange={(e) => setInputTitleValue(e.target.value)} onKeyDown={(e) => e.key === "Enter" ? fUpdateList(e, inputTitleValue) : e.key === "Enter" ? fToggleEdit : null} type="text" /> : <span className='block truncate no-underline font-bold text-secondary'>{list.title}</span>}
                 </div>
                 {list.edit ? (<div className="">
-                    <i onClick={editListTitle} className="fa-solid fa-xmark text-base leading-3 py-2 px-2.5 bg-secondary text-white rounded-full cursor-pointer opacity-80 hover:opacity-100 hover:transition-all"></i>
+                    <i onClick={fToggleEdit} className="fa-solid fa-xmark text-base leading-3 py-2 px-2.5 bg-secondary text-white rounded-full cursor-pointer opacity-80 hover:opacity-100 hover:transition-all"></i>
                 </div>) : (<div className="mr-[5px]">
-                    <i onClick={toggleListMenu} className="fa-solid fa-ellipsis rounded-[5px] cursor-pointer opacity-80 text-secondary hover:opacity-100 hover:transition-all"></i>
+                    <i onClick={fToggleMenu} className="fa-solid fa-ellipsis rounded-[5px] cursor-pointer opacity-80 text-secondary hover:opacity-100 hover:transition-all"></i>
                 </div>)}
                 {list.menu && (<div className='absolute right-[40px] bg-white rounded-[15px] p-[5px] mr-[10px] shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]'>
-                    <i onClick={editListTitle} className="fa-regular text-secondary fa-pen-to-square text-sm p-2.5 border-none bg-white rounded-[10px] cursor-pointer hover:text-white hover:bg-[#130f40] hover:transition-all"></i>
-                    <i onClick={removeList} className="fa-solid fa-trash text-secondary text-sm p-2.5 border-none bg-white rounded-[10px] cursor-pointer hover:text-white hover:bg-[#130f40] hover:transition-all"></i>
+                    <i onClick={fToggleEdit} className="fa-regular text-secondary fa-pen-to-square text-sm p-2.5 border-none bg-white rounded-[10px] cursor-pointer hover:text-white hover:bg-[#130f40] hover:transition-all"></i>
+                    <i onClick={fDeleteList} className="fa-solid fa-trash text-secondary text-sm p-2.5 border-none bg-white rounded-[10px] cursor-pointer hover:text-white hover:bg-[#130f40] hover:transition-all"></i>
                 </div>)}
             </div>
             <div className='min-w-[260px] rounded-[10px] font-thin mt-[25px]'>

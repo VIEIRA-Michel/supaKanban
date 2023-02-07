@@ -20,5 +20,22 @@ router.post('/', async (req, res) => {
     })
 });
 
+router.delete('/:id', async (req, res) => {
+    const { token } = req.cookies;
+    const decodedToken = jsonwebtoken.verify(token, keyPub);
+    ListModel.findOneAndDelete({ _id: req.params.id, userId: decodedToken.sub })
+        .then((data) => {
+            res.status(200).json({ message: 'Liste supprimée' })
+        })
+        .catch(error => res.status(400).json({ error }));
+});
+
+router.put('/:id', async (req, res) => {
+    const { token } = req.cookies;
+    const decodedToken = jsonwebtoken.verify(token, keyPub);
+    ListModel.findOneAndUpdate({ _id: req.params.id, userId: decodedToken.sub }, { title: req.body.title })
+        .then((result) => res.status(200).json({ result, message: 'Liste modifiée !' }))
+        .catch(error => res.status(400).json({ error }));
+});
 
 module.exports = router;

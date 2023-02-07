@@ -5,7 +5,7 @@ import { currentKanban } from '../../recoil';
 import { useLocation } from 'react-router-dom';
 import TodoList from './TodoList/TodoList';
 import { getKanban } from '../../apis/kanban';
-import { createList } from '../../apis/list';
+import { createList, removeList, modifyList } from '../../apis/list';
 
 
 
@@ -21,6 +21,10 @@ function TodoListGroup() {
     function replaceItemAtIndex(arr, index, newValue) {
         return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
     };
+
+    function removeItemAtIndex(arr, index) {
+        return [...arr.slice(0, index), ...arr.slice(index + 1)];
+    }
 
 
     function onDragEnd(result) {
@@ -75,6 +79,12 @@ function TodoListGroup() {
                             tasks: list.tasks,
                             userId: list.userId,
                             createdAt: list.createdAt,
+                            index: oldKanbanState.length,
+                            edit: false,
+                            menu: false,
+                            kanbanId: {
+                                _id: list.kanbanId,
+                            }
                         },
                     ])
                     setShowInput(false);
@@ -87,26 +97,68 @@ function TodoListGroup() {
         } catch (error) {
             console.log(error);
         }
+    }
 
+    function toggleEditMode(index) {
+        const newList = replaceItemAtIndex(kb, index, {
+            ...kb[index],
+            edit: !kb[index].edit,
+            menu: !kb[index].menu,
+        })
+        setKb(newList);
+    }
 
-        //         setTodosState((oldTodoListsState) => {
-        //             let state = JSON.parse(JSON.stringify(oldTodoListsState));
-        //             state.map((element, i) => {
-        //                 if (kanbanIndex === i) {
-        //                     element.kanban.push({
-        //                         id: uuidv4(),
-        //                         title: input,
-        //                         tasks: [],
-        //                         index: element.kanban.length,
-        //                         edit: false,
-        //                         menu: false,
+    function toggleShowMenu(index) {
+        const newList = replaceItemAtIndex(kb, index, {
+            ...kb[index],
+            menu: !kb[index].menu
+        })
+        setKb(newList);
+    }
+
+    async function deleteList(index) {
+        try {
+            await removeList(kb[index].kanbanId._id, kb[index]._id);
+            const newList = removeItemAtIndex(kb, index)
+            setKb(newList);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function updateList(index, e, inputValue) {
+        try {
+            if (e.key === "Enter") {
+                const response = await modifyList(kb[index].kanbanId._id, kb[index]._id, { title: inputValue });
+                const newList = replaceItemAtIndex(kb, index, {
+                    ...kb[index],
+                    title: inputValue,
+                    edit: !kb[index].edit,
+                })
+                setKb(newList);
+            } else if (e.key === "Escape") {
+                const newList = replaceItemAtIndex(kb, index, {
+                    ...kb[index],
+                    edit: !kb[index].edit,
+                })
+                setKb(newList);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {
         getKanban(url).then(data => {
-            console.log(data);
             if (data.length > 0) {
+                data.map((list, i) => {
+                    list.index = i;
+                    list.edit = false;
+                    list.menu = false;
+                    return list;
+                })
                 setKb(data);
+                console.log(data);
             }
         });
     }, [])
@@ -135,7 +187,7 @@ function TodoListGroup() {
                         <DragDropContext onDragEnd={onDragEnd}>
                             <div className="flex justify-evenly items-start flex-row flex-wrap">
                                 {kb.length > 0 && kb.map((list, index) => (
-                                    <TodoList key={index} list={list} index={index} kanbanId={url} />
+                                    <TodoList key={index} list={list} index={index} kanbanId={url} fToggleEdit={() => toggleEditMode(index)} fToggleMenu={() => toggleShowMenu(index)} fDeleteList={() => deleteList(index)} fUpdateList={(e, updateValue) => updateList(index, e, updateValue)} />
                                 ))}
                             </div>
                         </DragDropContext>
