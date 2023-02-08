@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import TodoList from './TodoList/TodoList';
 import { getKanban } from '../../apis/kanban';
 import { createList, removeList, modifyList } from '../../apis/list';
-import { createTask } from '../../apis/task';
+import { createTask, deleteTask } from '../../apis/task';
 
 
 
@@ -168,6 +168,24 @@ function TodoListGroup() {
             console.log(error);
         }
     }
+
+    async function removeTask(index, taskId) {
+        try {
+            await deleteTask(kb[index].kanbanId._id, kb[index]._id, taskId);
+            for (let i = 0; i < kb[index].tasks.length; i++) {
+                if (kb[index].tasks[i]._id === taskId) {
+                    const newList = replaceItemAtIndex(kb, index, {
+                        ...kb[index],
+                        tasks: removeItemAtIndex(kb[index].tasks, i)
+                    })
+                    setKb(newList);
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         getKanban(url).then(data => {
             if (data.length > 0) {
@@ -207,7 +225,18 @@ function TodoListGroup() {
                         <DragDropContext onDragEnd={onDragEnd}>
                             <div className="flex justify-evenly items-start flex-row flex-wrap">
                                 {kb.length > 0 && kb.map((list, index) => (
-                                    <TodoList key={index} list={list} index={index} kanbanId={url} fToggleEdit={() => toggleEditMode(index)} fToggleMenu={() => toggleShowMenu(index)} fDeleteList={() => deleteList(index)} fUpdateList={(e, updateValue) => updateList(index, e, updateValue)} fAddTask={(inputValue) => addTask(index, inputValue)} />
+                                    <TodoList
+                                        key={index}
+                                        list={list}
+                                        index={index}
+                                        kanbanId={url}
+                                        fToggleEdit={() => toggleEditMode(index)}
+                                        fToggleMenu={() => toggleShowMenu(index)}
+                                        fDeleteList={() => deleteList(index)}
+                                        fUpdateList={(e, updateValue) => updateList(index, e, updateValue)}
+                                        fAddTask={(inputValue) => addTask(index, inputValue)}
+                                        fRemoveTask={(id) => removeTask(index, id)}
+                                    />
                                 ))}
                             </div>
                         </DragDropContext>

@@ -24,4 +24,16 @@ router.post('/', async (req, res) => {
         .catch((e) => res.status(400).json({ e }))
 });
 
+
+router.delete('/:id', async (req, res) => {
+    const { token } = req.cookies;
+    const decodedToken = jsonwebtoken.verify(token, keyPub);
+    const listId = req.baseUrl.split('/')[5];
+    ListModel.findOneAndUpdate({ _id: listId, userId: decodedToken.sub }, { $pull: { tasks: { _id: req.params.id } } })
+        .then(() => {
+            res.status(200).json({ message: 'Tâche supprimée' })
+        })
+        .catch(error => res.status(400).json({ error }));
+});
+
 module.exports = router

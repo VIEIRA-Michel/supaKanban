@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { todosState } from '../../../../recoil';
 
-function TodoItem({ todo, kanbanId }) {
+function TodoItem({ todo, kanbanId, fRemoveTask }) {
     const setTodosState = useSetRecoilState(todosState);
     const [showButton, setShowButton] = useState(false);
     const [inputTaskTitle, setInputTaskTitle] = useState(todo.content);
@@ -26,29 +26,6 @@ function TodoItem({ todo, kanbanId }) {
                                     task.edit = !task.edit;
                                 } else {
                                     task.edit = false;
-                                }
-                                return task;
-                            })
-                        }
-                        return list;
-                    })
-                }
-                return table;
-            }))
-            return state;
-        });
-    }
-
-    function removeTask() {
-        setTodosState((oldTodosState) => {
-            let state = JSON.parse(JSON.stringify(oldTodosState));
-            state.map((table => {
-                if (table.id === kanbanId) {
-                    table.kanban.map((list) => {
-                        if (list.id === todo.listId) {
-                            list.tasks.map((task, i) => {
-                                if (task.id === todo.id) {
-                                    list.tasks.splice(i, 1);
                                 }
                                 return task;
                             })
@@ -122,9 +99,8 @@ function TodoItem({ todo, kanbanId }) {
             {showButton && !todo.edit ?
                 <div className='flex flex-row absolute bg-white right-[5px] top-[5px] z-[2] p-[5px] cursor-pointer rounded-[15px] shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]'>
                     <i onClick={editTaskTitle} className="fa-regular fa-pen-to-square text-sm rounded-[10px] bg-white p-[10px] hover:bg-primary hover:text-white hover:transition-all"></i>
-                    <i onClick={removeTask} className="fa-solid fa-trash text-sm rounded-[10px] bg-white p-[10px] hover:bg-primary hover:text-white hover:transition-all"></i>
+                    <i onClick={fRemoveTask} className="fa-solid fa-trash text-sm rounded-[10px] bg-white p-[10px] hover:bg-primary hover:text-white hover:transition-all"></i>
                 </div>
-
                 : !showButton && !todo.edit ? '' :
                     <button onClick={editTaskTitle} className='cursor-pointer border-none bg-transparent'>
                         <i className="fa-solid fa-xmark bg-white text-sm leading-3 py-2 px-2.5 rounded-full hover:bg-primary hover:text-white hover:transition-all"></i>
