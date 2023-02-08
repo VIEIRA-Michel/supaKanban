@@ -34,7 +34,27 @@ export async function deleteTask(kanbanId, listId, taskId) {
         if (body) {
             throw body;
         } else {
-            throw new Error('Error api removeTask');
+            throw new Error('Error api deleteTask');
         }
     }
 }
+
+export async function modifyTask(kanbanId, listId, taskId, update) {
+    const response = await fetch(`${API_KANBAN}/${kanbanId}/list/${listId}/task/${taskId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(update)
+    });
+    const body = await response.json();
+    if (response.ok) {
+        return body;
+    } else {
+        if (body) {
+            throw body;
+        } else {
+            throw new Error('Error api modifyTask');
+        }
+    }
+};

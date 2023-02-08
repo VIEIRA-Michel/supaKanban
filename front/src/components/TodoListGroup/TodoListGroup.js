@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import TodoList from './TodoList/TodoList';
 import { getKanban } from '../../apis/kanban';
 import { createList, removeList, modifyList } from '../../apis/list';
-import { createTask, deleteTask } from '../../apis/task';
+import { createTask, deleteTask, modifyTask } from '../../apis/task';
 
 
 
@@ -116,6 +116,17 @@ function TodoListGroup() {
         setKb(newList);
     }
 
+    function toggleEditTask(index, taskIndex) {
+        const newList = replaceItemAtIndex(kb, index, {
+            ...kb[index],
+            tasks: replaceItemAtIndex(kb[index].tasks, taskIndex, {
+                ...kb[index].tasks[taskIndex],
+                edit: !kb[index].tasks[taskIndex].edit,
+            }),
+        })
+        setKb(newList);
+    }
+
     async function deleteList(index) {
         try {
             await removeList(kb[index].kanbanId._id, kb[index]._id);
@@ -186,6 +197,23 @@ function TodoListGroup() {
         }
     }
 
+    async function updateTask(index, taskId, inputValue) {
+        await modifyTask(kb[index].kanbanId._id, kb[index]._id, taskId, { content: inputValue });
+        for (let i = 0; i < kb[index].tasks.length; i++) {
+            if (kb[index].tasks[i]._id === taskId) {
+                const newList = replaceItemAtIndex(kb, index, {
+                    ...kb[index],
+                    tasks: replaceItemAtIndex(kb[index].tasks, i, {
+                        ...kb[index].tasks[i],
+                        content: inputValue,
+                        edit: !kb[index].tasks[i].edit,
+                    }),
+                })
+                setKb(newList);
+            }
+        }
+    }
+
     useEffect(() => {
         getKanban(url).then(data => {
             if (data.length > 0) {
@@ -193,6 +221,11 @@ function TodoListGroup() {
                     list.index = i;
                     list.edit = false;
                     list.menu = false;
+                    list.tasks.map((task, j) => {
+                        task.column = i;
+                        task.edit = false;
+                        return task;
+                    });
                     return list;
                 })
                 setKb(data);
@@ -200,7 +233,6 @@ function TodoListGroup() {
             }
         });
     }, [])
-
 
     return (
         <>
@@ -228,7 +260,6 @@ function TodoListGroup() {
                                     <TodoList
                                         key={index}
                                         list={list}
-                                        index={index}
                                         kanbanId={url}
                                         fToggleEdit={() => toggleEditMode(index)}
                                         fToggleMenu={() => toggleShowMenu(index)}
@@ -236,6 +267,8 @@ function TodoListGroup() {
                                         fUpdateList={(e, updateValue) => updateList(index, e, updateValue)}
                                         fAddTask={(inputValue) => addTask(index, inputValue)}
                                         fRemoveTask={(id) => removeTask(index, id)}
+                                        fUpdateTask={(id, inputValue) => updateTask(index, id, inputValue)}
+                                        fToggleEditTask={(taskIndex) => toggleEditTask(index, taskIndex)}
                                     />
                                 ))}
                             </div>

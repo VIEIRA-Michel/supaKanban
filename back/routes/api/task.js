@@ -36,4 +36,19 @@ router.delete('/:id', async (req, res) => {
         .catch(error => res.status(400).json({ error }));
 });
 
+router.put('/:id', async (req, res) => {
+    const { token } = req.cookies;
+    const decodedToken = jsonwebtoken.verify(token, keyPub);
+    const listId = req.baseUrl.split('/')[5];
+    const { content } = req.body;
+    ListModel.findOne({ _id: listId, userId: decodedToken.sub })
+        .then((list) => {
+            const task = list.tasks.id(req.params.id);
+            task.content = content;
+            list.save();
+            res.status(200).json({ list, message: 'Liste modifiée !' })
+        })
+        .catch(error => res.status(400).json({ error }));
+});
+
 module.exports = router

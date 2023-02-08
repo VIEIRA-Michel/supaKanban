@@ -2,7 +2,7 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useState } from 'react';
 import TodoItem from "./TodoItem/TodoItem";
 
-function TodoList({ list, index, kanbanId, fToggleEdit, fToggleMenu, fDeleteList, fUpdateList, fAddTask, fRemoveTask }) {
+function TodoList({ list, kanbanId, fToggleEdit, fToggleMenu, fDeleteList, fUpdateList, fAddTask, fRemoveTask, fUpdateTask, fToggleEditTask }) {
     const [inputValue, setInputValue] = useState('');
     const [inputTitleValue, setInputTitleValue] = useState(list.title);
     const [showAddTodo, setShowAddTodo] = useState(false);
@@ -86,7 +86,13 @@ function TodoList({ list, index, kanbanId, fToggleEdit, fToggleMenu, fDeleteList
                                                     }}
                                                     className="mt-2.5 first:mt-0"
                                                 >
-                                                    <TodoItem todo={task} kanbanId={kanbanId} fRemoveTask={() => fRemoveTask(task._id)} />
+                                                    <TodoItem
+                                                        todo={task}
+                                                        kanbanId={kanbanId}
+                                                        fRemoveTask={() => fRemoveTask(task._id)}
+                                                        fUpdateTask={(input) => fUpdateTask(task._id, input)}
+                                                        fToggleEditTask={() => fToggleEditTask(index)}
+                                                    />
                                                 </div>
                                             )}
                                         </Draggable>
