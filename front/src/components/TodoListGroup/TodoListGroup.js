@@ -62,6 +62,19 @@ function TodoListGroup() {
                     tasks: destinationTask,
                 })
                 setKb(newList);
+            } else if (source.droppableId === destination.droppableId && source.index !== destination.index) {
+                await (updateIndex(result.draggableId, result));
+                const sourceColIndex = kb.findIndex(e => e._id === source.droppableId);
+                const sourceCol = kb[sourceColIndex];
+                let sourceTask = [...sourceCol.tasks];
+                let removed = sourceTask.splice(source.index, 1);
+                sourceTask.splice(destination.index, 0, removed[0]);
+
+                let newList = replaceItemAtIndex(kb, sourceColIndex, {
+                    ...kb[sourceColIndex],
+                    tasks: sourceTask,
+                });
+                setKb(newList);
             }
         } catch (error) {
             console.log(error);
