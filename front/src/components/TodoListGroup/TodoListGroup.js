@@ -7,6 +7,7 @@ import TodoList from './TodoList/TodoList';
 import { getKanban } from '../../apis/kanban';
 import { createList, removeList, modifyList } from '../../apis/list';
 import { createTask, deleteTask, modifyTask } from '../../apis/task';
+import { updateIndex } from '../../apis/idx';
 
 
 
@@ -27,42 +28,43 @@ function TodoListGroup() {
     }
 
 
-    function onDragEnd(result) {
-        if (!result.destination) return
-        const { source, destination } = result
-        if (source.droppableId !== destination.droppableId) {
+    async function onDragEnd(result) {
+        try {
+            if (!result.destination) return
+            const { source, destination } = result
+            if (source.droppableId !== destination.droppableId) {
+                const { newSourceTask, newDestinationTask } = await (updateIndex(result.draggableId, result));
+                const sourceColIndex = kb.findIndex(e => e._id === source.droppableId);
+                const destinationColIndex = kb.findIndex(e => e._id === destination.droppableId);
 
-            const sourceColIndex = kb.kanban.findIndex(e => e.id === source.droppableId);
-            const destinationColIndex = kb.kanban.findIndex(e => e.id === destination.droppableId);
+                const sourceCol = kb[sourceColIndex];
+                const destinationCol = kb[destinationColIndex];
 
-            const sourceCol = kb.kanban[sourceColIndex];
-            const destinationCol = kb.kanban[destinationColIndex];
+                let sourceTask = [...sourceCol.tasks];
+                let destinationTask = [...destinationCol.tasks];
 
-            const sourceTask = [...sourceCol.tasks];
-            const destinationTask = [...destinationCol.tasks];
+                let removed = sourceTask.splice(source.index, 1);
 
-            let [removed] = JSON.parse(JSON.stringify(sourceTask.splice(source.index, 1)));
-            removed.listId = destination.droppableId
-            destinationTask.splice(destination.index, 0, removed);
+                removed.listId = destination.droppableId;
+                removed = replaceItemAtIndex(removed, 0, {
+                    ...removed[0],
+                    listId: destination.droppableId,
+                })
 
-            // setTodosState((oldTodosState) => {
-            //     let state = JSON.parse(JSON.stringify(oldTodosState));
-            //     state[kanbanIndex].kanban[sourceColIndex].tasks = sourceTask;
-            //     state[kanbanIndex].kanban[destinationColIndex].tasks = destinationTask;
-            //     return state;
-            // });
-        } else if (source.droppableId === destination.droppableId && source.index !== destination.index) {
-            // setTodosState((oldTodosState) => {
-            //     let state = JSON.parse(JSON.stringify(oldTodosState));
-            //     state[kanbanIndex].kanban.map((el) => {
-            //         if (el.id === destination.droppableId) {
-            //             const [removed] = el.tasks.splice(source.index, 1);
-            //             el.tasks.splice(destination.index, 0, removed);
-            //         }
-            //         return el;
-            //     })
-            //     return state;
-            // });
+                destinationTask.splice(destination.index, 0, removed[0]);
+
+                let newList = replaceItemAtIndex(kb, sourceColIndex, {
+                    ...kb[sourceColIndex],
+                    tasks: sourceTask,
+                })
+                newList = replaceItemAtIndex(newList, destinationColIndex, {
+                    ...kb[destinationColIndex],
+                    tasks: destinationTask,
+                })
+                setKb(newList);
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -224,12 +226,14 @@ function TodoListGroup() {
                     list.tasks.map((task, j) => {
                         task.column = i;
                         task.edit = false;
+                        task.listId = list._id;
+                        task.index = j;
                         return task;
                     });
                     return list;
                 })
                 setKb(data);
-                console.log(data);
+                // console.log(data);
             }
         });
     }, [])
