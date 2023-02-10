@@ -19,7 +19,9 @@ router.post('/', async (req, res) => {
                 index: 0,
             })
             list.save();
-            res.status(201).json({ list, message: 'Tâche ajoutée !' })
+            UserModel.findOneAndUpdate({ _id: decodedToken.sub }, { $inc: { 'taskCreated': 1 } })
+                .then(() => res.status(201).json({ list, message: 'Tâche ajoutée !' }))
+                .catch((e) => res.status(400).json({ e }))
         })
         .catch((e) => res.status(400).json({ e }))
 });

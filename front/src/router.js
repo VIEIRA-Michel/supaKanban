@@ -7,6 +7,7 @@ const TodoListGroup = lazy(() => import('./components/TodoListGroup/TodoListGrou
 const TodoListsBoardManagement = lazy(() => import('./components/TodoListsBoardManagement/TodoListsBoardManagement'));
 const LoginForm = lazy(() => import('./components/Form/LoginForm/LoginForm'));
 const RegisterForm = lazy(() => import('./components/Form/RegisterForm/RegisterForm'));
+const Profile = lazy(() => import('./components/Profile/Profile'));
 
 export const router = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
             {
                 path: '/board',
                 element: <ProtectedRoute><TodoListsBoardManagement /></ProtectedRoute>,
+            },
+            {
+                path: '/profile',
+                element: <ProtectedRoute><Profile /></ProtectedRoute>,
             },
         ],
     },
