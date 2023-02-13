@@ -18,7 +18,6 @@ function BoardItem({ title, id, kanbanIndex, editMode, kanban, kanbanCount, item
     }
 
     async function removeTodoList() {
-        console.log(id);
         try {
             await deleteKanban(id);
             const newList = removeItemAtIndex(todoLists, kanbanIndex);
@@ -58,6 +57,7 @@ function BoardItem({ title, id, kanbanIndex, editMode, kanban, kanbanCount, item
 
         }
     }
+    
     return (
         <div className={kanbanCount ? 'flex flex-row justify-between flex-auto items-center mt-5' : 'flex flex-row justify-between flex-auto items-center'}>
             <div onMouseEnter={() => setShowButton(true)} onMouseLeave={() => setShowButton(false)} className={showButton ? 'min-h-[55px] w-[70%] flex items-center flex-auto p-2.5 rounded-[20px] relative cursor-default bg-[#ffffffb3] transition-all' : 'min-h-[55px] w-[70%] p-2.5 bg-white rounded-[20px] cursor-default relative flex flex-auto'}>

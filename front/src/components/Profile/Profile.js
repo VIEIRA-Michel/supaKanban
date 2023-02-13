@@ -57,29 +57,26 @@ function Profile() {
 
     return (
         <>
-            <div className='h-1/5 flex justify-center items-center'>
-                <h2 className='mb-5'>Profile</h2>
-            </div>
-            <div className="w-[330px] m-auto bg-[#777591] rounded-[40px] flex flex-col justify-center items-center p-5 shadow-[0_2px_18px_0_rgba(0,0,0,0.5)]">
+            <div className="max-[450px]:w-[90%] min-[451px]:w-[350px] m-10 bg-[#777591] rounded-[40px] flex flex-col justify-center items-center p-5 shadow-[0_2px_18px_0_rgba(0,0,0,0.5)]">
                 <div className={showMsg ? "bg-[#EFE8DF] p-2 rounded-[15px] w-full" : "hidden"}>
                     {showMsg && <p className="text-primary w-full flex flex-row justify-center items-center"><span className="mr-4">{showMsg}</span><i class="fa-thin fa-check"></i></p>}
                 </div>
                 <div className='flex flex-col flex-auto w-full'>
-                    <div className="flex flex-col justify-center text-white text-center mt-4">
-                        <div className="flex flex-row justify-evenly">
-                            <div className="flex flex-col w-[30%]">
+                    <div className="flex flex-col justify-center text-white text-center">
+                        <div className="flex flex-row justify-evenly max-[374px]:flex-col ">
+                            <div className="flex flex-col w-[30%] max-[374px]:w-full">
                                 <p>Kanban crée</p>
                                 <div className="bg-white rounded-[15px] text-primary py-2.5 font-bold">
                                     {user && user.kanbanCreated}
                                 </div>
                             </div>
-                            <div className="flex flex-col w-[30%]">
+                            <div className="flex flex-col w-[30%] max-[374px]:w-full max-[374px]:mt-4">
                                 <p>Liste crée</p>
                                 <div className="bg-white rounded-[15px] text-primary py-2.5 font-bold">
                                     {user && user.listCreated}
                                 </div>
                             </div>
-                            <div className="flex flex-col w-[30%]">
+                            <div className="flex flex-col w-[30%] max-[374px]:w-full max-[374px]:mt-4">
                                 <p>Tâche crée</p>
                                 <div className="bg-white rounded-[15px] text-primary py-2.5 font-bold">
                                     {user && user.taskCreated}
@@ -118,7 +115,7 @@ function Profile() {
                                 Annuler la modification
                             </button>
                             <button type="submit" disabled={isSubmitting} className="rounded-[15px] border border-[#EFE8DF] p-2 text-center cursor-pointer w-full mt-4 opacity-80 hover:bg-[#EFE8DF] hover:text-primary hover:opacity-100 hover:transition-all">
-                                Enregistrer le nouveau mot de passe
+                                Enregistrer le mot de passe
                             </button>
                         </form>}
                     </div>

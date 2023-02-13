@@ -10,17 +10,12 @@ function Header() {
     let location = useLocation();
     const { user, logout } = useContext(AuthContext);
     return (
-        <header className='h-[50px] bg-white flex flex-row justify-between items-center shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]'>
+        <header className='h-[50px] bg-white flex flex-row justify-between items-center shadow-[0_2px_18px_0_rgba(0,0,0,0.3)] z-10'>
             <div className='w-[50px]'>
                 <img src={logo} alt="" />
             </div>
             {user ? (
                 <>
-                    <div className='flex justify-between'>
-                        {todos && todos.map((element, index) =>
-                            <Link key={index} to={`/${element._id}`} className={location.pathname === `/${element._id}` ? 'text-secondary no-underline mr-[10px] py-[5px] px-[10px] rounded-[5px] font-bold hover:bg-[#dbdbdb] hover:transition-all' : 'text-secondary no-underline mr-[10px] py-[5px] px-[10px] rounded-[5px] font-medium hover:bg-[#dbdbdb] hover:transition-all'}>{element.title}</Link>
-                        )}
-                    </div>
                     <ul className='flex flex-row'>
                         <div className='flex flex-row justify-evenly'>
                             <Link to="/board" className='mr-[10px] no-underline'><i className="fa-duotone fa-list-check text-secondary border border-[#777591] text-white bg-tertiary p-[10px] rounded-[10px] cursor-pointer opacity-80 hover:opacity-100 hover:text-white hover:transition-all"></i></Link>

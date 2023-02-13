@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useRecoilState } from 'recoil';
 import { currentKanban } from '../../recoil';
@@ -229,35 +229,39 @@ function TodoListGroup() {
         }
     }
 
-    useEffect(() => {
-        getKanban(url).then(data => {
-            if (data.length > 0) {
-                data.map((list, i) => {
-                    list.index = i;
-                    list.edit = false;
-                    list.menu = false;
-                    list.tasks.map((task, j) => {
-                        task.column = i;
-                        task.edit = false;
-                        task.listId = list._id;
-                        task.index = j;
-                        return task;
-                    });
-                    return list;
-                })
-                setKb(data);
-                // console.log(data);
+    useLayoutEffect(() => {
+        if (kb.length > 0) {
+            setKb([]);
+        } else {
+            async function fetchData() {
+                const response = await getKanban(url)
+                if (response.length > 0) {
+                    response.map((list, i) => {
+                        list.index = i;
+                        list.edit = false;
+                        list.menu = false;
+                        list.tasks.map((task, j) => {
+                            task.column = i;
+                            task.edit = false;
+                            task.listId = list._id;
+                            task.index = j;
+                            return task;
+                        });
+                        return list;
+                    })
+                    setKb(response);
+                }
             }
-        });
-    }, [])
+            fetchData()
+        }
+    }, [url])
 
     return (
         <>
             {
                 kb.length > 0 ?
                     (<div className='flex flex-col h-full'>
-                        <h2 className='mb-5 flex justify-center'>{kb.title}</h2>
-                        <div className={`mb-5 h-1/5 flex justify-center list-${kb.length} items-center`}>
+                        <div className={`m-6 h-1/5 flex justify-center list-${kb.length} items-center`}>
                             <div className='w-[200px] m-auto flex justify-center items-center'>
                                 {!showInput &&
                                     <button className={`p-[20px] py-2.5 px-5 cursor-pointer opacity-80 transition-opacity hover:opacity-100 text-sm rounded-[15px] w-[200px] shadow-[0_2px_18px_0_rgba(0,0,0,0.5)] border-none bg-secondary list-${kb.length} flex justify-between items-center flex-auto`} onClick={() => setShowInput(true)}>

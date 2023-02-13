@@ -35,9 +35,9 @@ function TodoList({ list, kanbanId, fToggleEdit, fToggleMenu, fDeleteList, fUpda
     }
 
     return (
-        <div className='m-5 max-w-[300px] p-5 shadow-[0_2px_18px_0_rgba(0,0,0,0.5)] rounded-[40px] bg-transparent'>
+        <div className='m-5 max-[450px]:w-[90%] min-[451px]:w-[350px] p-5 shadow-[0_2px_18px_0_rgba(0,0,0,0.5)] rounded-[40px] bg-transparent'>
             <div className='flex flex-row justify-between items-center relative mt-[5px]'>
-                <div className="text-base w-[84.7%]">
+                <div className="text-base w-[83%]">
                     {list.edit ? <input className='font-[Dosis] p-[10px] rounded-[15px] w-full border-none' value={inputTitleValue} onChange={(e) => setInputTitleValue(e.target.value)} onKeyDown={(e) => e.key === "Enter" ? fUpdateList(e, inputTitleValue) : e.key === "Enter" ? fToggleEdit : null} type="text" /> : <span className='block truncate no-underline font-bold text-secondary'>{list.title}</span>}
                 </div>
                 {list.edit ? (<div className="">
@@ -50,7 +50,7 @@ function TodoList({ list, kanbanId, fToggleEdit, fToggleMenu, fDeleteList, fUpda
                     <i onClick={fDeleteList} className="fa-solid fa-trash text-secondary text-sm p-2.5 border-none bg-white rounded-[10px] cursor-pointer hover:text-white hover:bg-[#130f40] hover:transition-all"></i>
                 </div>)}
             </div>
-            <div className='min-w-[260px] rounded-[10px] font-thin mt-[25px]'>
+            <div className='min-w-[230px] max-w-[100%] rounded-[10px] font-thin mt-[25px]'>
                 <div className="flex items-center">
                     {showAddTodo ? <>
                         <div className='flex items-center flex-auto'>

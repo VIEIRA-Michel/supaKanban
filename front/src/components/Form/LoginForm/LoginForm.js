@@ -48,8 +48,8 @@ function LoginForm() {
             {user ? (
                 <Navigate to="/board" />
             ) : (
-                <div className='h-full w-[350px] m-auto rounded-[40px] shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]'>
-                    <form onSubmit={submit} className="flex flex-col max-w-[300px] m-auto">
+                <div className='max-[450px]:w-[90%] min-[451px]:w-[350px] m-auto rounded-[40px] shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]'>
+                    <form onSubmit={submit} className="flex flex-col w-[85%] m-auto">
                         <div className="flex flex-col mt-5">
                             <label htmlFor="email" className='text-center text-secondary'>Email</label>
                             <input type="email" className='rounded-[15px] p-[5px] text-secondary border-[transparent]' name="email" id="email" {...register('email')} />

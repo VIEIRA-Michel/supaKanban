@@ -71,7 +71,11 @@ router.delete('/:id', async (req, res) => {
         .then(data => {
             if (data && data[0].userId == decodedToken.sub) {
                 KanbanModel.deleteOne({ _id: req.params.id })
-                    .then(() => res.status(200).json({ message: 'Kanban supprimé !' }))
+                    .then(() => {
+                        ListModel.deleteMany({ kanbanId: req.params.id })
+                            .then(() => res.status(200).json({ message: 'Kanban supprimé !' }))
+                            .catch(error => res.status(400).json({ error }));
+                    })
                     .catch(error => res.status(400).json({ error }));
             } else {
                 res.status(404).json({ message: 'Kanban non trouvé !' })

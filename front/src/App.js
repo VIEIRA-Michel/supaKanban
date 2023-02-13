@@ -8,12 +8,10 @@ function App() {
     <div className='app'>
       <AuthProvider>
         <Header />
-        <div className='d-flex flex-row justify-content-center p-20 flex-fill mainContainer'>
-          <div className="d-flex flex-column align-items-center flex-fill">
-            <Suspense>
-              <Outlet />
-            </Suspense>
-          </div>
+        <div className='flex flex-col justify-center items-center w-full mt-10 z-[-1]'>
+          <Suspense>
+            <Outlet />
+          </Suspense>
         </div>
       </AuthProvider>
     </div>

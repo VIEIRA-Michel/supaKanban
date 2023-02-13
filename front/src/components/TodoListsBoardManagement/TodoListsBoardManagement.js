@@ -38,15 +38,11 @@ function TodoListsBoardManagement() {
         getAllKanbans().then((data) => {
             setTodoListsState(data);
         }).catch((e) => { console.log(e) })
-        // eslint-disable-next-line
     }, [])
 
     return (
         <>
-            <div className='h-1/5 flex justify-center items-center'>
-                <h2 className='mb-5'>Liste des tableaux</h2>
-            </div>
-            <div className="w-[330px] m-auto bg-[#777591] rounded-[40px] flex flex-col justify-center items-center p-5 shadow-[0_2px_18px_0_rgba(0,0,0,0.5)]">
+            <div className="max-[450px]:w-[90%] min-[451px]:w-[350px] mx-auto mt-10 bg-[#777591] rounded-[40px] flex flex-col justify-center items-center p-5 shadow-[0_2px_18px_0_rgba(0,0,0,0.5)]">
                 <div className='flex flex-col flex-auto w-full'>
                     <div className="flex justify-center text-white">
                         <button className='w-full text-white flex justify-between items-center cursor-pointer rounded-[15px] py-2.5 px-5 bg-[#130f40] border-none opacity-80 hover:opacity-100 transition-all' onClick={() => setCreateMode(true)}><span className='mr-1.5'>Créer un tableau</span><i className="fa-solid fa-plus"></i></button>
