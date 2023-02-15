@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useRecoilState } from 'recoil';
 import { currentKanban } from '../../recoil';
@@ -33,7 +33,7 @@ function TodoListGroup() {
             if (!result.destination) return
             const { source, destination } = result
             if (source.droppableId !== destination.droppableId) {
-                const { newSourceTask, newDestinationTask } = await (updateIndex(result.draggableId, result));
+                await updateIndex(result.draggableId, result);
                 const sourceColIndex = kb.findIndex(e => e._id === source.droppableId);
                 const destinationColIndex = kb.findIndex(e => e._id === destination.droppableId);
 
@@ -63,7 +63,7 @@ function TodoListGroup() {
                 })
                 setKb(newList);
             } else if (source.droppableId === destination.droppableId && source.index !== destination.index) {
-                await (updateIndex(result.draggableId, result));
+                await updateIndex(result.draggableId, result);
                 const sourceColIndex = kb.findIndex(e => e._id === source.droppableId);
                 const sourceCol = kb[sourceColIndex];
                 let sourceTask = [...sourceCol.tasks];
@@ -155,7 +155,7 @@ function TodoListGroup() {
     async function updateList(index, e, inputValue) {
         try {
             if (e.key === "Enter") {
-                const response = await modifyList(kb[index].kanbanId._id, kb[index]._id, { title: inputValue });
+                await modifyList(kb[index].kanbanId._id, kb[index]._id, { title: inputValue });
                 const newList = replaceItemAtIndex(kb, index, {
                     ...kb[index],
                     title: inputValue,

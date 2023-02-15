@@ -59,7 +59,7 @@ function Profile() {
         <>
             <div className="max-[450px]:w-[90%] min-[451px]:w-[350px] m-10 bg-[#777591] rounded-[40px] flex flex-col justify-center items-center p-5 shadow-[0_2px_18px_0_rgba(0,0,0,0.5)]">
                 <div className={showMsg ? "bg-[#EFE8DF] p-2 rounded-[15px] w-full" : "hidden"}>
-                    {showMsg && <p className="text-primary w-full flex flex-row justify-center items-center"><span className="mr-4">{showMsg}</span><i class="fa-thin fa-check"></i></p>}
+                    {showMsg && <p className="text-primary w-full flex flex-row justify-center items-center"><span className="mr-4">{showMsg}</span><i className="fa-thin fa-check"></i></p>}
                 </div>
                 <div className='flex flex-col flex-auto w-full'>
                     <div className="flex flex-col justify-center text-white text-center">

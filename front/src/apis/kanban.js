@@ -1,4 +1,4 @@
-const API_KANBAN = '/api/kanban';
+const API_KANBAN = 'http://localhost:3000/api/kanban';
 
 export async function createKanban(title) {
     const response = await fetch(API_KANBAN, {
@@ -6,6 +6,7 @@ export async function createKanban(title) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(title)
     });
     const body = await response.json();
@@ -27,6 +28,7 @@ export async function getAllKanbans() {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
     });
     const body = await response.json();
     if (response.ok) {
@@ -46,6 +48,7 @@ export async function getKanban(id) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
     });
     const body = await response.json();
     if (response.ok) {
@@ -60,12 +63,12 @@ export async function getKanban(id) {
 }
 
 export async function updateKanban(id, update) {
-    console.log(update);
     const response = await fetch(`${API_KANBAN}/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(update)
     });
     const body = await response.json();
@@ -85,7 +88,8 @@ export async function deleteKanban(id) {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        credentials: 'include',
     });
     const body = await response.json();
     if (response.ok) {

@@ -1,13 +1,9 @@
-import { useRecoilValue } from 'recoil';
-import { todosState } from '../../recoil';
 import logo from '../../assets/pictures/logo-supakanban.svg';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../context';
 
 function Header() {
-    const todos = useRecoilValue(todosState);
-    let location = useLocation();
     const { user, logout } = useContext(AuthContext);
     return (
         <header className='h-[50px] bg-white flex flex-row justify-between items-center shadow-[0_2px_18px_0_rgba(0,0,0,0.3)] z-10'>

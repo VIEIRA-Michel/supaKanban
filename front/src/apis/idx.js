@@ -1,4 +1,4 @@
-const API_INDEX = '/api/index';
+const API_INDEX = 'http://localhost:3000/api/index';
 
 export async function updateIndex(taskId, obj) {
     const response = await fetch(`${API_INDEX}/${taskId}`, {
@@ -6,6 +6,7 @@ export async function updateIndex(taskId, obj) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(obj)
     });
     const body = await response.json();

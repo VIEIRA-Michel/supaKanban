@@ -1,4 +1,4 @@
-const API_AUTH = '/api/auth';
+const API_AUTH = 'http://localhost:3000/api/auth';
 
 export async function signIn(credentials) {
     const response = await fetch(API_AUTH, {
@@ -6,6 +6,7 @@ export async function signIn(credentials) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(credentials)
     });
     const body = await response.json();
@@ -21,7 +22,10 @@ export async function signIn(credentials) {
 }
 
 export async function getCurrentUser() {
-    const response = await fetch(`${API_AUTH}/current`);
+    const response = await fetch(`${API_AUTH}/current`, {
+        method: 'GET',
+        credentials: 'include'
+    });
     return response.json();
 
 }
@@ -29,5 +33,6 @@ export async function getCurrentUser() {
 export async function signOut() {
     await fetch(API_AUTH, {
         method: 'DELETE',
+        credentials: 'include'
     });
 }

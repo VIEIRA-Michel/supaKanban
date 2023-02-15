@@ -1,4 +1,4 @@
-const API_USERS = '/api/users';
+const API_USERS = 'http://localhost:3000/api/users';
 
 export async function createUser(newUser) {
     const response = await fetch(API_USERS, {
@@ -6,6 +6,7 @@ export async function createUser(newUser) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(newUser)
     });
     const body = await response.json();
@@ -26,6 +27,7 @@ export async function changePassword(pwd) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(pwd)
     });
     const body = await response.json();

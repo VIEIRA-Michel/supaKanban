@@ -50,7 +50,11 @@ module.exports = {
 };
 ```
 
-4. After that write this command from _**front**_ folder and _**back**_ folder to launch the project
+
+4. Replace the mongoose url already present in _**back/database/index.js**_ by your mongoose url to connect your database
+
+
+5. After that write this command from _**front**_ folder and _**back**_ folder to launch the project
 
 ```bash
 npm start
