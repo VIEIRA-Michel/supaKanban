@@ -4,7 +4,7 @@ const UserModel = require('../../database/models/user.model');
 const jsonwebtoken = require('jsonwebtoken');
 const { keyPub } = require('../../keys');
 
-router.post('/', async (req, res) => {
+router.post('/new', async (req, res) => {
     const { token } = req.cookies;
     const decodedToken = jsonwebtoken.verify(token, keyPub);
     ListModel.findOne({ _id: req.body.id, userId: decodedToken.sub })

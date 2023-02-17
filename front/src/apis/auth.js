@@ -1,15 +1,15 @@
-const API_AUTH = 'http://localhost:3000/api/auth';
+const API_AUTH = 'http://localhost:3001/api/auth';
 
 export async function signIn(credentials) {
-    const response = await fetch(API_AUTH, {
+    const response = await fetch(`${API_AUTH}/signin`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        credentials: 'include',
         body: JSON.stringify(credentials)
     });
     const body = await response.json();
+    console.log(body);
     if (response.ok) {
         return body;
     } else {
@@ -21,18 +21,8 @@ export async function signIn(credentials) {
     }
 }
 
-export async function getCurrentUser() {
-    const response = await fetch(`${API_AUTH}/current`, {
-        method: 'GET',
-        credentials: 'include'
-    });
-    return response.json();
-
-}
-
 export async function signOut() {
-    await fetch(API_AUTH, {
+    await fetch(`${API_AUTH}/signout`, {
         method: 'DELETE',
-        credentials: 'include'
     });
 }

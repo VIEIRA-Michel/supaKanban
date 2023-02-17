@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
+const bcrypt = require('bcrypt');
 
 const userSchema = mongoose.Schema({
     email: { type: String, required: true, unique: true },
@@ -10,6 +11,10 @@ const userSchema = mongoose.Schema({
     taskCreated: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now() }
 });
+
+userSchema.methods.comparePassword = function (password) {
+    return bcrypt.compare(password, this.password);
+}
 
 userSchema.plugin(uniqueValidator);
 

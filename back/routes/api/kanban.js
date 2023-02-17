@@ -5,9 +5,10 @@ const UserModel = require('../../database/models/user.model');
 const jsonwebtoken = require('jsonwebtoken');
 const { keyPub } = require('../../keys');
 
-router.post('/', async (req, res) => {
+router.post('/new', async (req, res) => {
     const { title } = req.body;
-    const { token } = req.cookies;
+    // const { token } = req.cookies;
+    console.log(req.user);
     const decodedToken = jsonwebtoken.verify(token, keyPub);
     const newKanban = new KanbanModel({ title, userId: decodedToken.sub });
     newKanban.save((err, data) => {
@@ -22,13 +23,14 @@ router.post('/', async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-    const { token } = req.cookies;
-    const decodedToken = jsonwebtoken.verify(token, keyPub);
-    KanbanModel.find({ userId: decodedToken.sub }).sort({ _id: -1 })
-        .then(data => {
-            res.status(200).json(data);
-        })
-        .catch(error => res.status(400).json({ error }));
+    // const { token } = req.cookies;
+    console.log(req);
+    // KanbanModel.find({ userId: decodedToken.sub }).sort({ _id: -1 })
+    //     .then(data => {
+    //         res.status(200).json(data);
+    //     })
+    //     .catch(error => res.status(400).json({ error }));
+    res.end();
 })
 
 router.get('/:id', async (req, res) => {

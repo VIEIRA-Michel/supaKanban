@@ -1,12 +1,11 @@
-const API_KANBAN = 'http://localhost:3000/api/kanban';
+const API_KANBAN = 'http://localhost:3001/api/kanban';
 
 export async function createTask(kanbanId, listId, { content }) {
-    const response = await fetch(`${API_KANBAN}/${kanbanId}/list/${listId}/task`, {
+    const response = await fetch(`${API_KANBAN}/${kanbanId}/list/${listId}/task/new`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        credentials: 'include',
         body: JSON.stringify({ id: listId, content })
     });
     const body = await response.json();
@@ -27,7 +26,6 @@ export async function deleteTask(kanbanId, listId, taskId) {
         headers: {
             'Content-Type': 'application/json'
         },
-        credentials: 'include',
     });
     const body = await response.json();
     if (response.ok) {
@@ -47,7 +45,6 @@ export async function modifyTask(kanbanId, listId, taskId, update) {
         headers: {
             'Content-Type': 'application/json'
         },
-        credentials: 'include',
         body: JSON.stringify(update)
     });
     const body = await response.json();
