@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const apiUsers = require('./users');
-const apiAuth = require('./auth');
-const apiKanban = require('./kanban');
-const apiList = require('./list');
-const apiTask = require('./task');
-const apiIndex = require('./idx');
+const apiUsers = require('./users.routes');
+const apiAuth = require('./auth.routes');
+const apiKanban = require('./kanban.routes');
+const apiList = require('./list.routes');
+const apiTask = require('./task.routes');
+const apiIndex = require('./idx.routes');
 
 router.use('/users', apiUsers);
 router.use('/auth', apiAuth);

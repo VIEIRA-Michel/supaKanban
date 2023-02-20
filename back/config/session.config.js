@@ -1,18 +1,20 @@
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const mongoose = require('mongoose');
-const { app } = require('../index');
+const { clientPromise } = require('../database');
+const { app } = require('../app');
 
-app.use(session({
-    secret: 'cersei',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        httpOnly: true,
-        maxAge: 60 * 60 * 24 * 14 * 1000,
-    },
-    store: MongoStore.create({
-        client: mongoose.connection.getClient(),
-        ttl: 60 * 60 * 24 * 14,
+app.use(
+    session({
+        secret: 'cersei',
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60 * 24 * 14, // session 14 days
+        },
+        store: MongoStore.create({
+            clientPromise: clientPromise.then((m) => m.connection.getClient()),
+            ttl: 60 * 60 * 24 * 14,
+        }),
     })
-}));
+);

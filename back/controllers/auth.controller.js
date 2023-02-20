@@ -5,14 +5,25 @@ exports.sessionCreate = (req, res, next) => {
         if (err) {
             next(err);
         } else if (!user) {
-            res.status(404).json({ message: info.message })
-            // res.render('signin', { error: info.message })
+            res.status(404).json(info);
         } else {
             req.login(user, (err) => {
                 if (err) {
                     next(err)
                 } else {
-                    res.status(200).json({ message: 'vous êtes maintenant connecté' });
+                    // const dataFromUser = {
+                    //     _id: user._id,
+                    //     email: user.email,
+                    //     username: user.username,
+                    //     kanbanCreated: user.kanbanCreated,
+                    //     listCreated: user.listCreated,
+                    //     taskCreated: user.taskCreated,
+                    //     createdAt: user.createdAt
+                    // };
+                    // res.status(200).json(user);
+                    // next();
+                    // res.end();
+                    res.status(200).json(user);
                 }
             })
         }
