@@ -1,7 +1,6 @@
 import App from './App';
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy } from 'react';
-// import { rootLoader } from './loaders/rootLoader';
 import ProtectedRoute from './guards/ProtectedRoute';
 const TodoListGroup = lazy(() => import('./components/TodoListGroup/TodoListGroup'));
 const TodoListsBoardManagement = lazy(() => import('./components/TodoListsBoardManagement/TodoListsBoardManagement'));
@@ -13,7 +12,6 @@ export const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
-        // loader: rootLoader,
         children: [
             {
                 path: '/signup',

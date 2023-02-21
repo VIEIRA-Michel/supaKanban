@@ -6,6 +6,7 @@ export async function createUser(newUser) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(newUser)
     });
     const body = await response.json();

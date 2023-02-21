@@ -2,11 +2,13 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, Navigate } from 'react-router-dom';
-import { AuthContext } from '../../../context/AuthContext';
-import { useContext } from 'react';
+import { useUserActions } from '../../../actions';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../../recoil';
 
 function LoginForm() {
-    const { login, user } = useContext(AuthContext);
+    const userData = useRecoilValue(userState);
+    const useUser = useUserActions();
 
     const validationSchema = yup.object({
         email: yup
@@ -38,15 +40,14 @@ function LoginForm() {
     const submit = handleSubmit(async (credentials) => {
         try {
             clearErrors();
-            await login(credentials);
+            await useUser.login(credentials);
         } catch ({ message }) {
-            console.log(message);
             setError('generic', { type: 'generic', message })
         }
     });
     return (
         <>
-            {user ? (
+            {userData ? (
                 <Navigate to="/board" />
             ) : (
                 <div className='max-[450px]:w-[90%] min-[451px]:w-[350px] m-auto rounded-[40px] shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]'>

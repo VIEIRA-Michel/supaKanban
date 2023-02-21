@@ -10,11 +10,11 @@ app.use(
         saveUninitialized: false,
         cookie: {
             httpOnly: true,
-            maxAge: 1000 * 60 * 60 * 24 * 14, // session 14 days
+            maxAge: 1000 * 60 * 60 * 24,
         },
         store: MongoStore.create({
             clientPromise: clientPromise.then((m) => m.connection.getClient()),
-            ttl: 60 * 60 * 24 * 14,
+            ttl: 1000 * 60 * 60 * 24,
         }),
     })
 );

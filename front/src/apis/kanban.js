@@ -27,6 +27,7 @@ export async function getAllKanbans() {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
     });
     const body = await response.json();
     if (response.ok) {

@@ -1,12 +1,13 @@
-import { useContext } from "react";
-import { AuthContext } from "../context";
 import { Navigate } from 'react-router-dom';
+import { useUserActions } from '../actions';
 
 function ProtectedRoute({ children }) {
-    const { user } = useContext(AuthContext);
-
-    return user ? children : <Navigate to="/signin" />
-
+    const useUser = useUserActions();
+    if (useUser.checkUserIsConnected()) {
+        return children
+    } else {
+        <Navigate to="/signin" />
+    }
 }
 
 export default ProtectedRoute;

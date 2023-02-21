@@ -1,13 +1,16 @@
-import { useContext, useState } from "react";
-import { AuthContext } from '../../context';
+import { useState } from "react";
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { changePassword } from '../../apis/users';
-
+import { useUserActions } from '../../actions';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../recoil';
 
 function Profile() {
-    const { user } = useContext(AuthContext);
+    const userData = useRecoilValue(userState);
+    const useUser = useUserActions();
+    // const { user } = useContext(AuthContext);
     const [showPwdForm, setShowPwdForm] = useState(false);
     const [showMsg, setShowMsg] = useState(null);
     const validationSchema = yup.object({
@@ -67,19 +70,19 @@ function Profile() {
                             <div className="flex flex-col w-[30%] max-[374px]:w-full">
                                 <p>Kanban crée</p>
                                 <div className="bg-white rounded-[15px] text-primary py-2.5 font-bold">
-                                    {user && user.kanbanCreated}
+                                    {userData && userData.kanbanCreated}
                                 </div>
                             </div>
                             <div className="flex flex-col w-[30%] max-[374px]:w-full max-[374px]:mt-4">
                                 <p>Liste crée</p>
                                 <div className="bg-white rounded-[15px] text-primary py-2.5 font-bold">
-                                    {user && user.listCreated}
+                                    {userData && userData.listCreated}
                                 </div>
                             </div>
                             <div className="flex flex-col w-[30%] max-[374px]:w-full max-[374px]:mt-4">
                                 <p>Tâche crée</p>
                                 <div className="bg-white rounded-[15px] text-primary py-2.5 font-bold">
-                                    {user && user.taskCreated}
+                                    {userData && userData.taskCreated}
                                 </div>
                             </div>
                         </div>
@@ -87,7 +90,7 @@ function Profile() {
                     <div className="flex flex-col justify-center items-center mt-4">
                         <p>Email</p>
                         <div className="bg-white opacity-50 text-primary p-2 rounded-[15px] w-full cursor-not-allowed">
-                            {user && user.email}
+                            {userData && userData.local.email}
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center mt-4">

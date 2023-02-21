@@ -11,18 +11,6 @@ exports.sessionCreate = (req, res, next) => {
                 if (err) {
                     next(err)
                 } else {
-                    // const dataFromUser = {
-                    //     _id: user._id,
-                    //     email: user.email,
-                    //     username: user.username,
-                    //     kanbanCreated: user.kanbanCreated,
-                    //     listCreated: user.listCreated,
-                    //     taskCreated: user.taskCreated,
-                    //     createdAt: user.createdAt
-                    // };
-                    // res.status(200).json(user);
-                    // next();
-                    // res.end();
                     res.status(200).json(user);
                 }
             })
@@ -38,3 +26,19 @@ exports.sessionDelete = (req, res, next) => {
         res.end();
     });
 };
+
+
+exports.checkAuthentication = (req, res) => {
+    if (req.user) {
+        res.status(200).json({
+            success: true,
+            message: "success user",
+            user: req.user,
+        });
+    } else {
+        req.status(404).json({
+            success: false,
+            message: "No user",
+        })
+    }
+}

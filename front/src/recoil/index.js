@@ -19,3 +19,8 @@ export const showInput = atom({
     key: 'showInput',
     default: false,
 });
+
+export const userState = atom({
+    key: 'userState',
+    default: null,
+})

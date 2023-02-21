@@ -1,15 +1,14 @@
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { createUser } from '../../../apis/users';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
-import { AuthContext } from '../../../context/AuthContext';
-import { useContext } from 'react';
-
+import { Link, Navigate } from 'react-router-dom';
+import { useUserActions } from '../../../actions';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../../recoil';
 
 function RegisterForm() {
-    const { user } = useContext(AuthContext);
-    const navigate = useNavigate();
+    const userData = useRecoilValue(userState);
+    const useUser = useUserActions();
     const validationSchema = yup.object({
         username: yup
             .string()
@@ -45,8 +44,7 @@ function RegisterForm() {
     const submit = handleSubmit(async (user) => {
         try {
             clearErrors();
-            await createUser(user);
-            navigate('/signin');
+            await useUser.register(user);
         } catch ({ message }) {
             setError('generic', { type: 'generic', message })
         }
@@ -54,7 +52,7 @@ function RegisterForm() {
 
     return (
         <>
-            {user ? (
+            {userData ? (
                 <Navigate to="/board" />
             ) : (<div className="max-[450px]:w-[90%] min-[451px]:w-[350px] m-auto rounded-[40px] shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]">
                 <form onSubmit={submit} className="flex flex-col w-[85%] m-auto">
