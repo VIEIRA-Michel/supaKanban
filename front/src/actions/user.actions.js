@@ -43,9 +43,17 @@ export function useUserActions() {
 
     async function checkUserIsConnected() {
         try {
-            const { user } = await checkIsAuth();
-            setUserData(user);
+            const response = await checkIsAuth();
+            if (response !== null) {
+                const { user } = response;
+                setUserData(user);
+                return true;
+            } else {
+                setUserData(null);
+                return false;
+            }
         } catch (e) {
+            setUserData(null);
             return console.log(e);
         }
     }

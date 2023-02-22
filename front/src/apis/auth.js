@@ -38,6 +38,9 @@ export async function checkIsAuth() {
         credentials: 'include',
     });
     const body = await response.json();
+    if (body === null) {
+        return null;
+    }
     if (response.ok) {
         return body;
     } else {

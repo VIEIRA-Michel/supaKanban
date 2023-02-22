@@ -1,7 +1,6 @@
 import App from './App';
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy } from 'react';
-import ProtectedRoute from './guards/ProtectedRoute';
 const TodoListGroup = lazy(() => import('./components/TodoListGroup/TodoListGroup'));
 const TodoListsBoardManagement = lazy(() => import('./components/TodoListsBoardManagement/TodoListsBoardManagement'));
 const LoginForm = lazy(() => import('./components/Form/LoginForm/LoginForm'));
@@ -23,15 +22,15 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/:idKanban',
-                element: <ProtectedRoute><TodoListGroup /></ProtectedRoute>,
+                element: <TodoListGroup />,
             },
             {
                 path: '/board',
-                element: <ProtectedRoute><TodoListsBoardManagement /></ProtectedRoute>,
+                element: <TodoListsBoardManagement />,
             },
             {
                 path: '/profile',
-                element: <ProtectedRoute><Profile /></ProtectedRoute>,
+                element: <Profile />,
             },
         ],
     },

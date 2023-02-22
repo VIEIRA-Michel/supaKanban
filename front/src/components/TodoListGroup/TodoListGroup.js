@@ -1,8 +1,8 @@
 import { useState, useLayoutEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { useRecoilState } from 'recoil';
-import { currentKanban } from '../../recoil';
-import { useLocation } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { currentKanban, userState } from '../../recoil';
+import { useLocation, Navigate } from 'react-router-dom';
 import TodoList from './TodoList/TodoList';
 import { getKanban } from '../../apis/kanban';
 import { createList, removeList, modifyList } from '../../apis/list';
@@ -15,6 +15,7 @@ function TodoListGroup() {
     const [kb, setKb] = useRecoilState(currentKanban);
     const [input, setInput] = useState('');
     const [showInput, setShowInput] = useState(false);
+    const userData = useRecoilValue(userState);
     let location = useLocation();
     let url = location.pathname.substring(1);
 
@@ -258,62 +259,68 @@ function TodoListGroup() {
 
     return (
         <>
-            {
-                kb.length > 0 ?
-                    (<div className='flex flex-col h-full'>
-                        <div className={`m-6 h-1/5 flex justify-center list-${kb.length} items-center`}>
-                            <div className='w-[200px] m-auto flex justify-center items-center'>
-                                {!showInput &&
-                                    <button className={`p-[20px] py-2.5 px-5 cursor-pointer opacity-80 transition-opacity hover:opacity-100 text-sm rounded-[15px] w-[200px] shadow-[0_2px_18px_0_rgba(0,0,0,0.5)] border-none bg-secondary list-${kb.length} flex justify-between items-center flex-auto`} onClick={() => setShowInput(true)}>
-                                        <span>Ajouter une liste</span>
-                                        <i className="fa-solid fa-plus"></i>
-                                    </button>}
-                                {showInput && <>
-                                    <input className='font-[Dosis] w-[200px] h-[38px] rounded-[15px] border-none px-[5px]' type="text" placeholder="Saisissez un nom de liste" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => submit(e)} />
-                                    <button className='rounded-full border-none cursor-pointer ml-2.5 bg-secondary' onClick={() => setShowInput(false)}><i className="fa-solid fa-xmark py-2 px-2.5 text-white text-sm leading-3 rounded-[5px] cursor-pointer opacity-80 hover:transition-all hover:opacity-100"></i></button>
-                                </>
-                                }
-                            </div>
-                        </div>
-                        <DragDropContext onDragEnd={onDragEnd}>
-                            <div className="flex justify-evenly items-start flex-row flex-wrap">
-                                {kb.length > 0 && kb.map((list, index) => (
-                                    <TodoList
-                                        key={index}
-                                        list={list}
-                                        kanbanId={url}
-                                        fToggleEdit={() => toggleEditMode(index)}
-                                        fToggleMenu={() => toggleShowMenu(index)}
-                                        fDeleteList={() => deleteList(index)}
-                                        fUpdateList={(e, updateValue) => updateList(index, e, updateValue)}
-                                        fAddTask={(inputValue) => addTask(index, inputValue)}
-                                        fRemoveTask={(id) => removeTask(index, id)}
-                                        fUpdateTask={(id, inputValue) => updateTask(index, id, inputValue)}
-                                        fToggleEditTask={(taskIndex) => toggleEditTask(index, taskIndex)}
-                                    />
-                                ))}
-                            </div>
-                        </DragDropContext>
-                    </div>) : (
-                        <div className='flex flex-col h-full'>
-                            <h2 className='mb-5 flex justify-center'>{kb.title}</h2>
-                            <div className={`mb-5 h-1/5 flex justify-center list-0 items-center`}>
-                                <div className='w-[200px] m-auto flex justify-center items-center'>
-                                    {!showInput &&
-                                        <button className={`p-[20px] py-2.5 px-5 cursor-pointer opacity-80 transition-opacity hover:opacity-100 text-sm rounded-[15px] w-[200px] shadow-[0_2px_18px_0_rgba(0,0,0,0.5)] border-none bg-secondary list-0 flex justify-between items-center flex-auto`} onClick={() => setShowInput(true)}>
-                                            <span>Ajouter une liste</span>
-                                            <i className="fa-solid fa-plus"></i>
-                                        </button>}
-                                    {showInput && <>
-                                        <input className='font-[Dosis] w-[200px] h-[38px] rounded-[15px] border-none px-[5px]' type="text" placeholder="Saisissez un nom de liste" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => submit(e)} />
-                                        <button className='rounded-full border-none cursor-pointer ml-2.5 bg-secondary' onClick={() => setShowInput(false)}><i className="fa-solid fa-xmark py-2 px-2.5 text-white text-sm leading-3 rounded-[5px] cursor-pointer opacity-80 hover:transition-all hover:opacity-100"></i></button>
-                                    </>
-                                    }
+            {userData ? (
+                <>
+                    {
+                        kb.length > 0 ?
+                            (<div className='flex flex-col h-full'>
+                                <div className={`m-6 h-1/5 flex justify-center list-${kb.length} items-center`}>
+                                    <div className='w-[200px] m-auto flex justify-center items-center'>
+                                        {!showInput &&
+                                            <button className={`p-[20px] py-2.5 px-5 cursor-pointer opacity-80 transition-opacity hover:opacity-100 text-sm rounded-[15px] w-[200px] shadow-[0_2px_18px_0_rgba(0,0,0,0.5)] border-none bg-secondary list-${kb.length} flex justify-between items-center flex-auto`} onClick={() => setShowInput(true)}>
+                                                <span>Ajouter une liste</span>
+                                                <i className="fa-solid fa-plus"></i>
+                                            </button>}
+                                        {showInput && <>
+                                            <input className='font-[Dosis] w-[200px] h-[38px] rounded-[15px] border-none px-[5px]' type="text" placeholder="Saisissez un nom de liste" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => submit(e)} />
+                                            <button className='rounded-full border-none cursor-pointer ml-2.5 bg-secondary' onClick={() => setShowInput(false)}><i className="fa-solid fa-xmark py-2 px-2.5 text-white text-sm leading-3 rounded-[5px] cursor-pointer opacity-80 hover:transition-all hover:opacity-100"></i></button>
+                                        </>
+                                        }
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    )
-            }
+                                <DragDropContext onDragEnd={onDragEnd}>
+                                    <div className="flex justify-evenly items-start flex-row flex-wrap">
+                                        {kb.length > 0 && kb.map((list, index) => (
+                                            <TodoList
+                                                key={index}
+                                                list={list}
+                                                kanbanId={url}
+                                                fToggleEdit={() => toggleEditMode(index)}
+                                                fToggleMenu={() => toggleShowMenu(index)}
+                                                fDeleteList={() => deleteList(index)}
+                                                fUpdateList={(e, updateValue) => updateList(index, e, updateValue)}
+                                                fAddTask={(inputValue) => addTask(index, inputValue)}
+                                                fRemoveTask={(id) => removeTask(index, id)}
+                                                fUpdateTask={(id, inputValue) => updateTask(index, id, inputValue)}
+                                                fToggleEditTask={(taskIndex) => toggleEditTask(index, taskIndex)}
+                                            />
+                                        ))}
+                                    </div>
+                                </DragDropContext>
+                            </div>) : (
+                                <div className='flex flex-col h-full'>
+                                    <h2 className='mb-5 flex justify-center'>{kb.title}</h2>
+                                    <div className={`mb-5 h-1/5 flex justify-center list-0 items-center`}>
+                                        <div className='w-[200px] m-auto flex justify-center items-center'>
+                                            {!showInput &&
+                                                <button className={`p-[20px] py-2.5 px-5 cursor-pointer opacity-80 transition-opacity hover:opacity-100 text-sm rounded-[15px] w-[200px] shadow-[0_2px_18px_0_rgba(0,0,0,0.5)] border-none bg-secondary list-0 flex justify-between items-center flex-auto`} onClick={() => setShowInput(true)}>
+                                                    <span>Ajouter une liste</span>
+                                                    <i className="fa-solid fa-plus"></i>
+                                                </button>}
+                                            {showInput && <>
+                                                <input className='font-[Dosis] w-[200px] h-[38px] rounded-[15px] border-none px-[5px]' type="text" placeholder="Saisissez un nom de liste" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => submit(e)} />
+                                                <button className='rounded-full border-none cursor-pointer ml-2.5 bg-secondary' onClick={() => setShowInput(false)}><i className="fa-solid fa-xmark py-2 px-2.5 text-white text-sm leading-3 rounded-[5px] cursor-pointer opacity-80 hover:transition-all hover:opacity-100"></i></button>
+                                            </>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                    }
+                </>
+            ) : (
+                <Navigate to="/signin" />
+            )}
         </>
     )
 }

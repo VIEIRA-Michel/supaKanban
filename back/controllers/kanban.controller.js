@@ -3,11 +3,13 @@ const ListModel = require('../database/models/list.model');
 
 
 exports.getAllKanbans = (req, res) => {
-    KanbanModel.find({ userId: req.user._id }).sort({ _id: -1 })
-        .then(data => {
-            res.status(200).json(data);
-        })
-        .catch(error => res.status(400).json({ error }));
+    if (req.user._id) {
+        KanbanModel.find({ userId: req.user._id }).sort({ _id: -1 })
+            .then(data => {
+                res.status(200).json(data);
+            })
+            .catch(error => res.status(400).json({ error }));
+    }
 };
 
 exports.createKanban = (req, res) => {
