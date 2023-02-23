@@ -6,12 +6,17 @@ const TodoListsBoardManagement = lazy(() => import('./components/TodoListsBoardM
 const LoginForm = lazy(() => import('./components/Form/LoginForm/LoginForm'));
 const RegisterForm = lazy(() => import('./components/Form/RegisterForm/RegisterForm'));
 const Profile = lazy(() => import('./components/Profile/Profile'));
+const Home = lazy(() => import('./components/Home/Home'));
 
 export const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
         children: [
+            {
+                index: true,
+                element: <Home />
+            },
             {
                 path: '/signup',
                 element: <RegisterForm />

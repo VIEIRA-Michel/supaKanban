@@ -1,15 +1,19 @@
 import logo from '../../assets/pictures/logo-supakanban.svg';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { userState } from '../../recoil';
 import { useRecoilValue } from 'recoil';
 import { useUserActions } from '../../actions';
 function Header() {
     const useUser = useUserActions();
     const userData = useRecoilValue(userState);
+    const { pathname } = useLocation();
+    console.log(pathname);
     return (
-        <header className='h-[50px] bg-white flex flex-row justify-between items-center shadow-[0_2px_18px_0_rgba(0,0,0,0.3)] z-10'>
-            <div className='w-[50px]'>
-                <img src={logo} alt="" />
+        <header className={`h-[50px] bg-white flex flex-row justify-between items-center ${pathname === "/" && !userData ? 'w-[80%] m-auto my-4' : ' shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]'}  z-10`}>
+            <div className={`w-[50%]`}>
+                <Link to="/">
+                    <img className={`w-[50px] h-[50px]`} src={logo} alt="" />
+                </Link>
             </div>
             {userData ? (
                 <>
@@ -23,7 +27,7 @@ function Header() {
 
                 </>
             ) : (
-                <div className='flex flex-row'>
+                <div className={`w-[50%] flex flex-row justify-end`}>
                     <Link to="/signin" className='text-secondary bg-white border border-[#272350] font-[Dosis] py-[5px] px-2.5 rounded-[15px] cursor-pointer mr-[10px] no-underline text-sm flex justify-between items-center hover:bg-secondary hover:text-white hover:transition-all'><span>S'identifier</span></Link>
                 </div>
             )}

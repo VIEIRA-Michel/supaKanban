@@ -54,12 +54,12 @@ function LoginForm() {
                     <form onSubmit={submit} className="flex flex-col w-[85%] m-auto">
                         <div className="flex flex-col mt-5">
                             <label htmlFor="email" className='text-center text-secondary'>email</label>
-                            <input type="email" className='rounded-[15px] p-[5px] text-secondary border-[transparent]' name="email" id="email" {...register('email')} />
+                            <input type="email" className='rounded-[15px] p-[5px] text-white border-[transparent] bg-tertiary' name="email" id="email" {...register('email')} />
                             {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
                         </div>
                         <div className="flex flex-col mt-5">
                             <label htmlFor="password" className='text-center text-secondary'>mot de passe</label>
-                            <input type="password" className='rounded-[15px] p-[5px] text-secondary border-[transparent]' name="password" id="password" {...register('password')} />
+                            <input type="password" className='rounded-[15px] p-[5px] text-white border-[transparent] bg-tertiary' name="password" id="password" {...register('password')} />
                             {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
                         </div>
                         {errors.generic && <p className='text-red-500'>{errors.generic.message}</p>}

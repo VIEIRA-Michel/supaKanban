@@ -12,6 +12,10 @@
     color: #272350;
   }
 
+  .text-quaternary {
+    color: #6B69C9;
+  }
+
   .bg-primary {
     background-color: #130f40;
   }
@@ -23,6 +27,11 @@
   .bg-tertiary {
     background-color: #777591;
   }
+
+  .bg-quaternary {
+    background-color: #6B69C9;
+  }
+
 }
 
 
