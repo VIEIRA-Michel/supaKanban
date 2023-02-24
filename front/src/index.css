@@ -16,6 +16,10 @@
     color: #6B69C9;
   }
 
+  .text-quinary {
+    color: #FCBA06;
+  }
+
   .bg-primary {
     background-color: #130f40;
   }
@@ -30,6 +34,10 @@
 
   .bg-quaternary {
     background-color: #6B69C9;
+  }
+
+  .bg-quinary {
+    background-color: #FCBA06;
   }
 
 }

@@ -64,29 +64,13 @@ function Profile() {
                         {showMsg && <p className="text-primary w-full flex flex-row justify-center items-center"><span className="mr-4">{showMsg}</span><i className="fa-thin fa-check"></i></p>}
                     </div>
                     <div className='flex flex-col flex-auto w-full'>
-                        <div className="flex flex-col justify-center text-white text-center">
-                            <div className="flex flex-row justify-evenly max-[374px]:flex-col ">
-                                <div className="flex flex-col w-[30%] max-[374px]:w-full">
-                                    <p>Kanban crée</p>
-                                    <div className="bg-white rounded-[15px] text-primary py-2.5 font-bold">
-                                        {userData && userData.kanbanCreated}
-                                    </div>
-                                </div>
-                                <div className="flex flex-col w-[30%] max-[374px]:w-full max-[374px]:mt-4">
-                                    <p>Liste crée</p>
-                                    <div className="bg-white rounded-[15px] text-primary py-2.5 font-bold">
-                                        {userData && userData.listCreated}
-                                    </div>
-                                </div>
-                                <div className="flex flex-col w-[30%] max-[374px]:w-full max-[374px]:mt-4">
-                                    <p>Tâche crée</p>
-                                    <div className="bg-white rounded-[15px] text-primary py-2.5 font-bold">
-                                        {userData && userData.taskCreated}
-                                    </div>
-                                </div>
+                        <div className="flex flex-col justify-center text-white items-center">
+                            <p>Nom d'utilisateur</p>
+                            <div className="w-full bg-white opacity-100 text-primary p-2 rounded-[15px] hover:opacity-80">
+                                {userData && userData.username}
                             </div>
                         </div>
-                        <div className="flex flex-col justify-center items-center mt-4">
+                        <div className="flex flex-col justify-center text-white items-center mt-4">
                             <p>Email</p>
                             <div className="bg-white opacity-50 text-primary p-2 rounded-[15px] w-full cursor-not-allowed">
                                 {userData && userData.local.email}

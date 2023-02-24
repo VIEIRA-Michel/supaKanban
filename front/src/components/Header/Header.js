@@ -11,17 +11,19 @@ function Header() {
     return (
         <header className={`h-[50px] bg-white flex flex-row justify-between items-center ${pathname === "/" && !userData ? 'w-[80%] m-auto my-4' : ' shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]'}  z-10`}>
             <div className={`w-[50%]`}>
-                <Link to="/">
-                    <img className={`w-[50px] h-[50px]`} src={logo} alt="" />
-                </Link>
+                <div className='w-[50px] h-[50px]'>
+                    <Link to="/">
+                        <img className={`w-[50px] h-[50px]`} src={logo} alt="" />
+                    </Link>
+                </div>
             </div>
             {userData ? (
                 <>
                     <ul className='flex flex-row'>
                         <div className='flex flex-row justify-evenly'>
-                            <Link to="/board" className='mr-[10px] no-underline'><i className="fa-duotone fa-list-check text-secondary border border-[#777591] text-white bg-tertiary p-[10px] rounded-[10px] cursor-pointer opacity-80 hover:opacity-100 hover:text-white hover:transition-all"></i></Link>
-                            <Link to="/profile" className='mr-[10px] no-underline'><i className="fa-duotone fa-user text-secondary border border-[#777591] text-white bg-tertiary p-[10px] rounded-[10px] cursor-pointer opacity-80 hover:opacity-100 hover:text-white hover:transition-all"></i></Link>
-                            <li onClick={() => useUser.logout()} className='mr-[10px] no-underline'><i className="fa-duotone fa-right-from-bracket text-white bg-secondary rounded-[10px] p-[10px] cursor-pointer border border-[#272350] opacity-80 hover:opacity-100 hover:text-white hover:transition-all"></i></li>
+                            <Link to="/" className='mr-[10px] flex justify-center items-center no-underline'><i className="flex justify-center items-center w-[38px] h-[38px] fa-duotone fa-home text-secondary border border-[#777591] text-white bg-tertiary rounded-[10px] cursor-pointer opacity-80 hover:opacity-100 hover:text-white hover:transition-all"></i></Link>
+                            <Link to="/profile" className='mr-[10px] flex justify-center items-center no-underline'><i className="flex justify-center items-center w-[38px] h-[38px] fa-duotone fa-user text-secondary border border-[#777591] text-white bg-tertiary rounded-[10px] cursor-pointer opacity-80 hover:opacity-100 hover:text-white hover:transition-all"></i></Link>
+                            <li onClick={() => useUser.logout()} className='mr-[10px] no-underline flex justify-center items-center'><i className="flex justify-center items-center w-[38px] h-[38px] fa-duotone fa-right-from-bracket text-white bg-secondary rounded-[10px] cursor-pointer border border-[#272350] opacity-80 hover:opacity-100 hover:text-white hover:transition-all"></i></li>
                         </div>
                     </ul>
 
