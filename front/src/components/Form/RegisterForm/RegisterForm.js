@@ -51,7 +51,7 @@ function RegisterForm() {
     });
 
     return (
-        <>
+        <div className='h-[90vh] w-full flex justify-center items-center'>
             {userData ? (
                 <Navigate to="/board" />
             ) : (<div className="max-[450px]:w-[90%] min-[451px]:w-[350px] m-auto rounded-[40px] shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]">
@@ -82,7 +82,7 @@ function RegisterForm() {
                 </div>
             </div>
             )}
-        </>
+        </div>
 
     )
 }

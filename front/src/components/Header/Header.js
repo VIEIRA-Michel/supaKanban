@@ -9,7 +9,7 @@ function Header() {
     const { pathname } = useLocation();
     console.log(pathname);
     return (
-        <header className={`h-[50px] bg-white flex flex-row justify-between items-center ${pathname === "/" && !userData ? 'w-[80%] m-auto my-4' : ' shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]'}  z-10`}>
+        <header className={`h-[50px] bg-white flex flex-row justify-between items-center fixed top-0 left-0 right-0 ${pathname === "/" && !userData ? 'w-[80%] m-auto my-4' : ' shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]'}  z-10`}>
             <div className={`w-[50%]`}>
                 <div className='w-[50px] h-[50px]'>
                     <Link to="/">
