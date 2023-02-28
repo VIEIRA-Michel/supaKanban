@@ -28,7 +28,7 @@ function App() {
       {done ? (
         <div className='app'>
           <Header />
-          <div className='flex flex-col justify-center items-center w-full mt-10 z-[-1]'>
+          <div className='flex flex-col justify-center items-center w-full mt-[50px] z-[-1]'>
             <Suspense>
               <Outlet />
             </Suspense>

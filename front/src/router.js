@@ -7,6 +7,8 @@ const LoginForm = lazy(() => import('./components/Form/LoginForm/LoginForm'));
 const RegisterForm = lazy(() => import('./components/Form/RegisterForm/RegisterForm'));
 const Profile = lazy(() => import('./components/Profile/Profile'));
 const Home = lazy(() => import('./components/Home/Home'));
+const NoteList = lazy(() => import('./components/Note/NoteList/NoteList'));
+const Note = lazy(() => import('./components/Note/Note/Note'));
 
 export const router = createBrowserRouter([
     {
@@ -26,17 +28,25 @@ export const router = createBrowserRouter([
                 element: <LoginForm />
             },
             {
-                path: '/:idKanban',
-                element: <TodoListGroup />,
+                path: '/kanban',
+                element: <TodoListsBoardManagement />,
             },
             {
-                path: '/board',
-                element: <TodoListsBoardManagement />,
+                path: '/kanban/:id',
+                element: <TodoListGroup />,
             },
             {
                 path: '/profile',
                 element: <Profile />,
             },
+            {
+                path: '/note',
+                element: <NoteList />,
+            },
+            {
+                path: '/note/:id',
+                element: <Note />,
+            }
         ],
     },
 ]);

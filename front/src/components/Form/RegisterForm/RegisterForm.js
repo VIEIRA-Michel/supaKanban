@@ -53,7 +53,7 @@ function RegisterForm() {
     return (
         <div className='h-[90vh] w-full flex justify-center items-center'>
             {userData ? (
-                <Navigate to="/board" />
+                <Navigate to="/" />
             ) : (<div className="max-[450px]:w-[90%] min-[451px]:w-[350px] m-auto rounded-[40px] shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]">
                 <form onSubmit={submit} className="flex flex-col w-[85%] m-auto">
                     <div className="flex flex-col mt-5">
