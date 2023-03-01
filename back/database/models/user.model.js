@@ -11,6 +11,7 @@ const userSchema = mongoose.Schema({
     kanbanCreated: { type: Number, default: 0 },
     listCreated: { type: Number, default: 0 },
     taskCreated: { type: Number, default: 0 },
+    noteCreated: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now() }
 });
 
