@@ -1,59 +1,59 @@
 import { useState } from 'react';
-// import { useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
+import { noteState } from '../../../../recoil'
 import { Link } from 'react-router-dom';
 
 
-function NoteItem({ title, id, editMode, item, noteCount }) {
+function NoteItem({ title, id, editMode, item, noteCount, noteIndex }) {
     const [showButton, setShowButton] = useState(false);
     const [inputTitleValue, setInputTitleValue] = useState('');
+    const [noteList, setNoteList] = useRecoilState(noteState);
 
-    // function replaceItemAtIndex(arr, index, newValue) {
-    //     return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
-    // }
+    function replaceItemAtIndex(arr, index, newValue) {
+        return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
+    }
 
-    // function removeItemAtIndex(arr, index) {
-    //     return [...arr.slice(0, index), ...arr.slice(index + 1)];
-    // }
+    function removeItemAtIndex(arr, index) {
+        return [...arr.slice(0, index), ...arr.slice(index + 1)];
+    }
 
     async function removeNote() {
-        // try {
-        //     await deleteKanban(id);
-        //     const newList = removeItemAtIndex(todoLists, kanbanIndex);
-        //     setTodoListsState(newList);
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        try {
+            const newList = removeItemAtIndex(noteList, noteIndex);
+            setNoteList(newList);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
 
     function toggleEditMode() {
-        // setInputTitleValue(title);
-        // const newList = replaceItemAtIndex(todoLists, kanbanIndex, {
-        //     ...item,
-        //     edit: !item.edit
-        // });
-        // setTodoListsState(newList);
+        setInputTitleValue(title);
+        const newList = replaceItemAtIndex(noteList, noteIndex, {
+            ...item,
+            edit: !item.edit
+        });
+        setNoteList(newList);
     }
 
     async function submit(e) {
-        // try {
-        //     if (e.key === "Enter") {
-        //         if (inputTitleValue.length > 0) {
-        //             await updateKanban(id, { title: inputTitleValue });
-        //             const newList = replaceItemAtIndex(todoLists, kanbanIndex, {
-        //                 ...item,
-        //                 title: inputTitleValue,
-        //                 edit: !item.edit
-        //             });
-        //             setTodoListsState(newList);
-        //         }
-        //     } else if (e.key === "Escape") {
-        //         toggleEditMode();
-        //     }
-        // } catch (error) {
-
-        // }
+        try {
+            if (e.key === "Enter") {
+                if (inputTitleValue.length > 0) {
+                    const newList = replaceItemAtIndex(noteList, noteIndex, {
+                        ...item,
+                        title: inputTitleValue,
+                        edit: !item.edit
+                    });
+                    setNoteList(newList);
+                }
+            } else if (e.key === "Escape") {
+                toggleEditMode();
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -74,7 +74,7 @@ function NoteItem({ title, id, editMode, item, noteCount }) {
                         : ""
                 }
             </div>
-            <Link to={`/note/${id}`} state={{ title, id, item }} className='ml-[15px] p-2.5 rounded-[15px] bg-quinary text-primary cursor-pointer opacity-80 hover:opacity-100 hover:transition-all min-h-[55px] no-underline h-full flex items-center'><i class="fa-duotone fa-arrow-right-to-arc"></i></Link>
+            <Link to={`/note/${id}`} state={{ title, id, item }} className='ml-[15px] p-2.5 rounded-[15px] bg-quinary text-primary cursor-pointer opacity-80 hover:opacity-100 hover:transition-all min-h-[55px] no-underline h-full flex items-center'><i className="fa-duotone fa-arrow-right-to-arc"></i></Link>
         </div>
     )
 }

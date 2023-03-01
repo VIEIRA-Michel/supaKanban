@@ -1,15 +1,15 @@
 const UserModel = require('../database/models/user.model');
 const NoteModel = require('../database/models/note.model');
 
-exports.createNote = async (req, res, next) => {
+exports.createNote = async (req, res) => {
     try {
-        const newNote = new NoteModel({ title: req.body.title, content: req.body.content, userId: req.user._id });
+        const newNote = new NoteModel({ title: req.body.title, content: '', userId: req.user._id });
         newNote.save((err, data) => {
             if (err) {
                 res.status(400).json('Oops une erreur est survenue');
             } else {
                 UserModel.findOneAndUpdate({ _id: req.user._id }, { $inc: { 'noteCreated': 1 } })
-                    .then(() => res.json(data))
+                    .then(() => res.status(201).json(data))
                     .catch((e) => res.status(400).json({ e }))
             }
         })
@@ -18,7 +18,7 @@ exports.createNote = async (req, res, next) => {
     }
 }
 
-exports.getAllNotes = async (req, res, next) => {
+exports.getAllNotes = async (req, res) => {
     try {
         NoteModel.find({ userId: req.user._id })
             .then((data) => res.json(data))
@@ -28,7 +28,7 @@ exports.getAllNotes = async (req, res, next) => {
     }
 }
 
-exports.getOneNote = async (req, res, next) => {
+exports.getOneNote = async (req, res) => {
     try {
         NoteModel.findOne({ _id: req.params.id })
             .then((data) => res.json(data))
@@ -38,7 +38,7 @@ exports.getOneNote = async (req, res, next) => {
     }
 };
 
-exports.updateNote = async (req, res, next) => {
+exports.updateNote = async (req, res) => {
     try {
         NoteModel.findOneAndUpdate({ _id: req.params.id }, { title: req.body.title, content: req.body.content })
             .then((data) => res.json(data))
@@ -48,7 +48,7 @@ exports.updateNote = async (req, res, next) => {
     }
 };
 
-exports.deleteNote = async (req, res, next) => {
+exports.deleteNote = async (req, res) => {
     try {
         NoteModel.findOneAndDelete({ _id: req.params.id })
             .then((data) => res.json(data))
