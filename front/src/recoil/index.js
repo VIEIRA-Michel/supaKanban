@@ -23,9 +23,24 @@ export const showInput = atom({
 export const userState = atom({
     key: 'userState',
     default: null,
-})
+});
 
 export const noteState = atom({
     key: 'noteState',
     default: [],
-})
+});
+
+export const currentNote = atom({
+    key: 'currentNote',
+    default: null,
+});
+
+export const currentNoteTitle = atom({
+    key: 'currentNoteTitle',
+    default: null,
+});
+
+export const currentNoteContent = atom({
+    key: 'currentNoteContent',
+    default: null,
+});

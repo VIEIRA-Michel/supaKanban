@@ -40,9 +40,16 @@ exports.getOneNote = async (req, res) => {
 
 exports.updateNote = async (req, res) => {
     try {
-        NoteModel.findOneAndUpdate({ _id: req.params.id }, { title: req.body.title, content: req.body.content })
-            .then((data) => res.json(data))
-            .catch((e) => res.status(400).json({ e }))
+        console.log(req.body);
+        if (req.body.content) {
+            NoteModel.findOneAndUpdate({ _id: req.params.id }, { title: req.body.title, content: req.body.content })
+                .then((data) => res.json(data))
+                .catch((e) => res.status(400).json({ e }))
+        } else {
+            NoteModel.findOneAndUpdate({ _id: req.params.id }, { title: req.body.title })
+                .then((data) => res.json(data))
+                .catch((e) => res.status(400).json({ e }))
+        }
     } catch (error) {
         res.status(400).json('Oops une erreur est survenue');
     }
