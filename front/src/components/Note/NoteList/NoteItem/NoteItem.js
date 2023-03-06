@@ -4,7 +4,7 @@ import { noteState } from '../../../../recoil'
 import { Link } from 'react-router-dom';
 
 
-function NoteItem({ title, id, editMode, item, noteCount, noteIndex }) {
+function NoteItem({ title, id, editMode, item, noteCount, noteIndex, fUpdate, fDelete }) {
     const [showButton, setShowButton] = useState(false);
     const [inputTitleValue, setInputTitleValue] = useState('');
     const [noteList, setNoteList] = useRecoilState(noteState);
@@ -19,14 +19,13 @@ function NoteItem({ title, id, editMode, item, noteCount, noteIndex }) {
 
     async function removeNote() {
         try {
+            await fDelete();
             const newList = removeItemAtIndex(noteList, noteIndex);
             setNoteList(newList);
         } catch (error) {
             console.log(error);
         }
     }
-
-
 
     function toggleEditMode() {
         setInputTitleValue(title);
@@ -41,6 +40,7 @@ function NoteItem({ title, id, editMode, item, noteCount, noteIndex }) {
         try {
             if (e.key === "Enter") {
                 if (inputTitleValue.length > 0) {
+                    await fUpdate(inputTitleValue);
                     const newList = replaceItemAtIndex(noteList, noteIndex, {
                         ...item,
                         title: inputTitleValue,

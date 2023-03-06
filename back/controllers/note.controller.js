@@ -20,7 +20,7 @@ exports.createNote = async (req, res) => {
 
 exports.getAllNotes = async (req, res) => {
     try {
-        NoteModel.find({ userId: req.user._id })
+        NoteModel.find({ userId: req.user._id }).sort({ _id: -1 })
             .then((data) => res.json(data))
             .catch((e) => res.status(400).json({ e }))
     } catch (error) {

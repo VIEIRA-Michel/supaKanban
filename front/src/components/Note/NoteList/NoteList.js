@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { userState, noteState } from '../../../recoil';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import NoteItem from './NoteItem/NoteItem';
-import { createNote, getAllNotes } from '../../../apis/note';
+import { createNote, getAllNotes, updateNote, deleteNote } from '../../../apis/note';
 const Loading = lazy(() => import('../../Loading/Loading'));
 
 function NoteList() {
@@ -59,7 +59,7 @@ function NoteList() {
                         noteList.length > 0 ?
                             <div className='flex flex-auto flex-col w-full'>
                                 {noteList.map((element, index) =>
-                                    <NoteItem key={index} title={element.title} id={element._id} editMode={element.edit} item={element} noteCount={noteList.length} noteIndex={index} />
+                                    <NoteItem key={index} title={element.title} id={element._id} editMode={element.edit} item={element} noteCount={noteList.length} noteIndex={index} fUpdate={(title) => updateNote(element._id, { title })} fDelete={() => deleteNote(element._id)} />
                                 )}
                             </div>
                             :
