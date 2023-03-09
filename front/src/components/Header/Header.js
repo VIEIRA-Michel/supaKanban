@@ -6,6 +6,7 @@ import { useUserActions } from '../../actions';
 function Header() {
     const useUser = useUserActions();
     const userData = useRecoilValue(userState);
+    console.log(userData);
     const { pathname } = useLocation();
     console.log(pathname);
     return (
@@ -20,9 +21,9 @@ function Header() {
             {userData ? (
                 <>
                     <ul className='flex flex-row'>
-                        <div className='flex flex-row justify-evenly'>
-                            <Link to="/" className='mr-[10px] flex justify-center items-center no-underline'><i className="flex justify-center items-center w-[38px] h-[38px] fa-duotone fa-home text-secondary border border-[#777591] text-white bg-tertiary rounded-[10px] cursor-pointer opacity-80 hover:opacity-100 hover:text-white hover:transition-all"></i></Link>
-                            <Link to="/profile" className='mr-[10px] flex justify-center items-center no-underline'><i className="flex justify-center items-center w-[38px] h-[38px] fa-duotone fa-user text-secondary border border-[#777591] text-white bg-tertiary rounded-[10px] cursor-pointer opacity-80 hover:opacity-100 hover:text-white hover:transition-all"></i></Link>
+                        <div className='flex flex-row justify-evenly items-center'>
+                            {/* <Link to="/" className='mr-[10px] flex justify-center items-center no-underline'><i className="flex justify-center items-center w-[38px] h-[38px] fa-duotone fa-home text-secondary border border-[#777591] text-white bg-tertiary rounded-[10px] cursor-pointer opacity-80 hover:opacity-100 hover:text-white hover:transition-all"></i></Link> */}
+                            <p className='mr-5 text-quaternary'>Hello, <span className='text-quinary font-bold'>{userData.username}</span> !</p>
                             <li onClick={() => useUser.logout()} className='mr-[10px] no-underline flex justify-center items-center'><i className="flex justify-center items-center w-[38px] h-[38px] fa-duotone fa-right-from-bracket text-white bg-secondary rounded-[10px] cursor-pointer border border-[#272350] opacity-80 hover:opacity-100 hover:text-white hover:transition-all"></i></li>
                         </div>
                     </ul>

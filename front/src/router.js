@@ -9,6 +9,7 @@ const Profile = lazy(() => import('./components/Profile/Profile'));
 const Home = lazy(() => import('./components/Home/Home'));
 const NoteList = lazy(() => import('./components/Note/NoteList/NoteList'));
 const Note = lazy(() => import('./components/Note/Note/Note'));
+const Statistics = lazy(() => import('./components/Statistics/Statistics'));
 
 export const router = createBrowserRouter([
     {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
             {
                 path: '/profile',
                 element: <Profile />,
+            },
+            {
+                path: '/stats',
+                element: <Statistics />,
             },
             {
                 path: '/note',
