@@ -12,12 +12,12 @@ function Home() {
                         <div className='w-[90%] h-full flex flex-col justify-evenly m-auto'>
                             <div className='bg-quaternary rounded-[40px] h-[250px] shadow-[0_2px_18px_0_rgba(0,0,0,0.5)]'>
                                 <div className='h-full flex flex-col'>
-                                    <div className='max-[375px]:text-base max-[414px]:text-lg  max-[414px]:text-center max-[414px]:m-auto h-[25%] flex justify-center items-center font-bold text-xl text-quinary'>Que souhaitez-vous faire ?</div>
-                                    <div className='w-[70%] h-[70%] mx-auto flex flex-col justify-evenly'>
+                                    <div className='max-[375px]:text-base max-[414px]:text-lg  max-[414px]:text-center max-[414px]:m-auto h-[15%] flex justify-center items-center font-bold text-xl text-quinary'>Que souhaitez-vous faire ?</div>
+                                    <div className='w-[70%] h-[80%] mx-auto flex flex-col justify-evenly'>
                                         <div className='flex flex-row justify-between items-center'><span className='text-white'>Accéder à mes notes</span><Link to={"/note"} className='w-[38px] h-[38px] bg-white text-quaternary flex justify-center items-center rounded-[10px] relative opacity-80 hover:opacity-100'><i className='fa-duotone fa-file-pen'></i></Link></div>
                                         <div className='flex flex-row justify-between items-center'><span className='text-white'>Accéder à mes kanbans</span><Link to={"/kanban"} className='w-[38px] h-[38px] bg-white text-quaternary flex justify-center items-center rounded-[10px] relative opacity-80 hover:opacity-100'><i className='fa-duotone fa-square-kanban'></i></Link></div>
                                         <div className='flex flex-row justify-between items-center'><span className='text-white'>Accéder à mon profil</span><Link to={"/profile"} className='w-[38px] h-[38px] bg-white text-quaternary flex justify-center items-center rounded-[10px] relative opacity-80 hover:opacity-100'><i className='fa-duotone fa-user'></i></Link></div>
-                                        <div className='flex flex-row justify-between items-center'><span className='text-white'>Accéder à mes statistiques</span><Link to={"/stats"} className='w-[38px] h-[38px] bg-white text-quaternary flex justify-center items-center rounded-[10px] relative opacity-80 hover:opacity-100'><i class="fa-duotone fa-chart-simple"></i></Link></div>
+                                        <div className='flex flex-row justify-between items-center'><span className='text-white'>Accéder à mes statistiques</span><Link to={"/stats"} className='w-[38px] h-[38px] bg-white text-quaternary flex justify-center items-center rounded-[10px] relative opacity-80 hover:opacity-100'><i className="fa-duotone fa-chart-simple"></i></Link></div>
                                     </div>
                                 </div>
                             </div>

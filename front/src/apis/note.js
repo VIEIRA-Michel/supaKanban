@@ -47,6 +47,7 @@ export async function getNote(noteId) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
     });
     const body = await response.json();
     if (response.ok) {
@@ -66,6 +67,7 @@ export async function deleteNote(noteId) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
     });
     const body = await response.json();
     if (response.ok) {
@@ -85,6 +87,7 @@ export async function updateNote(noteId, update) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(update)
     });
     const body = await response.json();

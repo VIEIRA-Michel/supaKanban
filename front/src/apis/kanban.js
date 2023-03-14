@@ -6,6 +6,7 @@ export async function createKanban(title) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(title)
     });
     const body = await response.json();
@@ -47,8 +48,10 @@ export async function getKanban(id) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
     });
     const body = await response.json();
+    console.log(response);
     if (response.ok) {
         return body;
     } else {
@@ -66,6 +69,7 @@ export async function updateKanban(id, update) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(update)
     });
     const body = await response.json();
@@ -86,6 +90,7 @@ export async function deleteKanban(id) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
     });
     const body = await response.json();
     if (response.ok) {

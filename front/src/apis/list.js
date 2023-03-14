@@ -6,6 +6,7 @@ export async function createList({ title, id }) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({ title, id })
     });
     const body = await response.json();
@@ -26,6 +27,7 @@ export async function removeList(kanbanId, id) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
     });
     const body = await response.json();
     if (response.ok) {
@@ -45,6 +47,7 @@ export async function modifyList(kanbanId, id, update) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(update)
     });
     const body = await response.json();

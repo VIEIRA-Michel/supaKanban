@@ -16,8 +16,8 @@ function TodoListGroup() {
     const [input, setInput] = useState('');
     const [showInput, setShowInput] = useState(false);
     const userData = useRecoilValue(userState);
-    let location = useLocation();
-    let url = location.pathname.substring(1);
+    let url = useLocation().pathname.split('/')[2];
+    console.log(url);
 
 
     function replaceItemAtIndex(arr, index, newValue) {
@@ -233,29 +233,28 @@ function TodoListGroup() {
     useLayoutEffect(() => {
         if (kb.length > 0) {
             setKb([]);
-        } else {
-            async function fetchData() {
-                const response = await getKanban(url)
-                if (response.length > 0) {
-                    response.map((list, i) => {
-                        list.index = i;
-                        list.edit = false;
-                        list.menu = false;
-                        list.tasks.map((task, j) => {
-                            task.column = i;
-                            task.edit = false;
-                            task.listId = list._id;
-                            task.index = j;
-                            return task;
-                        });
-                        return list;
-                    })
-                    setKb(response);
-                }
-            }
-            fetchData()
         }
-    }, [url])
+        async function fetchData() {
+            const response = await getKanban(url)
+            if (response.length > 0) {
+                response.map((list, i) => {
+                    list.index = i;
+                    list.edit = false;
+                    list.menu = false;
+                    list.tasks.map((task, j) => {
+                        task.column = i;
+                        task.edit = false;
+                        task.listId = list._id;
+                        task.index = j;
+                        return task;
+                    });
+                    return list;
+                })
+                setKb(response);
+            }
+        }
+        fetchData()
+    }, [])
 
     return (
         <>

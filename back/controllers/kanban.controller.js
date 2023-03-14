@@ -1,5 +1,6 @@
 const KanbanModel = require('../database/models/kanban.model');
 const ListModel = require('../database/models/list.model');
+const UserModel = require('../database/models/user.model');
 
 
 exports.getAllKanbans = (req, res) => {

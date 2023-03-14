@@ -6,6 +6,7 @@ export async function createTask(kanbanId, listId, { content }) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({ id: listId, content })
     });
     const body = await response.json();
@@ -26,6 +27,7 @@ export async function deleteTask(kanbanId, listId, taskId) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
     });
     const body = await response.json();
     if (response.ok) {
@@ -45,6 +47,7 @@ export async function modifyTask(kanbanId, listId, taskId, update) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(update)
     });
     const body = await response.json();

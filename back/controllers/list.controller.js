@@ -1,4 +1,5 @@
 const ListModel = require('../database/models/list.model');
+const UserModel = require('../database/models/user.model');
 
 exports.createList = (req, res) => {
     const { title, id } = req.body;

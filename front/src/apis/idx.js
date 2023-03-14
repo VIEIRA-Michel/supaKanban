@@ -6,6 +6,7 @@ export async function updateIndex(taskId, obj) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(obj)
     });
     const body = await response.json();
