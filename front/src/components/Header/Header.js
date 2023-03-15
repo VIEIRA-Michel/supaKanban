@@ -31,7 +31,7 @@ function Header() {
                 </>
             ) : (
                 <div className={`w-[50%] flex flex-row justify-end`}>
-                    <Link to="/signin" className='text-secondary bg-white border border-[#272350] font-[Dosis] py-[5px] px-2.5 rounded-[15px] cursor-pointer mr-[10px] no-underline text-sm flex justify-between items-center hover:bg-secondary hover:text-white hover:transition-all'><span>S'identifier</span></Link>
+                    <Link to="/signin" className='px-2 h-[38px] text-white bg-primary font-[Dosis] rounded-[10px] cursor-pointer mr-[10px] no-underline flex justify-between items-center opacity-80 hover:opacity-100 hover:transition-all'><span className='mr-2'>S'identifier</span><i class="fa-duotone fa-unlock"></i></Link>
                 </div>
             )}
         </header>

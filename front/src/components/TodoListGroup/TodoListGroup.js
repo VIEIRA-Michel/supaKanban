@@ -264,15 +264,15 @@ function TodoListGroup() {
                         kb.length > 0 ?
                             (<div className='flex flex-col h-full'>
                                 <div className={`m-6 h-1/5 flex justify-center list-${kb.length} items-center`}>
-                                    <div className='w-[200px] m-auto flex justify-center items-center'>
+                                    <div className={`w-[200px] m-auto flex justify-around items-center ${showInput ? 'bg-quinary' : ''} shadow-[0_2px_18px_0_rgba(0,0,0,0.5)] rounded-[15px]`}>
                                         {!showInput &&
-                                            <button className={`p-[20px] py-2.5 px-5 cursor-pointer opacity-80 transition-opacity hover:opacity-100 text-sm rounded-[15px] w-[200px] shadow-[0_2px_18px_0_rgba(0,0,0,0.5)] border-none bg-secondary list-${kb.length} flex justify-between items-center flex-auto`} onClick={() => setShowInput(true)}>
+                                            <button className={`p-[20px] py-2.5 px-5 cursor-pointer opacity-80 transition-opacity hover:opacity-100 text-sm rounded-[15px] w-[200px] border-none bg-secondary list-${kb.length} flex justify-between items-center flex-auto`} onClick={() => setShowInput(true)}>
                                                 <span>Ajouter une liste</span>
                                                 <i className="fa-solid fa-plus"></i>
                                             </button>}
                                         {showInput && <>
-                                            <input className='font-[Dosis] w-[200px] h-[38px] rounded-[15px] border-none px-[5px]' type="text" placeholder="Saisissez un nom de liste" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => submit(e)} />
-                                            <button className='rounded-full border-none cursor-pointer ml-2.5 bg-secondary' onClick={() => setShowInput(false)}><i className="fa-solid fa-xmark py-2 px-2.5 text-white text-sm leading-3 rounded-[5px] cursor-pointer opacity-80 hover:transition-all hover:opacity-100"></i></button>
+                                            <input className='font-[Dosis] w-[70%] h-[38px] bg-transparent text-quaternary rounded-[15px] border-none px-[5px] outline-0 placeholder:text-white' type="text" placeholder="Saisissez le nom" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => submit(e)} />
+                                            <button className='rounded-full border-none cursor-pointer bg-secondary' onClick={() => setShowInput(false)}><i className="fa-solid fa-xmark py-2 px-2.5 text-white text-sm leading-3 rounded-[5px] cursor-pointer opacity-80 hover:transition-all hover:opacity-100"></i></button>
                                         </>
                                         }
                                     </div>
@@ -297,21 +297,18 @@ function TodoListGroup() {
                                     </div>
                                 </DragDropContext>
                             </div>) : (
-                                <div className='flex flex-col h-full'>
-                                    <h2 className='mb-5 flex justify-center'>{kb.title}</h2>
-                                    <div className={`mb-5 h-1/5 flex justify-center list-0 items-center`}>
-                                        <div className='w-[200px] m-auto flex justify-center items-center'>
-                                            {!showInput &&
-                                                <button className={`p-[20px] py-2.5 px-5 cursor-pointer opacity-80 transition-opacity hover:opacity-100 text-sm rounded-[15px] w-[200px] shadow-[0_2px_18px_0_rgba(0,0,0,0.5)] border-none bg-secondary list-0 flex justify-between items-center flex-auto`} onClick={() => setShowInput(true)}>
-                                                    <span>Ajouter une liste</span>
-                                                    <i className="fa-solid fa-plus"></i>
-                                                </button>}
-                                            {showInput && <>
-                                                <input className='font-[Dosis] w-[200px] h-[38px] rounded-[15px] border-none px-[5px]' type="text" placeholder="Saisissez un nom de liste" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => submit(e)} />
-                                                <button className='rounded-full border-none cursor-pointer ml-2.5 bg-secondary' onClick={() => setShowInput(false)}><i className="fa-solid fa-xmark py-2 px-2.5 text-white text-sm leading-3 rounded-[5px] cursor-pointer opacity-80 hover:transition-all hover:opacity-100"></i></button>
-                                            </>
-                                            }
-                                        </div>
+                                <div className={`m-6 h-1/5 flex justify-center list-${kb.length} items-center`}>
+                                    <div className={`w-[200px] m-auto flex justify-around items-center ${showInput ? 'bg-quinary' : ''} shadow-[0_2px_18px_0_rgba(0,0,0,0.5)] rounded-[15px]`}>
+                                        {!showInput &&
+                                            <button className={`p-[20px] py-2.5 px-5 cursor-pointer opacity-80 transition-opacity hover:opacity-100 text-sm rounded-[15px] w-[200px] border-none bg-secondary list-${kb.length} flex justify-between items-center flex-auto`} onClick={() => setShowInput(true)}>
+                                                <span>Ajouter une liste</span>
+                                                <i className="fa-solid fa-plus"></i>
+                                            </button>}
+                                        {showInput && <>
+                                            <input className='font-[Dosis] w-[70%] h-[38px] bg-transparent text-quaternary rounded-[15px] border-none px-[5px] outline-0 placeholder:text-white' type="text" placeholder="Saisissez le nom" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => submit(e)} />
+                                            <button className='rounded-full border-none cursor-pointer bg-secondary' onClick={() => setShowInput(false)}><i className="fa-solid fa-xmark py-2 px-2.5 text-white text-sm leading-3 rounded-[5px] cursor-pointer opacity-80 hover:transition-all hover:opacity-100"></i></button>
+                                        </>
+                                        }
                                     </div>
                                 </div>
                             )

@@ -62,7 +62,7 @@ function BoardItem({ title, id, kanbanIndex, editMode, kanban, kanbanCount, item
         <div className={kanbanCount ? 'flex flex-row justify-between flex-auto items-center mt-5' : 'flex flex-row justify-between flex-auto items-center'}>
             <div onMouseEnter={() => setShowButton(true)} onMouseLeave={() => setShowButton(false)} className={showButton ? 'min-h-[55px] w-[70%] flex items-center flex-auto p-2.5 rounded-[20px] relative cursor-default bg-[#ffffffb3] transition-all' : 'min-h-[55px] w-[70%] p-2.5 bg-white rounded-[20px] cursor-default relative flex flex-auto'}>
                 <div className='text-base text-[#3a4cae] font-thin truncate w-11/12 flex items-center'>
-                    {editMode ? <input type='text' className='font-[Dosis] text-base font-thin border-none rounded-[10px] w-11/12 outline-0' value={inputTitleValue} onChange={(e) => setInputTitleValue(e.target.value)} onKeyDown={(e) => submit(e)} /> : <span className='truncate'>{title}</span>}
+                    {editMode ? <input type='text' className='font-[Dosis] text-base font-thin border-none rounded-[10px] w-11/12 py-2 px-2.5 outline-0' value={inputTitleValue} onChange={(e) => setInputTitleValue(e.target.value)} onKeyDown={(e) => submit(e)} /> : <span className='truncate'>{title}</span>}
                 </div>
                 {editMode ?
                     <button onClick={toggleEditMode} className='border-none bg-transparent'>
