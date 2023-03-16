@@ -1,9 +1,23 @@
-import { Link, useLocation, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { userState } from '../../recoil';
 import { useRecoilValue } from 'recoil';
 
 function Statistics() {
     const userData = useRecoilValue(userState);
+
+    function formatDate(string) {
+        const date = string.split('T')[0].split('-');
+        const event = new Date(Date.UTC(date[0], date[1], date[2]));
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const returnDate = event.toLocaleDateString("fr-FR", options);
+        return returnDate;
+    }
+
+    const lastKanbanCreated = userData.lastKanbanCreated ? formatDate(userData.lastKanbanCreated) : '/';
+    const lastListCreated = userData.lastListCreated ? formatDate(userData.lastListCreated) : '/';
+    const lastTaskCreated = userData.lastTaskCreated ? formatDate(userData.lastTaskCreated) : '/';
+    const lastNoteCreated = userData.lastNoteCreated ? formatDate(userData.lastNoteCreated) : '/';
+
     return (
         <>
             {userData ?
@@ -17,7 +31,7 @@ function Statistics() {
                                         {userData && userData.kanbanCreated}
                                     </div>
                                     <div>
-                                        <p>Dernier kanban crée le : 25 mars 2021 </p>
+                                        <p>Dernier kanban crée le : <span className='text-primary font-bold'>{lastKanbanCreated}</span></p>
                                     </div>
                                 </div>
                                 <div className="flex flex-col w-[85%] justify-between items-center m-4">
@@ -26,7 +40,7 @@ function Statistics() {
                                         {userData && userData.listCreated}
                                     </div>
                                     <div>
-                                        <p>Dernière liste crée le : 25 mars 2021 </p>
+                                        <p>Dernière liste crée le : <span className='text-primary font-bold'>{lastListCreated}</span></p>
                                     </div>
                                 </div>
                                 <div className="flex flex-col w-[85%] justify-between items-center m-4">
@@ -35,16 +49,16 @@ function Statistics() {
                                         {userData && userData.taskCreated}
                                     </div>
                                     <div>
-                                        <p>Dernière tâche crée le : 25 mars 2021 </p>
+                                        <p>Dernière tâche crée le : <span className='text-primary font-bold'>{lastTaskCreated}</span></p>
                                     </div>
                                 </div>
                                 <div className="flex flex-col w-[85%] justify-between items-center m-4">
                                     <span className='text-quinary font-bold'>Nombre de notes créer</span>
                                     <div className="w-full bg-white text-center p-2 font-dosis rounded-[15px] text-primary">
-                                        {userData && userData.taskCreated}
+                                        {userData && userData.noteCreated}
                                     </div>
                                     <div>
-                                        <p>Dernière note crée le : 25 mars 2021 </p>
+                                        <p className=''>Dernière note crée le : <span className='text-primary font-bold'>{lastNoteCreated}</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -54,7 +68,6 @@ function Statistics() {
                 ) : (
                     <Navigate to="/signin" />
                 )}
-
         </>
     )
 }

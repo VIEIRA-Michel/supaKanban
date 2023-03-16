@@ -10,7 +10,6 @@ export async function signIn(credentials) {
         body: JSON.stringify(credentials)
     });
     const body = await response.json();
-    console.log(body);
     if (response.ok) {
         return body;
     } else {

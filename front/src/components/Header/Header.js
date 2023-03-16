@@ -6,9 +6,7 @@ import { useUserActions } from '../../actions';
 function Header() {
     const useUser = useUserActions();
     const userData = useRecoilValue(userState);
-    console.log(userData);
     const { pathname } = useLocation();
-    console.log(pathname);
     return (
         <header className={`h-[50px] bg-white flex flex-row justify-between items-center fixed top-0 left-0 right-0 ${pathname === "/" && !userData ? 'w-[80%] m-auto my-4' : ' shadow-[0_2px_18px_0_rgba(0,0,0,0.3)]'}  z-10`}>
             <div className={`w-[50%]`}>
@@ -31,7 +29,7 @@ function Header() {
                 </>
             ) : (
                 <div className={`w-[50%] flex flex-row justify-end`}>
-                    <Link to="/signin" className='px-2 h-[38px] text-white bg-primary font-[Dosis] rounded-[10px] cursor-pointer mr-[10px] no-underline flex justify-between items-center opacity-80 hover:opacity-100 hover:transition-all'><span className='mr-2'>S'identifier</span><i class="fa-duotone fa-unlock"></i></Link>
+                    <Link to="/signin" className='px-2 h-[38px] text-white bg-primary font-[Dosis] rounded-[10px] cursor-pointer mr-[10px] no-underline flex justify-between items-center opacity-80 hover:opacity-100 hover:transition-all'><span className='mr-2'>S'identifier</span><i className="fa-duotone fa-unlock"></i></Link>
                 </div>
             )}
         </header>

@@ -1,28 +1,27 @@
 import './App.scss';
 import Header from './components/Header/Header';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Suspense, useLayoutEffect, useState } from 'react';
-import { checkIsAuth } from './apis/auth';
-import { useSetRecoilState } from "recoil";
-import { userState } from './recoil';
+import { useUserActions } from './actions/user.actions';
 import { lazy } from 'react';
 const Loading = lazy(() => import('./components/Loading/Loading'));
 
 function App() {
   const [done, setDone] = useState(false);
-  const setUserData = useSetRecoilState(userState);
+  const { pathname } = useLocation();
+  const useUser = useUserActions();
 
   useLayoutEffect(() => {
-    checkIsAuth().then((result) => {
-      if (result !== null) {
-        const { user } = result;
-        setUserData(user);
+    async function check() {
+      try {
+        await useUser.checkUserIsConnected();
+        setTimeout(() => { setDone(true) }, 750)
+      } catch (error) {
+        console.log(error);
       }
-      setTimeout(() => { setDone(!done) }, 600)
-    }).catch((e) => {
-      console.log(e)
-    })
-  }, [])
+    }
+    check();
+  }, [pathname])
   return (
     <>
       {done ? (

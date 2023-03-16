@@ -27,6 +27,7 @@ export async function changePassword(pwd) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(pwd)
     });
     const body = await response.json();

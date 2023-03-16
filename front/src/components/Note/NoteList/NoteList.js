@@ -1,10 +1,9 @@
-import { lazy, useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { userState, noteState } from '../../../recoil';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import NoteItem from './NoteItem/NoteItem';
 import { createNote, getAllNotes, updateNote, deleteNote } from '../../../apis/note';
-const Loading = lazy(() => import('../../Loading/Loading'));
 
 function NoteList() {
     const [createMode, setCreateMode] = useState(false);
@@ -38,6 +37,7 @@ function NoteList() {
                 setDataLoaded(!dataLoaded);
             }).catch((e) => { console.log(e) })
         }
+        // eslint-disable-next-line
     }, [])
 
     return (
@@ -51,7 +51,7 @@ function NoteList() {
                     </div>
                     {createMode && <div className='flex items-center w-full'>
                         <div className='flex flex-row w-full mt-5'>
-                            <input type="text" className='flex flex-auto font-[Dosis] text-base rounded-[15px] border-none p-2.5 text-black' value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyDown={(e) => submit(e)} />
+                            <input type="text" className='flex flex-auto font-[Dosis] text-base rounded-[15px] border-none p-2.5 text-primary outline-0' value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyDown={(e) => submit(e)} />
                             <button className='border-none bg-transparent ml-2.5' onClick={() => setCreateMode(false)}><i className="fa-solid fa-xmark py-2 px-2.5 bg-[#130f40] text-white text-sm leading-3 rounded-full cursor-pointer opacity-80 hover:opacity-100 transition-all"></i></button>
                         </div>
                     </div>}

@@ -8,7 +8,7 @@ exports.createList = (req, res) => {
         if (err) {
             res.status(400).json('Oops une erreur est survenue');
         } else {
-            UserModel.findOneAndUpdate({ _id: req.user._id }, { $inc: { 'listCreated': 1 } })
+            UserModel.findOneAndUpdate({ _id: req.user._id }, { $inc: { 'listCreated': 1 }, lastListCreated: Date.now() })
                 .then(() => res.json(data))
                 .catch((e) => res.status(400).json({ e }))
         }

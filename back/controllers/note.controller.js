@@ -8,7 +8,7 @@ exports.createNote = async (req, res) => {
             if (err) {
                 res.status(400).json('Oops une erreur est survenue');
             } else {
-                UserModel.findOneAndUpdate({ _id: req.user._id }, { $inc: { 'noteCreated': 1 } })
+                UserModel.findOneAndUpdate({ _id: req.user._id }, { $inc: { 'noteCreated': 1 }, lastNoteCreated: Date.now() })
                     .then(() => res.status(201).json(data))
                     .catch((e) => res.status(400).json({ e }))
             }

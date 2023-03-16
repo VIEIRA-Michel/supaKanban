@@ -14,7 +14,7 @@ exports.createTask = (req, res) => {
                 index: 0,
             })
             list.save();
-            UserModel.findOneAndUpdate({ _id: req.user._id }, { $inc: { 'taskCreated': 1 } })
+            UserModel.findOneAndUpdate({ _id: req.user._id }, { $inc: { 'taskCreated': 1 }, lastTaskCreated: Date.now() })
                 .then(() => res.status(201).json({ list, message: 'Tâche ajoutée !' }))
                 .catch((e) => res.status(400).json({ e }))
         })

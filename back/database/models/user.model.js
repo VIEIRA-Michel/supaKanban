@@ -12,7 +12,11 @@ const userSchema = mongoose.Schema({
     listCreated: { type: Number, default: 0 },
     taskCreated: { type: Number, default: 0 },
     noteCreated: { type: Number, default: 0 },
-    createdAt: { type: Date, default: Date.now() }
+    createdAt: { type: Date, default: Date.now() },
+    lastKanbanCreated: { type: Date, default: null },
+    lastListCreated: { type: Date, default: null },
+    lastTaskCreated: { type: Date, default: null },
+    lastNoteCreated: { type: Date, default: null },
 });
 
 userSchema.statics.hashPassword = async (password) => {
