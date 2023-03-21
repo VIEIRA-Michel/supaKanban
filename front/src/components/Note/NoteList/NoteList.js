@@ -18,9 +18,8 @@ function NoteList() {
                 try {
                     const note = await createNote({ title: inputValue });
                     if (note) {
-                        console.log(note);
                         setCreateMode(false);
-                        setNoteList([{ _id: noteList.length + 1, title: inputValue, content: "", date: "2021-10-10", userId: 1, edit: false }, ...noteList]);
+                        setNoteList([{ ...note, edit: false }, ...noteList]);
                         setInputValue('');
                     }
                 } catch (error) {

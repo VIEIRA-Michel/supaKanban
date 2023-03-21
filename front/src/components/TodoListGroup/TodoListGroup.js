@@ -17,7 +17,6 @@ function TodoListGroup() {
     const [showInput, setShowInput] = useState(false);
     const userData = useRecoilValue(userState);
     let url = useLocation().pathname.split('/')[2];
-    console.log(url);
 
 
     function replaceItemAtIndex(arr, index, newValue) {

@@ -20,7 +20,6 @@ function Header() {
                 <>
                     <ul className='flex flex-row'>
                         <div className='flex flex-row justify-evenly items-center'>
-                            {/* <Link to="/" className='mr-[10px] flex justify-center items-center no-underline'><i className="flex justify-center items-center w-[38px] h-[38px] fa-duotone fa-home text-secondary border border-[#777591] text-white bg-tertiary rounded-[10px] cursor-pointer opacity-80 hover:opacity-100 hover:text-white hover:transition-all"></i></Link> */}
                             <p className='mr-5 text-quaternary'>Hello, <span className='text-quinary font-bold'>{userData.username}</span> !</p>
                             <li onClick={() => useUser.logout()} className='mr-[10px] no-underline flex justify-center items-center'><i className="flex justify-center items-center w-[38px] h-[38px] fa-duotone fa-right-from-bracket text-white bg-secondary rounded-[10px] cursor-pointer border border-[#272350] opacity-80 hover:opacity-100 hover:text-white hover:transition-all"></i></li>
                         </div>
@@ -28,9 +27,11 @@ function Header() {
 
                 </>
             ) : (
-                <div className={`w-[50%] flex flex-row justify-end`}>
-                    <Link to="/signin" className='px-2 h-[38px] text-white bg-primary font-[Dosis] rounded-[10px] cursor-pointer mr-[10px] no-underline flex justify-between items-center opacity-80 hover:opacity-100 hover:transition-all'><span className='mr-2'>S'identifier</span><i className="fa-duotone fa-unlock"></i></Link>
-                </div>
+                pathname !== "/signin" && pathname !== "/signup" ? (
+                    <div className={`w-[50%] flex flex-row justify-end`}>
+                        <Link to="/signin" className='px-2 h-[38px] text-primary font-[Dosis] rounded-[10px] cursor-pointer mr-[10px] flex justify-between items-center opacity-80 hover:underline hover:opacity-100 hover:transition-all'>S'identifier</Link>
+                    </div>
+                ) : null
             )}
         </header>
     )
